@@ -1,0 +1,93 @@
+version: '3.9'
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    ports: ['8080:8080']
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin123
+    command: start-dev --import-realm
+    volumes:
+      - './infra/keycloak/realm-ifarm.json:/opt/keycloak/data/import/realm.json'
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/health']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    ports: ['5672:5672', '15672:15672']
+    environment:
+      RABBITMQ_DEFAULT_USER: ifarm
+      RABBITMQ_DEFAULT_PASS: ifarm123
+    volumes:
+      - 'rabbitmq_data:/var/lib/rabbitmq'
+    healthcheck:
+      test: ['CMD', 'rabbitmq-diagnostics', 'check_running']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports: ['6379:6379']
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongodb:
+    image: mongo:7
+    ports: ['27017:27017']
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ifarm
+      MONGO_INITDB_ROOT_PASSWORD: ifarm123
+    volumes:
+      - 'mongo_data:/data/db'
+      - './infra/mongodb/init:/docker-entrypoint-initdb.d'
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: postgres:16-alpine
+    ports: ['5432:5432']
+    environment:
+      POSTGRES_USER: ifarm
+      POSTGRES_PASSWORD: ifarm123
+      POSTGRES_DB: ifarm
+    volumes:
+      - 'postgres_data:/var/lib/postgresql/data'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ifarm']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports: ['9090:9090']
+    volumes:
+      - './infra/observability/prometheus.yml:/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana:latest
+    ports: ['3200:3000']
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin123
+    volumes:
+      - './infra/observability/grafana:/etc/grafana/provisioning'
+
+  loki:
+    image: grafana/loki:latest
+    ports: ['3100:3100']
+
+volumes:
+  rabbitmq_data:
+  mongo_data:
+  postgres_data:

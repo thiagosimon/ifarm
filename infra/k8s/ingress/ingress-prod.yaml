@@ -1,0 +1,175 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ifarm-ingress
+  namespace: ifarm
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rate-limit-connections: "10"
+    nginx.ingress.kubernetes.io/rate-limit-rps: "50"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://app.ifarm.com.br,https://admin.ifarm.com.br,https://carbon.ifarm.com.br"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type, X-Request-ID"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+spec:
+  tls:
+    - hosts:
+        - api.ifarm.com.br
+        - app.ifarm.com.br
+        - admin.ifarm.com.br
+        - carbon.ifarm.com.br
+        - www.ifarm.com.br
+      secretName: ifarm-tls
+  rules:
+    - host: api.ifarm.com.br
+      http:
+        paths:
+          - path: /v1/identity
+            pathType: Prefix
+            backend:
+              service:
+                name: identity-service
+                port:
+                  number: 80
+          - path: /v1/catalog
+            pathType: Prefix
+            backend:
+              service:
+                name: catalog-service
+                port:
+                  number: 80
+          - path: /v1/quotations
+            pathType: Prefix
+            backend:
+              service:
+                name: quotation-service
+                port:
+                  number: 80
+          - path: /v1/matching
+            pathType: Prefix
+            backend:
+              service:
+                name: matching-service
+                port:
+                  number: 80
+          - path: /v1/orders
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: 80
+          - path: /v1/payments
+            pathType: Prefix
+            backend:
+              service:
+                name: payment-service
+                port:
+                  number: 80
+          - path: /v1/notifications
+            pathType: Prefix
+            backend:
+              service:
+                name: notification-service
+                port:
+                  number: 80
+          - path: /v1/reviews
+            pathType: Prefix
+            backend:
+              service:
+                name: review-service
+                port:
+                  number: 80
+          - path: /v1/tax
+            pathType: Prefix
+            backend:
+              service:
+                name: tax-service
+                port:
+                  number: 80
+          - path: /v1/score
+            pathType: Prefix
+            backend:
+              service:
+                name: score-service
+                port:
+                  number: 80
+          - path: /v1/commissions
+            pathType: Prefix
+            backend:
+              service:
+                name: commission-service
+                port:
+                  number: 80
+          - path: /v1/credit
+            pathType: Prefix
+            backend:
+              service:
+                name: credit-service
+                port:
+                  number: 80
+          - path: /v1/esg
+            pathType: Prefix
+            backend:
+              service:
+                name: esg-service
+                port:
+                  number: 80
+          - path: /v1/carbon
+            pathType: Prefix
+            backend:
+              service:
+                name: carbon-service
+                port:
+                  number: 80
+          - path: /v1/iot
+            pathType: Prefix
+            backend:
+              service:
+                name: iot-ingestion
+                port:
+                  number: 80
+    - host: app.ifarm.com.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-retailer
+                port:
+                  number: 80
+    - host: admin.ifarm.com.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-admin
+                port:
+                  number: 80
+    - host: carbon.ifarm.com.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-carbon
+                port:
+                  number: 80
+    - host: www.ifarm.com.br
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-landing
+                port:
+                  number: 80

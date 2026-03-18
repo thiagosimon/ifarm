@@ -1,0 +1,29 @@
+{
+  "name": "ifarm-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "iFarm - Ecossistema Digital do Agronegócio Brasileiro",
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:cov": "turbo run test:cov",
+    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
+    "dev": "turbo run dev",
+    "clean": "turbo run clean",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "realm": "ifarm",
+  "enabled": true,
+  "displayName": "iFarm Platform",
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "accessTokenLifespan": 3600,
+  "ssoSessionIdleTimeout": 86400,
+  "roles": {
+    "realm": [
+      { "name": "FARMER", "description": "Rural producer" },
+      { "name": "RETAILER", "description": "Store owner/seller" },
+      { "name": "ADMIN", "description": "iFarm administrator" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "ifarm-mobile",
+      "name": "iFarm Mobile App",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "redirectUris": ["com.ifarm.app:/callback", "http://localhost:3000/*"],
+      "webOrigins": ["*"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      }
+    },
+    {
+      "clientId": "ifarm-web-retailer",
+      "name": "iFarm Web Retailer",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "secret": "retailer-secret-change-in-production",
+      "redirectUris": ["http://localhost:4000/*", "https://app.ifarm.com.br/*"],
+      "webOrigins": ["http://localhost:4000", "https://app.ifarm.com.br"]
+    },
+    {
+      "clientId": "ifarm-web-admin",
+      "name": "iFarm Web Admin",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "secret": "admin-secret-change-in-production",
+      "redirectUris": ["http://localhost:4001/*", "https://admin.ifarm.com.br/*"],
+      "webOrigins": ["http://localhost:4001", "https://admin.ifarm.com.br"]
+    },
+    {
+      "clientId": "ifarm-api",
+      "name": "iFarm API Gateway",
+      "enabled": true,
+      "publicClient": false,
+      "bearerOnly": true,
+      "secret": "api-secret-change-in-production"
+    }
+  ],
+  "users": [
+    {
+      "username": "admin@ifarm.com.br",
+      "email": "admin@ifarm.com.br",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Admin",
+      "lastName": "iFarm",
+      "credentials": [{ "type": "password", "value": "admin123", "temporary": false }],
+      "realmRoles": ["ADMIN"]
+    },
+    {
+      "username": "farmer@test.com",
+      "email": "farmer@test.com",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "João",
+      "lastName": "Silva",
+      "credentials": [{ "type": "password", "value": "test123", "temporary": false }],
+      "realmRoles": ["FARMER"]
+    },
+    {
+      "username": "retailer@test.com",
+      "email": "retailer@test.com",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Maria",
+      "lastName": "Souza",
+      "credentials": [{ "type": "password", "value": "test123", "temporary": false }],
+      "realmRoles": ["RETAILER"]
+    }
+  ]
+}

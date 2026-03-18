@@ -1,0 +1,145 @@
+import { Injectable, Logger, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import * as amqp from 'amqp-connection-manager';
+import { ChannelWrapper } from 'amqp-connection-manager';
+import { ConfirmChannel, ConsumeMessage } from 'amqplib';
+
+const EXCHANGE_NAME = 'ifarm.events';
+const EXCHANGE_TYPE = 'topic';
+
+@Injectable()
+export class RabbitmqService implements OnModuleInit, OnModuleDestroy {
+  private readonly logger = new Logger(RabbitmqService.name);
+  private connection: amqp.AmqpConnectionManager;
+  private channelWrapper: ChannelWrapper;
+  private isConnected = false;
+
+  async onModuleInit(): Promise<void> {
+    const uri = process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672';
+
+    this.connection = amqp.connect([uri], {
+      heartbeatIntervalInSeconds: 30,
+      reconnectTimeInSeconds: 5,
+    });
+
+    this.connection.on('connect', () => {
+      this.logger.log('RabbitMQ connected');
+      this.isConnected = true;
+    });
+
+    this.connection.on('disconnect', (err: any) => {
+      this.logger.warn(`RabbitMQ disconnected: ${err?.message}`);
+      this.isConnected = false;
+    });
+
+    this.channelWrapper = this.connection.createChannel({
+      json: true,
+      setup: async (channel: ConfirmChannel) => {
+        await channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE, {
+          durable: true,
+        });
+
+        // Dead-letter exchange
+        await channel.assertExchange('ifarm.events.dlx', 'topic', {
+          durable: true,
+        });
+        await channel.assertQueue('ifarm.events.dlq', {
+          durable: true,
+          arguments: {
+            'x-message-ttl': 86400000, // 24h
+          },
+        });
+        await channel.bindQueue('ifarm.events.dlq', 'ifarm.events.dlx', '#');
+      },
+    });
+
+    await this.channelWrapper.waitForConnect();
+    this.logger.log('RabbitMQ channel ready');
+  }
+
+  async onModuleDestroy(): Promise<void> {
+    try {
+      await this.channelWrapper?.close();
+      await this.connection?.close();
+      this.logger.log('RabbitMQ connection closed');
+    } catch (err: any) {
+      this.logger.error(`Error closing RabbitMQ: ${err.message}`);
+    }
+  }
+
+  async publish(routingKey: string, payload: Record<string, any>): Promise<void> {
+    const message = {
+      ...payload,
+      _meta: {
+        service: 'payment-service',
+        routingKey,
+        publishedAt: new Date().toISOString(),
+      },
+    };
+
+    try {
+      await this.channelWrapper.publish(EXCHANGE_NAME, routingKey, message, {
+        persistent: true,
+        contentType: 'application/json',
+        headers: {
+          'x-retry-count': 0,
+        },
+      });
+      this.logger.debug(`Published event: ${routingKey}`);
+    } catch (err: any) {
+      this.logger.error(
+        `Failed to publish event ${routingKey}: ${err.message}`,
+      );
+      throw err;
+    }
+  }
+
+  /**
+   * Subscribe to a routing key by creating a durable queue bound to the exchange.
+   */
+  async subscribe(
+    queueName: string,
+    routingKey: string,
+    handler: (msg: any) => Promise<void>,
+  ): Promise<void> {
+    await this.channelWrapper.addSetup(async (channel: ConfirmChannel) => {
+      await channel.assertQueue(queueName, {
+        durable: true,
+        arguments: {
+          'x-dead-letter-exchange': 'ifarm.events.dlx',
+          'x-dead-letter-routing-key': routingKey,
+        },
+      });
+      await channel.bindQueue(queueName, EXCHANGE_NAME, routingKey);
+      await channel.consume(queueName, async (msg: ConsumeMessage | null) => {
+        if (!msg) return;
+
+        try {
+          const content = JSON.parse(msg.content.toString());
+          await handler(content);
+          channel.ack(msg);
+        } catch (err: any) {
+          this.logger.error(
+            `Error processing message from ${queueName}: ${err.message}`,
+          );
+          // Nack and requeue up to 3 retries, then dead-letter
+          const retryCount =
+            (msg.properties.headers?.['x-retry-count'] as number) || 0;
+          if (retryCount < 3) {
+            channel.nack(msg, false, true);
+          } else {
+            this.logger.warn(
+              `Message from ${queueName} exceeded retry limit, sending to DLQ`,
+            );
+            channel.nack(msg, false, false);
+          }
+        }
+      });
+
+      this.logger.log(`Subscribed to ${routingKey} via queue ${queueName}`);
+    });
+  }
+
+  isHealthy(): boolean {
+    return this.isConnected;
+  }
+}

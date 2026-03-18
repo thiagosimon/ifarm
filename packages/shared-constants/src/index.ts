@@ -1,0 +1,152 @@
+export enum UserRole {
+  FARMER = 'FARMER',
+  RETAILER = 'RETAILER',
+  ADMIN = 'ADMIN',
+}
+
+export enum KycStatus {
+  PENDING = 'PENDING',
+  DOCUMENTS_SUBMITTED = 'DOCUMENTS_SUBMITTED',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
+
+export enum FarmerStatus {
+  PENDING_VERIFICATION = 'PENDING_VERIFICATION',
+  ACTIVE = 'ACTIVE',
+  SUSPENDED = 'SUSPENDED',
+  DEACTIVATED = 'DEACTIVATED',
+}
+
+export enum RetailerStatus {
+  PENDING_VERIFICATION = 'PENDING_VERIFICATION',
+  ACTIVE = 'ACTIVE',
+  SUSPENDED = 'SUSPENDED',
+  DEACTIVATED = 'DEACTIVATED',
+}
+
+export enum QuoteStatus {
+  OPEN = 'OPEN',
+  IN_PROPOSALS = 'IN_PROPOSALS',
+  ACCEPTED = 'ACCEPTED',
+  EXPIRED = 'EXPIRED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum OrderStatus {
+  AWAITING_PAYMENT = 'AWAITING_PAYMENT',
+  PAID = 'PAID',
+  PREPARING = 'PREPARING',
+  DISPATCHED = 'DISPATCHED',
+  DELIVERED = 'DELIVERED',
+  DISPUTED = 'DISPUTED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum PaymentMethod {
+  PIX = 'PIX',
+  BOLETO = 'BOLETO',
+  CREDIT_CARD = 'CREDIT_CARD',
+  RURAL_CREDIT = 'RURAL_CREDIT',
+}
+
+export enum PaymentStatus {
+  PENDING = 'PENDING',
+  CONFIRMED = 'CONFIRMED',
+  FAILED = 'FAILED',
+  REFUNDED = 'REFUNDED',
+}
+
+export enum CommissionStatus {
+  PENDING = 'PENDING',
+  HOLDBACK = 'HOLDBACK',
+  RELEASED = 'RELEASED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum DeliveryMode {
+  DELIVERY_ADDRESS = 'DELIVERY_ADDRESS',
+  DELIVERY_GEOLOCATION = 'DELIVERY_GEOLOCATION',
+  STORE_PICKUP = 'STORE_PICKUP',
+}
+
+export enum RecurringFrequency {
+  WEEKLY = 'WEEKLY',
+  BIWEEKLY = 'BIWEEKLY',
+  MONTHLY = 'MONTHLY',
+  CUSTOM = 'CUSTOM',
+}
+
+export enum ProductCategory {
+  FERTILIZERS = 'FERTILIZERS',
+  PESTICIDES = 'PESTICIDES',
+  SEEDS = 'SEEDS',
+  FARM_MACHINERY = 'FARM_MACHINERY',
+  FARM_IMPLEMENTS = 'FARM_IMPLEMENTS',
+  IRRIGATION = 'IRRIGATION',
+  ANIMAL_NUTRITION = 'ANIMAL_NUTRITION',
+  PPE_SAFETY = 'PPE_SAFETY',
+  VETERINARY = 'VETERINARY',
+}
+
+export enum NotificationChannel {
+  PUSH = 'PUSH',
+  WHATSAPP = 'WHATSAPP',
+  EMAIL = 'EMAIL',
+}
+
+export enum StateSalesTaxType {
+  EXEMPT = 'EXEMPT',
+  REDUCED_BASE = 'REDUCED_BASE',
+  DEFERRED = 'DEFERRED',
+  TAX_SUBSTITUTION = 'TAX_SUBSTITUTION',
+  STANDARD = 'STANDARD',
+  UNKNOWN = 'UNKNOWN',
+}
+
+export enum BuyerType {
+  INDIVIDUAL = 'INDIVIDUAL',
+  BUSINESS = 'BUSINESS',
+}
+
+export enum DocumentType {
+  IDENTITY_FRONT = 'IDENTITY_FRONT',
+  IDENTITY_BACK = 'IDENTITY_BACK',
+  PROOF_OF_ADDRESS = 'PROOF_OF_ADDRESS',
+  RURAL_TAX = 'RURAL_TAX',
+  LAND_TITLE = 'LAND_TITLE',
+  BUSINESS_REGISTRATION = 'BUSINESS_REGISTRATION',
+  SOCIAL_CONTRACT = 'SOCIAL_CONTRACT',
+}
+
+export const COMMISSION_RATES = {
+  UNDER_10K: { threshold: 10000, rate: 0.05 },
+  BETWEEN_10K_100K: { threshold: 100000, rate: 0.035 },
+  ABOVE_100K: { threshold: Infinity, rate: 0.02 },
+  SERVICES: { rate: 0.08 },
+} as const;
+
+export const HOLDBACK_BUSINESS_DAYS = 7;
+
+export const QUOTE_DEFAULT_EXPIRY_HOURS = 24;
+export const QUOTE_MAX_EXPIRY_HOURS = 72;
+export const MAX_RETAILERS_PER_QUOTE = 20;
+
+export const PIX_EXPIRY_SECONDS = 7200;
+export const BOLETO_EXPIRY_BUSINESS_DAYS = 3;
+
+export const KYC_DOC_MAX_SIZE_BYTES = 10 * 1024 * 1024;
+export const S3_PRESIGNED_TTL_SECONDS = 900;
+
+export const RATE_LIMITS = {
+  FARMER: { max: 100, windowMs: 60000 },
+  RETAILER: { max: 100, windowMs: 60000 },
+  ADMIN: { max: 1000, windowMs: 60000 },
+  AUTH: { max: 10, windowMs: 60000 },
+} as const;
+
+export const BRAZILIAN_STATES = [
+  'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'
+] as const;
+
+export type BrazilianState = typeof BRAZILIAN_STATES[number];
