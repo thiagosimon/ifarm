@@ -51,7 +51,10 @@
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": false,
       "secret": "admin-secret-change-in-production",
-      "redirectUris": ["http://localhost:4001/*", "https://admin.ifarm.com.br/*"],
+      "redirectUris": [
+        "http://localhost:4001/*",
+        "https://admin.ifarm.com.br/*"
+      ],
       "webOrigins": ["http://localhost:4001", "https://admin.ifarm.com.br"]
     },
     {
@@ -71,7 +74,9 @@
       "emailVerified": true,
       "firstName": "Admin",
       "lastName": "iFarm",
-      "credentials": [{ "type": "password", "value": "admin123", "temporary": false }],
+      "credentials": [
+        { "type": "password", "value": "admin123", "temporary": false }
+      ],
       "realmRoles": ["ADMIN"]
     },
     {
@@ -81,7 +86,9 @@
       "emailVerified": true,
       "firstName": "João",
       "lastName": "Silva",
-      "credentials": [{ "type": "password", "value": "test123", "temporary": false }],
+      "credentials": [
+        { "type": "password", "value": "test123", "temporary": false }
+      ],
       "realmRoles": ["FARMER"]
     },
     {
@@ -91,7 +98,9 @@
       "emailVerified": true,
       "firstName": "Maria",
       "lastName": "Souza",
-      "credentials": [{ "type": "password", "value": "test123", "temporary": false }],
+      "credentials": [
+        { "type": "password", "value": "test123", "temporary": false }
+      ],
       "realmRoles": ["RETAILER"]
     }
   ]

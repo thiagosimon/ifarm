@@ -15,7 +15,7 @@ FROM node:20-alpine AS production
 WORKDIR /app
 
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nestjs -u 1001
+  adduser -S nestjs -u 1001
 
 COPY --from=builder /app/package.json ./
 RUN npm install --omit=dev && npm cache clean --force
