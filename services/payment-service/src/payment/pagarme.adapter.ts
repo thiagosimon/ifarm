@@ -13,7 +13,7 @@ export interface PagarmeCreateOrderRequest {
     name: string;
     email: string;
     document: string;
-    type: 'individual' | 'company';
+    type?: 'individual' | 'company';
   };
   payments: Array<{
     payment_method: 'pix' | 'boleto' | 'credit_card';

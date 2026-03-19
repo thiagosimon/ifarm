@@ -88,7 +88,7 @@ export class RecurringService {
     ]);
 
     return {
-      data: data as RecurringConfigDocument[],
+      data: data as unknown as RecurringConfigDocument[],
       total,
       page: safePage,
       limit: safeLimit,

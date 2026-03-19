@@ -136,7 +136,7 @@ export class QuoteService {
     ]);
 
     return {
-      data: data as QuoteDocument[],
+      data: data as unknown as QuoteDocument[],
       total,
       page: safePage,
       limit: safeLimit,
@@ -167,8 +167,8 @@ export class QuoteService {
       .exec();
 
     return {
-      quote: quote as QuoteDocument,
-      proposals: proposals as ProposalDocument[],
+      quote: quote as unknown as QuoteDocument,
+      proposals: proposals as unknown as ProposalDocument[],
     };
   }
 

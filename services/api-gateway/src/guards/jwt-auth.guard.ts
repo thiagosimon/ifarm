@@ -8,7 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import * as jwt from 'jsonwebtoken';
-import * as jwksRsa from 'jwks-rsa';
+import jwksRsa from 'jwks-rsa';
 import Redis from 'ioredis';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { isPublicRoute } from '../config/routes.config';

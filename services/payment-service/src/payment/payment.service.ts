@@ -180,7 +180,8 @@ export class PaymentService {
     const lastTxn = charge?.last_transaction;
 
     // Create local transaction record
-    const transaction = this.transactionRepository.create({
+    const transaction = this.transactionRepository.create({} as Transaction);
+    Object.assign(transaction, {
       orderId: payload.orderId,
       pagarmeTransactionId: pagarmeResponse.id,
       farmerId: payload.farmerId,
@@ -202,7 +203,7 @@ export class PaymentService {
       cardBrand: lastTxn?.card?.brand || null,
     });
 
-    const saved = await this.transactionRepository.save(transaction);
+    const saved = await this.transactionRepository.save(transaction) as unknown as Transaction;
     this.logger.log(
       `Transaction created: ${saved.id} for orderId=${payload.orderId}, method=${method}`,
     );
@@ -385,7 +386,7 @@ export class PaymentService {
 
     transaction.status = 'REFUNDED';
     transaction.refundedAt = new Date();
-    const saved = await this.transactionRepository.save(transaction);
+    const saved = await this.transactionRepository.save(transaction) as unknown as Transaction;
 
     this.logger.log(`Transaction ${saved.id} refunded for orderId=${orderId}`);
 
