@@ -1,6 +1,6 @@
 [build]
   command = "npx turbo run build --filter @ifarm/web-landing"
-  publish = "out"
+  publish = ".next"
 
 [build.environment]
   NODE_VERSION = "20"
