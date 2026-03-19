@@ -1,0 +1,394 @@
+{
+  "common": {
+    "appName": "iFarm Lojista",
+    "tagline": "Portal de Gestão Agro B2B",
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "search": "Buscar...",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "close": "Fechar",
+    "viewAll": "Ver todos",
+    "noResults": "Nenhum resultado encontrado",
+    "actions": "Ações",
+    "status": "Status",
+    "date": "Data",
+    "total": "Total",
+    "details": "Detalhes",
+    "yes": "Sim",
+    "no": "Não",
+    "required": "Obrigatório",
+    "optional": "Opcional"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "quotations": "Cotações",
+    "orders": "Pedidos",
+    "catalog": "Catálogo",
+    "financial": "Financeiro",
+    "profile": "Perfil da Loja",
+    "kyc": "Verificação KYC",
+    "reviews": "Avaliações",
+    "team": "Equipe",
+    "customers": "Clientes",
+    "messages": "Mensagens",
+    "reports": "Relatórios",
+    "shipping": "Logística",
+    "invoices": "Notas Fiscais",
+    "notifications": "Notificações",
+    "settings": "Configurações",
+    "support": "Suporte Premium",
+    "logout": "Sair"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Bem-vindo de volta",
+    "kpi": {
+      "quotations": "Cotações",
+      "conversion": "Conversão",
+      "inProgress": "Em Andamento",
+      "revenue": "Faturamento",
+      "avgTicket": "Ticket Médio",
+      "rating": "Avaliação"
+    },
+    "charts": {
+      "salesOverTime": "Vendas ao Longo do Tempo",
+      "topProducts": "Top Produtos",
+      "quotationsVsResponses": "Cotações vs Respostas"
+    },
+    "recentQuotations": "Cotações Recentes"
+  },
+  "quotations": {
+    "title": "Cotações de Insumos",
+    "subtitle": "Gerencie suas cotações e propostas comerciais",
+    "tabs": {
+      "open": "Abertas",
+      "myProposals": "Minhas Propostas",
+      "accepted": "Aceitas",
+      "expired": "Expiradas"
+    },
+    "filters": {
+      "category": "Categoria",
+      "state": "Estado",
+      "valueRange": "Faixa de Valor",
+      "allCategories": "Todas as Categorias",
+      "allStates": "Todos os Estados"
+    },
+    "categories": {
+      "fertilizers": "Fertilizantes",
+      "seeds": "Sementes",
+      "pesticides": "Defensivos",
+      "machinery": "Maquinário"
+    },
+    "table": {
+      "number": "Nº Cotação",
+      "producer": "Produtor",
+      "products": "Produtos",
+      "quantity": "Qtd",
+      "expiration": "Expiração",
+      "estimatedValue": "Valor Est.",
+      "action": "Ação"
+    },
+    "status": {
+      "open": "Aberta",
+      "pending": "Pendente",
+      "accepted": "Aceita",
+      "rejected": "Rejeitada",
+      "expired": "Expirada",
+      "inAnalysis": "Em Análise"
+    },
+    "sendProposal": "Enviar Proposta",
+    "viewDetail": "Ver Detalhes",
+    "timeRemaining": "restantes"
+  },
+  "proposal": {
+    "title": "Nova Proposta",
+    "quotationRef": "Referência da Cotação",
+    "item": {
+      "unitPrice": "Preço Unitário",
+      "brand": "Marca/Fabricante",
+      "deliveryDays": "Prazo Entrega (dias)",
+      "subtotal": "Subtotal"
+    },
+    "paymentMethods": "Condições de Pagamento",
+    "payment": {
+      "boleto30": "Boleto 30d",
+      "boleto60": "Boleto 60d",
+      "boleto90": "Boleto 90d",
+      "pix": "PIX",
+      "card": "Cartão",
+      "barter": "Barter"
+    },
+    "validity": "Validade da Proposta",
+    "notes": "Observações",
+    "submit": "Enviar Proposta",
+    "summary": "Resumo da Proposta",
+    "totalValue": "Valor Total"
+  },
+  "orders": {
+    "title": "Pedidos",
+    "subtitle": "Acompanhe seus pedidos e entregas",
+    "columns": {
+      "preparing": "Em Preparação",
+      "shipped": "Despachados",
+      "delivered": "Entregues",
+      "disputed": "Disputados"
+    },
+    "detail": {
+      "title": "Detalhes do Pedido",
+      "orderDate": "Data do Pedido",
+      "customer": "Cliente",
+      "items": "Itens",
+      "trackingCode": "Código de Rastreio",
+      "enterTracking": "Informar Rastreio",
+      "timeline": "Timeline do Pedido"
+    },
+    "status": {
+      "created": "Pedido Criado",
+      "paymentApproved": "Pagamento Aprovado",
+      "preparing": "Em Preparação",
+      "shipped": "Despachado",
+      "delivered": "Entregue",
+      "disputed": "Disputa"
+    },
+    "actions": {
+      "dispatch": "Despachar Pedido",
+      "printDanfe": "Imprimir Danfe",
+      "markShipped": "Marcar como Enviado"
+    }
+  },
+  "catalog": {
+    "title": "Meu Catálogo",
+    "subtitle": "Gerencie {count} produtos ativos na sua vitrine B2B",
+    "addProduct": "Adicionar Produto",
+    "addFromGeneral": "Adicionar do Catálogo Geral",
+    "filters": {
+      "all": "Todos",
+      "fertilizers": "Fertilizantes",
+      "pesticides": "Defensivos",
+      "seeds": "Sementes",
+      "machinery": "Maquinário"
+    },
+    "product": {
+      "name": "Nome do Produto",
+      "description": "Descrição",
+      "category": "Categoria",
+      "brand": "Marca",
+      "unit": "Unidade",
+      "basePrice": "Preço Base",
+      "myPrice": "Meu Preço",
+      "stock": "Estoque",
+      "sku": "SKU",
+      "tariffCode": "NCM (Código Tarifário)",
+      "tariffWarning": "NCM obrigatório para emissão de NF",
+      "active": "Ativo",
+      "inactive": "Inativo",
+      "outOfStock": "Esgotado"
+    },
+    "regions": {
+      "title": "Regiões de Atendimento",
+      "subtitle": "Selecione os estados onde você atende"
+    },
+    "image": {
+      "upload": "Upload de Imagem",
+      "recommended": "Recomendado: 800×600px"
+    },
+    "sortBy": "Ordenar por",
+    "highestMargin": "Maior Margem"
+  },
+  "financial": {
+    "title": "Financeiro",
+    "subtitle": "Acompanhe seus repasses e pagamentos",
+    "summary": {
+      "totalPaid": "Total Pago",
+      "scheduled": "Programado",
+      "held": "Retido",
+      "fees": "Taxas"
+    },
+    "calendar": {
+      "title": "Calendário de Repasses",
+      "payoutDay": "Dia de Repasse"
+    },
+    "payout": {
+      "paid": "Pago",
+      "scheduled": "Programado",
+      "processing": "Processando",
+      "held": "Retido"
+    },
+    "exportCsv": "Exportar CSV",
+    "holdbackNote": "Holdback: 7 dias úteis conforme política"
+  },
+  "login": {
+    "title": "Entrar no Portal",
+    "subtitle": "Acesse sua conta de lojista",
+    "emailOrCnpj": "CNPJ ou E-mail",
+    "password": "Senha",
+    "rememberMe": "Lembrar deste dispositivo",
+    "forgotPassword": "Esqueci minha senha",
+    "signIn": "ENTRAR NO PORTAL",
+    "signInKeycloak": "Entrar com Keycloak",
+    "createAccount": "Criar conta",
+    "secureEnvironment": "Ambiente Seguro",
+    "version": "Portal B2B v2.4",
+    "features": {
+      "quotations": "Receba cotações de produtores de todo o Brasil",
+      "management": "Gerencie pedidos, catálogo e financeiro em um só lugar",
+      "analytics": "Acompanhe métricas e relatórios em tempo real"
+    }
+  },
+  "profile": {
+    "title": "Perfil da Loja",
+    "subtitle": "Configurações e informações da sua loja",
+    "completion": "Preenchimento do Perfil",
+    "almostThere": "Quase lá!",
+    "identity": {
+      "title": "Identidade Visual",
+      "banner": "Banner da Loja",
+      "bannerRecommended": "Recomendado: 1200×400px",
+      "logo": "Logo da Loja"
+    },
+    "business": {
+      "title": "Dados Cadastrais",
+      "companyName": "Razão Social",
+      "tradeName": "Nome Fantasia",
+      "cnpj": "CNPJ",
+      "stateRegistration": "Inscrição Estadual",
+      "email": "E-mail Comercial",
+      "phone": "Telefone"
+    },
+    "address": {
+      "title": "Endereço",
+      "zipCode": "CEP",
+      "street": "Logradouro",
+      "number": "Número",
+      "complement": "Complemento",
+      "neighborhood": "Bairro",
+      "city": "Cidade",
+      "state": "Estado",
+      "searchZip": "Buscar CEP"
+    },
+    "about": {
+      "title": "Sobre a Loja",
+      "bio": "Biografia / Descrição",
+      "specialties": "Especialidades",
+      "addTag": "Adicionar Tag"
+    },
+    "commercial": {
+      "title": "Configurações Comerciais",
+      "deliveryTime": "Prazo de Entrega Padrão",
+      "minOrder": "Pedido Mínimo",
+      "paymentTerms": "Condições de Pagamento"
+    }
+  },
+  "signup": {
+    "title": "Cadastro de Lojista",
+    "subtitle": "Junte-se à maior plataforma agro B2B do Brasil",
+    "fields": {
+      "companyName": "Razão Social",
+      "tradeName": "Nome Fantasia",
+      "cnpj": "CNPJ",
+      "phone": "Telefone",
+      "zipCode": "CEP",
+      "street": "Logradouro",
+      "city": "Cidade",
+      "neighborhood": "Bairro",
+      "email": "E-mail",
+      "password": "Senha"
+    },
+    "lgpd": {
+      "consent": "Li e aceito os Termos de Uso e Política de Privacidade",
+      "dataProcessing": "Autorizo o processamento dos meus dados conforme LGPD"
+    },
+    "submit": "Criar Conta"
+  },
+  "notifications": {
+    "title": "Central de Notificações",
+    "tabs": {
+      "all": "Todas",
+      "quotes": "Cotações",
+      "orders": "Pedidos",
+      "financial": "Financeiro"
+    },
+    "markAllRead": "Marcar todas como lidas",
+    "showOlder": "Mostrar notificações anteriores",
+    "types": {
+      "newQuote": "Nova Cotação",
+      "acceptedProposal": "Proposta Aceita",
+      "paymentConfirmed": "Pagamento Confirmado",
+      "inventoryAlert": "Alerta de Estoque",
+      "orderDispatched": "Pedido Despachado"
+    },
+    "actions": {
+      "review": "Revisar",
+      "dismiss": "Dispensar"
+    },
+    "today": "Hoje",
+    "yesterday": "Ontem"
+  },
+  "reviews": {
+    "title": "Avaliações e Reputação",
+    "overallRating": "Avaliação Geral",
+    "totalReviews": "{count} avaliações",
+    "distribution": "Distribuição de Notas",
+    "kpi": {
+      "nps": "NPS",
+      "repurchaseRate": "Taxa de Recompra",
+      "responseTime": "Tempo de Resposta"
+    },
+    "evolution": "Evolução das Avaliações"
+  },
+  "kyc": {
+    "title": "Verificação KYC",
+    "subtitle": "Complete sua verificação para operar na plataforma",
+    "steps": {
+      "documents": "Documentos",
+      "bankAccount": "Conta Bancária",
+      "review": "Revisão"
+    },
+    "status": {
+      "pending": "Pendente",
+      "approved": "Aprovado",
+      "rejected": "Rejeitado",
+      "inReview": "Em Revisão"
+    }
+  },
+  "team": {
+    "title": "Equipe",
+    "subtitle": "Gerencie membros e permissões",
+    "addMember": "Adicionar Membro",
+    "roles": {
+      "admin": "Administrador",
+      "manager": "Gerente",
+      "operator": "Operador",
+      "viewer": "Visualizador"
+    }
+  },
+  "customers": {
+    "title": "Clientes",
+    "subtitle": "CRM de produtores e cooperativas"
+  },
+  "reports": {
+    "title": "Relatórios",
+    "subtitle": "Dados analíticos e exportações"
+  },
+  "shipping": {
+    "title": "Logística",
+    "subtitle": "Gestão de frete e entregas"
+  },
+  "invoices": {
+    "title": "Notas Fiscais",
+    "subtitle": "Emissão e gestão de NF-e"
+  },
+  "settings": {
+    "title": "Configurações",
+    "subtitle": "Preferências do sistema"
+  }
+}

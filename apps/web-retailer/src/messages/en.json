@@ -1,0 +1,394 @@
+{
+  "common": {
+    "appName": "iFarm Retailer",
+    "tagline": "Agro B2B Management Portal",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search...",
+    "filter": "Filter",
+    "export": "Export",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "viewAll": "View all",
+    "noResults": "No results found",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "total": "Total",
+    "details": "Details",
+    "yes": "Yes",
+    "no": "No",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "quotations": "Quotations",
+    "orders": "Orders",
+    "catalog": "Catalog",
+    "financial": "Financial",
+    "profile": "Store Profile",
+    "kyc": "KYC Verification",
+    "reviews": "Reviews",
+    "team": "Team",
+    "customers": "Customers",
+    "messages": "Messages",
+    "reports": "Reports",
+    "shipping": "Shipping",
+    "invoices": "Invoices",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "support": "Premium Support",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "kpi": {
+      "quotations": "Quotations",
+      "conversion": "Conversion",
+      "inProgress": "In Progress",
+      "revenue": "Revenue",
+      "avgTicket": "Avg Ticket",
+      "rating": "Rating"
+    },
+    "charts": {
+      "salesOverTime": "Sales Over Time",
+      "topProducts": "Top Products",
+      "quotationsVsResponses": "Quotations vs Responses"
+    },
+    "recentQuotations": "Recent Quotations"
+  },
+  "quotations": {
+    "title": "Input Quotations",
+    "subtitle": "Manage your quotations and commercial proposals",
+    "tabs": {
+      "open": "Open",
+      "myProposals": "My Proposals",
+      "accepted": "Accepted",
+      "expired": "Expired"
+    },
+    "filters": {
+      "category": "Category",
+      "state": "State",
+      "valueRange": "Value Range",
+      "allCategories": "All Categories",
+      "allStates": "All States"
+    },
+    "categories": {
+      "fertilizers": "Fertilizers",
+      "seeds": "Seeds",
+      "pesticides": "Pesticides",
+      "machinery": "Machinery"
+    },
+    "table": {
+      "number": "Quote #",
+      "producer": "Producer",
+      "products": "Products",
+      "quantity": "Qty",
+      "expiration": "Expiration",
+      "estimatedValue": "Est. Value",
+      "action": "Action"
+    },
+    "status": {
+      "open": "Open",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "expired": "Expired",
+      "inAnalysis": "In Analysis"
+    },
+    "sendProposal": "Send Proposal",
+    "viewDetail": "View Details",
+    "timeRemaining": "remaining"
+  },
+  "proposal": {
+    "title": "New Proposal",
+    "quotationRef": "Quotation Reference",
+    "item": {
+      "unitPrice": "Unit Price",
+      "brand": "Brand/Manufacturer",
+      "deliveryDays": "Delivery Days",
+      "subtotal": "Subtotal"
+    },
+    "paymentMethods": "Payment Terms",
+    "payment": {
+      "boleto30": "Boleto 30d",
+      "boleto60": "Boleto 60d",
+      "boleto90": "Boleto 90d",
+      "pix": "PIX",
+      "card": "Card",
+      "barter": "Barter"
+    },
+    "validity": "Proposal Validity",
+    "notes": "Notes",
+    "submit": "Submit Proposal",
+    "summary": "Proposal Summary",
+    "totalValue": "Total Value"
+  },
+  "orders": {
+    "title": "Orders",
+    "subtitle": "Track your orders and deliveries",
+    "columns": {
+      "preparing": "Preparing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "disputed": "Disputed"
+    },
+    "detail": {
+      "title": "Order Details",
+      "orderDate": "Order Date",
+      "customer": "Customer",
+      "items": "Items",
+      "trackingCode": "Tracking Code",
+      "enterTracking": "Enter Tracking Code",
+      "timeline": "Order Timeline"
+    },
+    "status": {
+      "created": "Order Created",
+      "paymentApproved": "Payment Approved",
+      "preparing": "Preparing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "disputed": "Disputed"
+    },
+    "actions": {
+      "dispatch": "Dispatch Order",
+      "printDanfe": "Print Danfe",
+      "markShipped": "Mark as Shipped"
+    }
+  },
+  "catalog": {
+    "title": "My Catalog",
+    "subtitle": "Manage {count} active products in your B2B showcase",
+    "addProduct": "Add Product",
+    "addFromGeneral": "Add from General Catalog",
+    "filters": {
+      "all": "All",
+      "fertilizers": "Fertilizers",
+      "pesticides": "Pesticides",
+      "seeds": "Seeds",
+      "machinery": "Machinery"
+    },
+    "product": {
+      "name": "Product Name",
+      "description": "Description",
+      "category": "Category",
+      "brand": "Brand",
+      "unit": "Unit",
+      "basePrice": "Base Price",
+      "myPrice": "My Price",
+      "stock": "Stock",
+      "sku": "SKU",
+      "tariffCode": "HS Code (Tariff Code)",
+      "tariffWarning": "HS Code required for invoice generation",
+      "active": "Active",
+      "inactive": "Inactive",
+      "outOfStock": "Out of Stock"
+    },
+    "regions": {
+      "title": "Service Regions",
+      "subtitle": "Select the states where you operate"
+    },
+    "image": {
+      "upload": "Upload Image",
+      "recommended": "Recommended: 800×600px"
+    },
+    "sortBy": "Sort by",
+    "highestMargin": "Highest Margin"
+  },
+  "financial": {
+    "title": "Financial",
+    "subtitle": "Track your payouts and payments",
+    "summary": {
+      "totalPaid": "Total Paid",
+      "scheduled": "Scheduled",
+      "held": "Held",
+      "fees": "Fees"
+    },
+    "calendar": {
+      "title": "Payout Calendar",
+      "payoutDay": "Payout Day"
+    },
+    "payout": {
+      "paid": "Paid",
+      "scheduled": "Scheduled",
+      "processing": "Processing",
+      "held": "Held"
+    },
+    "exportCsv": "Export CSV",
+    "holdbackNote": "Holdback: 7 business days per policy"
+  },
+  "login": {
+    "title": "Sign In",
+    "subtitle": "Access your retailer account",
+    "emailOrCnpj": "Tax ID or Email",
+    "password": "Password",
+    "rememberMe": "Remember this device",
+    "forgotPassword": "Forgot password",
+    "signIn": "SIGN IN",
+    "signInKeycloak": "Sign in with Keycloak",
+    "createAccount": "Create account",
+    "secureEnvironment": "Secure Environment",
+    "version": "B2B Portal v2.4",
+    "features": {
+      "quotations": "Receive quotations from producers across Brazil",
+      "management": "Manage orders, catalog, and finances in one place",
+      "analytics": "Track metrics and reports in real time"
+    }
+  },
+  "profile": {
+    "title": "Store Profile",
+    "subtitle": "Settings and information for your store",
+    "completion": "Profile Completion",
+    "almostThere": "Almost there!",
+    "identity": {
+      "title": "Visual Identity",
+      "banner": "Store Banner",
+      "bannerRecommended": "Recommended: 1200×400px",
+      "logo": "Store Logo"
+    },
+    "business": {
+      "title": "Business Information",
+      "companyName": "Legal Name",
+      "tradeName": "Trade Name",
+      "cnpj": "Tax ID (CNPJ)",
+      "stateRegistration": "State Registration",
+      "email": "Business Email",
+      "phone": "Phone"
+    },
+    "address": {
+      "title": "Address",
+      "zipCode": "Zip Code",
+      "street": "Street",
+      "number": "Number",
+      "complement": "Complement",
+      "neighborhood": "Neighborhood",
+      "city": "City",
+      "state": "State",
+      "searchZip": "Search Zip"
+    },
+    "about": {
+      "title": "About the Store",
+      "bio": "Bio / Description",
+      "specialties": "Specialties",
+      "addTag": "Add Tag"
+    },
+    "commercial": {
+      "title": "Commercial Settings",
+      "deliveryTime": "Default Delivery Time",
+      "minOrder": "Minimum Order",
+      "paymentTerms": "Payment Terms"
+    }
+  },
+  "signup": {
+    "title": "Retailer Registration",
+    "subtitle": "Join Brazil's largest agro B2B platform",
+    "fields": {
+      "companyName": "Legal Name",
+      "tradeName": "Trade Name",
+      "cnpj": "Tax ID (CNPJ)",
+      "phone": "Phone",
+      "zipCode": "Zip Code",
+      "street": "Street",
+      "city": "City",
+      "neighborhood": "Neighborhood",
+      "email": "Email",
+      "password": "Password"
+    },
+    "lgpd": {
+      "consent": "I accept the Terms of Use and Privacy Policy",
+      "dataProcessing": "I authorize data processing in accordance with LGPD"
+    },
+    "submit": "Create Account"
+  },
+  "notifications": {
+    "title": "Notification Center",
+    "tabs": {
+      "all": "All",
+      "quotes": "Quotes",
+      "orders": "Orders",
+      "financial": "Financial"
+    },
+    "markAllRead": "Mark all as read",
+    "showOlder": "Show older notifications",
+    "types": {
+      "newQuote": "New Quote",
+      "acceptedProposal": "Accepted Proposal",
+      "paymentConfirmed": "Payment Confirmed",
+      "inventoryAlert": "Inventory Alert",
+      "orderDispatched": "Order Dispatched"
+    },
+    "actions": {
+      "review": "Review",
+      "dismiss": "Dismiss"
+    },
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "reviews": {
+    "title": "Reviews & Reputation",
+    "overallRating": "Overall Rating",
+    "totalReviews": "{count} reviews",
+    "distribution": "Rating Distribution",
+    "kpi": {
+      "nps": "NPS",
+      "repurchaseRate": "Repurchase Rate",
+      "responseTime": "Response Time"
+    },
+    "evolution": "Review Evolution"
+  },
+  "kyc": {
+    "title": "KYC Verification",
+    "subtitle": "Complete your verification to operate on the platform",
+    "steps": {
+      "documents": "Documents",
+      "bankAccount": "Bank Account",
+      "review": "Review"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "inReview": "In Review"
+    }
+  },
+  "team": {
+    "title": "Team",
+    "subtitle": "Manage members and permissions",
+    "addMember": "Add Member",
+    "roles": {
+      "admin": "Administrator",
+      "manager": "Manager",
+      "operator": "Operator",
+      "viewer": "Viewer"
+    }
+  },
+  "customers": {
+    "title": "Customers",
+    "subtitle": "Producer and cooperative CRM"
+  },
+  "reports": {
+    "title": "Reports",
+    "subtitle": "Analytical data and exports"
+  },
+  "shipping": {
+    "title": "Shipping",
+    "subtitle": "Freight and delivery management"
+  },
+  "invoices": {
+    "title": "Invoices",
+    "subtitle": "NF-e issuance and management"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "System preferences"
+  }
+}

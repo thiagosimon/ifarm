@@ -1,0 +1,394 @@
+{
+  "common": {
+    "appName": "iFarm Lojista",
+    "tagline": "Portal de Gestión Agro B2B",
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Agregar",
+    "search": "Buscar...",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "close": "Cerrar",
+    "viewAll": "Ver todos",
+    "noResults": "No se encontraron resultados",
+    "actions": "Acciones",
+    "status": "Estado",
+    "date": "Fecha",
+    "total": "Total",
+    "details": "Detalles",
+    "yes": "Sí",
+    "no": "No",
+    "required": "Obligatorio",
+    "optional": "Opcional"
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "quotations": "Cotizaciones",
+    "orders": "Pedidos",
+    "catalog": "Catálogo",
+    "financial": "Financiero",
+    "profile": "Perfil de Tienda",
+    "kyc": "Verificación KYC",
+    "reviews": "Reseñas",
+    "team": "Equipo",
+    "customers": "Clientes",
+    "messages": "Mensajes",
+    "reports": "Informes",
+    "shipping": "Logística",
+    "invoices": "Facturas",
+    "notifications": "Notificaciones",
+    "settings": "Configuración",
+    "support": "Soporte Premium",
+    "logout": "Salir"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Bienvenido de vuelta",
+    "kpi": {
+      "quotations": "Cotizaciones",
+      "conversion": "Conversión",
+      "inProgress": "En Progreso",
+      "revenue": "Facturación",
+      "avgTicket": "Ticket Promedio",
+      "rating": "Calificación"
+    },
+    "charts": {
+      "salesOverTime": "Ventas a lo Largo del Tiempo",
+      "topProducts": "Mejores Productos",
+      "quotationsVsResponses": "Cotizaciones vs Respuestas"
+    },
+    "recentQuotations": "Cotizaciones Recientes"
+  },
+  "quotations": {
+    "title": "Cotizaciones de Insumos",
+    "subtitle": "Gestione sus cotizaciones y propuestas comerciales",
+    "tabs": {
+      "open": "Abiertas",
+      "myProposals": "Mis Propuestas",
+      "accepted": "Aceptadas",
+      "expired": "Expiradas"
+    },
+    "filters": {
+      "category": "Categoría",
+      "state": "Estado",
+      "valueRange": "Rango de Valor",
+      "allCategories": "Todas las Categorías",
+      "allStates": "Todos los Estados"
+    },
+    "categories": {
+      "fertilizers": "Fertilizantes",
+      "seeds": "Semillas",
+      "pesticides": "Defensivos",
+      "machinery": "Maquinaria"
+    },
+    "table": {
+      "number": "N° Cotización",
+      "producer": "Productor",
+      "products": "Productos",
+      "quantity": "Cant",
+      "expiration": "Expiración",
+      "estimatedValue": "Valor Est.",
+      "action": "Acción"
+    },
+    "status": {
+      "open": "Abierta",
+      "pending": "Pendiente",
+      "accepted": "Aceptada",
+      "rejected": "Rechazada",
+      "expired": "Expirada",
+      "inAnalysis": "En Análisis"
+    },
+    "sendProposal": "Enviar Propuesta",
+    "viewDetail": "Ver Detalles",
+    "timeRemaining": "restantes"
+  },
+  "proposal": {
+    "title": "Nueva Propuesta",
+    "quotationRef": "Referencia de Cotización",
+    "item": {
+      "unitPrice": "Precio Unitario",
+      "brand": "Marca/Fabricante",
+      "deliveryDays": "Plazo de Entrega (días)",
+      "subtotal": "Subtotal"
+    },
+    "paymentMethods": "Condiciones de Pago",
+    "payment": {
+      "boleto30": "Boleto 30d",
+      "boleto60": "Boleto 60d",
+      "boleto90": "Boleto 90d",
+      "pix": "PIX",
+      "card": "Tarjeta",
+      "barter": "Barter"
+    },
+    "validity": "Validez de la Propuesta",
+    "notes": "Observaciones",
+    "submit": "Enviar Propuesta",
+    "summary": "Resumen de la Propuesta",
+    "totalValue": "Valor Total"
+  },
+  "orders": {
+    "title": "Pedidos",
+    "subtitle": "Acompañe sus pedidos y entregas",
+    "columns": {
+      "preparing": "En Preparación",
+      "shipped": "Despachados",
+      "delivered": "Entregados",
+      "disputed": "Disputados"
+    },
+    "detail": {
+      "title": "Detalles del Pedido",
+      "orderDate": "Fecha del Pedido",
+      "customer": "Cliente",
+      "items": "Ítems",
+      "trackingCode": "Código de Rastreo",
+      "enterTracking": "Ingresar Rastreo",
+      "timeline": "Timeline del Pedido"
+    },
+    "status": {
+      "created": "Pedido Creado",
+      "paymentApproved": "Pago Aprobado",
+      "preparing": "En Preparación",
+      "shipped": "Despachado",
+      "delivered": "Entregado",
+      "disputed": "Disputa"
+    },
+    "actions": {
+      "dispatch": "Despachar Pedido",
+      "printDanfe": "Imprimir Danfe",
+      "markShipped": "Marcar como Enviado"
+    }
+  },
+  "catalog": {
+    "title": "Mi Catálogo",
+    "subtitle": "Gestione {count} productos activos en su vitrina B2B",
+    "addProduct": "Agregar Producto",
+    "addFromGeneral": "Agregar del Catálogo General",
+    "filters": {
+      "all": "Todos",
+      "fertilizers": "Fertilizantes",
+      "pesticides": "Defensivos",
+      "seeds": "Semillas",
+      "machinery": "Maquinaria"
+    },
+    "product": {
+      "name": "Nombre del Producto",
+      "description": "Descripción",
+      "category": "Categoría",
+      "brand": "Marca",
+      "unit": "Unidad",
+      "basePrice": "Precio Base",
+      "myPrice": "Mi Precio",
+      "stock": "Stock",
+      "sku": "SKU",
+      "tariffCode": "NCM (Código Arancelario)",
+      "tariffWarning": "NCM obligatorio para emisión de factura",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "outOfStock": "Agotado"
+    },
+    "regions": {
+      "title": "Regiones de Atención",
+      "subtitle": "Seleccione los estados donde opera"
+    },
+    "image": {
+      "upload": "Subir Imagen",
+      "recommended": "Recomendado: 800×600px"
+    },
+    "sortBy": "Ordenar por",
+    "highestMargin": "Mayor Margen"
+  },
+  "financial": {
+    "title": "Financiero",
+    "subtitle": "Acompañe sus pagos y traspasos",
+    "summary": {
+      "totalPaid": "Total Pagado",
+      "scheduled": "Programado",
+      "held": "Retenido",
+      "fees": "Tasas"
+    },
+    "calendar": {
+      "title": "Calendario de Pagos",
+      "payoutDay": "Día de Pago"
+    },
+    "payout": {
+      "paid": "Pagado",
+      "scheduled": "Programado",
+      "processing": "Procesando",
+      "held": "Retenido"
+    },
+    "exportCsv": "Exportar CSV",
+    "holdbackNote": "Holdback: 7 días hábiles según política"
+  },
+  "login": {
+    "title": "Iniciar Sesión",
+    "subtitle": "Acceda a su cuenta de tienda",
+    "emailOrCnpj": "CUIT o E-mail",
+    "password": "Contraseña",
+    "rememberMe": "Recordar este dispositivo",
+    "forgotPassword": "Olvidé mi contraseña",
+    "signIn": "INICIAR SESIÓN",
+    "signInKeycloak": "Iniciar sesión con Keycloak",
+    "createAccount": "Crear cuenta",
+    "secureEnvironment": "Entorno Seguro",
+    "version": "Portal B2B v2.4",
+    "features": {
+      "quotations": "Reciba cotizaciones de productores de todo Brasil",
+      "management": "Gestione pedidos, catálogo y finanzas en un solo lugar",
+      "analytics": "Acompañe métricas e informes en tiempo real"
+    }
+  },
+  "profile": {
+    "title": "Perfil de Tienda",
+    "subtitle": "Configuraciones e información de su tienda",
+    "completion": "Completitud del Perfil",
+    "almostThere": "¡Casi listo!",
+    "identity": {
+      "title": "Identidad Visual",
+      "banner": "Banner de Tienda",
+      "bannerRecommended": "Recomendado: 1200×400px",
+      "logo": "Logo de Tienda"
+    },
+    "business": {
+      "title": "Datos de Registro",
+      "companyName": "Razón Social",
+      "tradeName": "Nombre de Fantasía",
+      "cnpj": "CUIT",
+      "stateRegistration": "Inscripción Estadual",
+      "email": "E-mail Comercial",
+      "phone": "Teléfono"
+    },
+    "address": {
+      "title": "Dirección",
+      "zipCode": "Código Postal",
+      "street": "Calle",
+      "number": "Número",
+      "complement": "Complemento",
+      "neighborhood": "Barrio",
+      "city": "Ciudad",
+      "state": "Estado",
+      "searchZip": "Buscar Código Postal"
+    },
+    "about": {
+      "title": "Sobre la Tienda",
+      "bio": "Biografía / Descripción",
+      "specialties": "Especialidades",
+      "addTag": "Agregar Tag"
+    },
+    "commercial": {
+      "title": "Configuración Comercial",
+      "deliveryTime": "Plazo de Entrega Estándar",
+      "minOrder": "Pedido Mínimo",
+      "paymentTerms": "Condiciones de Pago"
+    }
+  },
+  "signup": {
+    "title": "Registro de Tienda",
+    "subtitle": "Únase a la mayor plataforma agro B2B de Brasil",
+    "fields": {
+      "companyName": "Razón Social",
+      "tradeName": "Nombre de Fantasía",
+      "cnpj": "CUIT",
+      "phone": "Teléfono",
+      "zipCode": "Código Postal",
+      "street": "Calle",
+      "city": "Ciudad",
+      "neighborhood": "Barrio",
+      "email": "E-mail",
+      "password": "Contraseña"
+    },
+    "lgpd": {
+      "consent": "Acepto los Términos de Uso y Política de Privacidad",
+      "dataProcessing": "Autorizo el procesamiento de datos según LGPD"
+    },
+    "submit": "Crear Cuenta"
+  },
+  "notifications": {
+    "title": "Centro de Notificaciones",
+    "tabs": {
+      "all": "Todas",
+      "quotes": "Cotizaciones",
+      "orders": "Pedidos",
+      "financial": "Financiero"
+    },
+    "markAllRead": "Marcar todas como leídas",
+    "showOlder": "Mostrar notificaciones anteriores",
+    "types": {
+      "newQuote": "Nueva Cotización",
+      "acceptedProposal": "Propuesta Aceptada",
+      "paymentConfirmed": "Pago Confirmado",
+      "inventoryAlert": "Alerta de Inventario",
+      "orderDispatched": "Pedido Despachado"
+    },
+    "actions": {
+      "review": "Revisar",
+      "dismiss": "Descartar"
+    },
+    "today": "Hoy",
+    "yesterday": "Ayer"
+  },
+  "reviews": {
+    "title": "Reseñas y Reputación",
+    "overallRating": "Calificación General",
+    "totalReviews": "{count} reseñas",
+    "distribution": "Distribución de Notas",
+    "kpi": {
+      "nps": "NPS",
+      "repurchaseRate": "Tasa de Recompra",
+      "responseTime": "Tiempo de Respuesta"
+    },
+    "evolution": "Evolución de Reseñas"
+  },
+  "kyc": {
+    "title": "Verificación KYC",
+    "subtitle": "Complete su verificación para operar en la plataforma",
+    "steps": {
+      "documents": "Documentos",
+      "bankAccount": "Cuenta Bancaria",
+      "review": "Revisión"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "inReview": "En Revisión"
+    }
+  },
+  "team": {
+    "title": "Equipo",
+    "subtitle": "Gestione miembros y permisos",
+    "addMember": "Agregar Miembro",
+    "roles": {
+      "admin": "Administrador",
+      "manager": "Gerente",
+      "operator": "Operador",
+      "viewer": "Visualizador"
+    }
+  },
+  "customers": {
+    "title": "Clientes",
+    "subtitle": "CRM de productores y cooperativas"
+  },
+  "reports": {
+    "title": "Informes",
+    "subtitle": "Datos analíticos y exportaciones"
+  },
+  "shipping": {
+    "title": "Logística",
+    "subtitle": "Gestión de flete y entregas"
+  },
+  "invoices": {
+    "title": "Facturas",
+    "subtitle": "Emisión y gestión de facturas"
+  },
+  "settings": {
+    "title": "Configuración",
+    "subtitle": "Preferencias del sistema"
+  }
+}
