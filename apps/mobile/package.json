@@ -2,5 +2,19 @@
   "name": "@ifarm/mobile",
   "version": "0.0.1",
   "private": true,
-  "description": "iFarm Mobile App - Flutter (planned)"
+  "description": "iFarm Mobile App - Flutter",
+  "scripts": {
+    "clean": "./scripts/clean.sh",
+    "gen-l10n": "flutter gen-l10n",
+    "pub:get": "flutter pub get",
+    "analyze": "flutter analyze",
+    "test": "flutter test",
+    "build:android": "./scripts/build-android.sh",
+    "build:android:apk": "./scripts/build-android.sh --apk",
+    "build:android:aab": "./scripts/build-android.sh --appbundle",
+    "build:ios": "./scripts/build-ios.sh",
+    "build:ios:ipa": "./scripts/build-ios.sh --ipa",
+    "build:ios:no-sign": "./scripts/build-ios.sh --no-codesign",
+    "build:all": "npm run build:android && npm run build:ios"
+  }
 }

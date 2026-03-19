@@ -1,81 +1,89 @@
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
+
 class AppValidators {
   AppValidators._();
 
-  static String? required(String? value, [String? fieldName]) {
+  static String? required(AppLocalizations l, String? value,
+      [String? fieldName]) {
     if (value == null || value.trim().isEmpty) {
-      return '${fieldName ?? 'Campo'} é obrigatório';
+      return l.validatorRequired(fieldName ?? l.validatorFieldDefault);
     }
     return null;
   }
 
-  static String? email(String? value) {
-    if (value == null || value.trim().isEmpty) return 'Email é obrigatório';
+  static String? email(AppLocalizations l, String? value) {
+    if (value == null || value.trim().isEmpty) return l.validatorEmailRequired;
     final regex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-    if (!regex.hasMatch(value.trim())) return 'Email inválido';
+    if (!regex.hasMatch(value.trim())) return l.validatorEmailInvalid;
     return null;
   }
 
-  static String? password(String? value) {
-    if (value == null || value.isEmpty) return 'Senha é obrigatória';
-    if (value.length < 8) return 'Senha deve ter ao menos 8 caracteres';
+  static String? password(AppLocalizations l, String? value) {
+    if (value == null || value.isEmpty) return l.validatorPasswordRequired;
+    if (value.length < 8) return l.validatorPasswordMinLength;
     return null;
   }
 
-  static String? cpf(String? value) {
-    if (value == null || value.trim().isEmpty) return 'CPF é obrigatório';
+  static String? cpf(AppLocalizations l, String? value) {
+    if (value == null || value.trim().isEmpty) return l.validatorCpfRequired;
     final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length != 11) return 'CPF inválido';
-    if (!_isValidCpf(digits)) return 'CPF inválido';
+    if (digits.length != 11) return l.validatorCpfInvalid;
+    if (!_isValidCpf(digits)) return l.validatorCpfInvalid;
     return null;
   }
 
-  static String? cnpj(String? value) {
-    if (value == null || value.trim().isEmpty) return 'CNPJ é obrigatório';
+  static String? cnpj(AppLocalizations l, String? value) {
+    if (value == null || value.trim().isEmpty) return l.validatorCnpjRequired;
     final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length != 14) return 'CNPJ inválido';
-    if (!_isValidCnpj(digits)) return 'CNPJ inválido';
+    if (digits.length != 14) return l.validatorCnpjInvalid;
+    if (!_isValidCnpj(digits)) return l.validatorCnpjInvalid;
     return null;
   }
 
-  static String? federalTaxId(String? value) {
-    if (value == null || value.trim().isEmpty) return 'CPF/CNPJ é obrigatório';
+  static String? federalTaxId(AppLocalizations l, String? value) {
+    if (value == null || value.trim().isEmpty)
+      return l.validatorFederalTaxIdRequired;
     final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length == 11) return cpf(value);
-    if (digits.length == 14) return cnpj(value);
-    return 'CPF/CNPJ inválido';
+    if (digits.length == 11) return cpf(l, value);
+    if (digits.length == 14) return cnpj(l, value);
+    return l.validatorFederalTaxIdInvalid;
   }
 
-  static String? phone(String? value) {
-    if (value == null || value.trim().isEmpty) return 'Telefone é obrigatório';
+  static String? phone(AppLocalizations l, String? value) {
+    if (value == null || value.trim().isEmpty) return l.validatorPhoneRequired;
     final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length < 10 || digits.length > 11) return 'Telefone inválido';
+    if (digits.length < 10 || digits.length > 11)
+      return l.validatorPhoneInvalid;
     return null;
   }
 
-  static String? ncm(String? value) {
-    if (value == null || value.trim().isEmpty) return 'NCM é obrigatório';
+  static String? ncm(AppLocalizations l, String? value) {
+    if (value == null || value.trim().isEmpty) return l.validatorNcmRequired;
     final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length != 8) return 'NCM deve ter 8 dígitos';
+    if (digits.length != 8) return l.validatorNcmInvalid;
     return null;
   }
 
-  static String? minLength(String? value, int min, [String? fieldName]) {
+  static String? minLength(AppLocalizations l, String? value, int min,
+      [String? fieldName]) {
     if (value == null || value.trim().length < min) {
-      return '${fieldName ?? 'Campo'} deve ter ao menos $min caracteres';
+      return l.validatorMinLength(fieldName ?? l.validatorFieldDefault, min);
     }
     return null;
   }
 
-  static String? maxLength(String? value, int max, [String? fieldName]) {
+  static String? maxLength(AppLocalizations l, String? value, int max,
+      [String? fieldName]) {
     if (value != null && value.length > max) {
-      return '${fieldName ?? 'Campo'} deve ter no máximo $max caracteres';
+      return l.validatorMaxLength(fieldName ?? l.validatorFieldDefault, max);
     }
     return null;
   }
 
-  static String? disputeReason(String? value) {
-    if (value == null || value.trim().isEmpty) return 'Motivo é obrigatório';
-    if (value.trim().length < 20) return 'Descreva o problema com ao menos 20 caracteres';
+  static String? disputeReason(AppLocalizations l, String? value) {
+    if (value == null || value.trim().isEmpty)
+      return l.validatorDisputeReasonRequired;
+    if (value.trim().length < 20) return l.validatorDisputeReasonMinLength;
     return null;
   }
 

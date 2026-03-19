@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_typography.dart';
 import '../core/theme/app_spacing.dart';
@@ -21,20 +22,27 @@ class IFarmErrorState extends StatelessWidget {
             Container(
               width: 80,
               height: 80,
-              decoration: const BoxDecoration(color: AppColors.errorLight, shape: BoxShape.circle),
-              child: const Icon(Icons.error_outline, size: 40, color: AppColors.error),
+              decoration: const BoxDecoration(
+                  color: AppColors.errorLight, shape: BoxShape.circle),
+              child: const Icon(Icons.error_outline,
+                  size: 40, color: AppColors.error),
             ),
             const SizedBox(height: AppSpacing.xl),
-            Text('Algo deu errado', style: AppTypography.headlineSmall),
+            Text(AppLocalizations.of(context)!.errorSomethingWrong,
+                style: AppTypography.headlineSmall),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              message ?? 'Verifique sua conexão e tente novamente.',
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
+              message ?? AppLocalizations.of(context)!.errorCheckConnection,
+              style: AppTypography.bodyMedium
+                  .copyWith(color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
               const SizedBox(height: AppSpacing.xl),
-              IFarmButton(label: 'Tentar Novamente', onPressed: onRetry, fullWidth: false),
+              IFarmButton(
+                  label: AppLocalizations.of(context)!.tryAgain,
+                  onPressed: onRetry,
+                  fullWidth: false),
             ],
           ],
         ),

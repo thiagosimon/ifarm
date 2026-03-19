@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/catalog_provider.dart';
 import '../../providers/quotation_provider.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
+import 'package:ifarm_mobile/core/constants/enum_extensions.dart';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const _primary = Color(0xFF005129);
@@ -56,8 +58,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
     final cat = _categories[_selectedCategoryIndex];
     setState(() {
       _params = ProductSearchParams(
-        query:
-            _searchCtrl.text.trim().isEmpty ? null : _searchCtrl.text.trim(),
+        query: _searchCtrl.text.trim().isEmpty ? null : _searchCtrl.text.trim(),
         category: cat == 'Tudo' ? null : cat,
         isRuralCreditEligible: _ruralCreditFilter,
       );
@@ -65,6 +66,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
   }
 
   void _showFilters() {
+    final l = AppLocalizations.of(context)!;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -95,9 +97,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Filtros',
-                style: TextStyle(
+              Text(
+                l.productSearchFilters,
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
                   color: _onSurface,
@@ -105,9 +107,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'CRÉDITO RURAL',
-                style: TextStyle(
+              Text(
+                l.productSearchRuralCreditLabel,
+                style: const TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   color: _outline,
@@ -118,16 +120,17 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
               Row(
                 children: [
                   _FilterChip(
-                    label: 'Elegível',
+                    label: l.productSearchEligible,
                     selected: _ruralCreditFilter == true,
                     onSelected: (v) =>
                         setLocal(() => _ruralCreditFilter = v ? true : null),
                   ),
                   const SizedBox(width: 8),
                   _FilterChip(
-                    label: 'Todos',
+                    label: l.productSearchAll,
                     selected: _ruralCreditFilter == null,
-                    onSelected: (_) => setLocal(() => _ruralCreditFilter = null),
+                    onSelected: (_) =>
+                        setLocal(() => _ruralCreditFilter = null),
                   ),
                 ],
               ),
@@ -160,9 +163,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),
-                    child: const Text(
-                      'Aplicar Filtros',
-                      style: TextStyle(
+                    child: Text(
+                      l.productSearchApplyFilters,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w700,
                         color: _surfaceLowest,
@@ -182,6 +185,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
   @override
   Widget build(BuildContext context) {
     final productsAsync = ref.watch(productListProvider(_params));
+    final l = AppLocalizations.of(context)!;
     final topPadding = MediaQuery.of(context).padding.top;
     // Header visual height: topPadding + 8 (paddingTop offset) + content + 12 (paddingBottom) + 1 (separator)
     final headerHeight = topPadding + 8 + 44 + 12 + 1;
@@ -203,9 +207,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Encontre o melhor\npara sua safra.',
-                        style: TextStyle(
+                      Text(
+                        l.productSearchHeroTitle,
+                        style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w800,
                           color: _onSurface,
@@ -233,8 +237,8 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                                   fontSize: 14,
                                   color: _onSurface,
                                 ),
-                                decoration: const InputDecoration(
-                                  hintText: 'Buscar defensivos, sementes...',
+                                decoration: InputDecoration(
+                                  hintText: l.productSearchPlaceholder,
                                   hintStyle: TextStyle(
                                     fontSize: 14,
                                     color: _outline,
@@ -326,9 +330,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                       const SizedBox(height: 24),
 
                       // Section label
-                      const Text(
-                        'PRODUTOS DISPONÍVEIS',
-                        style: TextStyle(
+                      Text(
+                        l.productSearchAvailableProducts,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: _onSurfaceVariant,
@@ -362,18 +366,18 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                             const Icon(Icons.error_outline,
                                 size: 48, color: _outline),
                             const SizedBox(height: 12),
-                            const Text(
-                              'Erro ao carregar produtos',
-                              style: TextStyle(color: _onSurfaceVariant),
+                            Text(
+                              l.productSearchLoadError,
+                              style: const TextStyle(color: _onSurfaceVariant),
                             ),
                             const SizedBox(height: 16),
                             TextButton(
                               onPressed: () => ref
                                   .read(productListProvider(_params).notifier)
                                   .load(),
-                              child: const Text(
-                                'Tentar novamente',
-                                style: TextStyle(color: _primary),
+                              child: Text(
+                                l.productSearchRetry,
+                                style: const TextStyle(color: _primary),
                               ),
                             ),
                           ],
@@ -383,27 +387,27 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   ),
                   data: (products) {
                     if (products.isEmpty) {
-                      return const SliverToBoxAdapter(
+                      return SliverToBoxAdapter(
                         child: Center(
                           child: Padding(
-                            padding: EdgeInsets.all(48),
+                            padding: const EdgeInsets.all(48),
                             child: Column(
                               children: [
-                                Icon(Icons.search_off,
+                                const Icon(Icons.search_off,
                                     size: 56, color: _outlineVariant),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 Text(
-                                  'Nenhum produto encontrado',
-                                  style: TextStyle(
+                                  l.productSearchEmpty,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
                                     color: _onSurface,
                                   ),
                                 ),
-                                SizedBox(height: 6),
+                                const SizedBox(height: 6),
                                 Text(
-                                  'Tente outros termos ou remova os filtros',
-                                  style: TextStyle(
+                                  l.productSearchEmptyHint,
+                                  style: const TextStyle(
                                       fontSize: 13, color: _onSurfaceVariant),
                                   textAlign: TextAlign.center,
                                 ),
@@ -420,7 +424,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                           child: _ProductCard(
                             product: products[i],
                             onTap: () =>
-                                context.push('/catalog/${products[i].id}'),
+                                context.push('/product/${products[i].id}'),
                             onAddToCart: () {
                               ref.read(quoteCartProvider.notifier).addItem(
                                     QuoteCartItem(
@@ -434,8 +438,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                                   );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content:
-                                      const Text('Adicionado à cotação'),
+                                  content: Text(l.productSearchAddedToQuote),
                                   backgroundColor: _primaryContainer,
                                   behavior: SnackBarBehavior.floating,
                                   shape: RoundedRectangleBorder(
@@ -506,8 +509,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                               IconButton(
                                 icon: const Icon(Icons.notifications_outlined,
                                     color: _onSurface, size: 24),
-                                onPressed: () =>
-                                    context.push('/notifications'),
+                                onPressed: () => context.push('/notifications'),
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(
                                     minWidth: 40, minHeight: 40),
@@ -559,11 +561,13 @@ class _ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final imageUrl = product.primaryImageUrl as String?;
     final brand = product.brand as String;
-    final categoryLabel = product.category.label as String;
+    final categoryLabel = product.category.localizedLabel(context) as String;
     final name = product.name as String;
-    final unit = product.measurementUnit as String? ?? 'Unidade';
+    final unit =
+        product.measurementUnit as String? ?? l.productSearchDefaultUnit;
 
     return GestureDetector(
       onTap: onTap,
@@ -607,8 +611,8 @@ class _ProductCard extends StatelessWidget {
                   top: 16,
                   left: 16,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: _secondary,
                       borderRadius: BorderRadius.circular(100),
@@ -699,7 +703,7 @@ class _ProductCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Sob consulta',
+                            l.productSearchPriceOnRequest,
                             style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w800,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/constants/enums.dart';
+import '../../core/constants/enum_extensions.dart';
 import '../../core/router/app_router.dart';
 import '../../core/storage/secure_storage.dart';
 import '../../providers/auth_provider.dart';
@@ -49,6 +51,7 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
   }
 
   Future<void> _submit() async {
+    final l = AppLocalizations.of(context)!;
     final cart = ref.read(quoteCartProvider);
     if (cart.isEmpty) return;
 
@@ -87,7 +90,7 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
       ref.read(quoteCartProvider.notifier).clear();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Cotação enviada com sucesso!')),
+          SnackBar(content: Text(l.quoteBuilderSuccess)),
         );
         context.go(Routes.myQuotes);
       }
@@ -105,6 +108,7 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = ref.watch(quoteCartProvider);
+    final l = AppLocalizations.of(context)!;
 
     if (cart.isEmpty) {
       return Scaffold(
@@ -131,7 +135,7 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
               children: [
                 // ── Items section ─────────────────────────────────────────
-                _SectionLabel(label: 'Itens (${cart.length})'),
+                _SectionLabel(label: l.quoteBuilderItemCount(cart.length)),
                 const SizedBox(height: 12),
                 ...cart.map((item) => _CartItemCard(
                       item: item,
@@ -149,7 +153,7 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
                 const SizedBox(height: 24),
 
                 // ── Delivery section ──────────────────────────────────────
-                _SectionLabel(label: 'Modo de Entrega'),
+                _SectionLabel(label: l.quoteBuilderDeliveryAddress),
                 const SizedBox(height: 12),
                 _DeliveryCard(
                   value: _deliveryMode,
@@ -159,7 +163,7 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
                 const SizedBox(height: 24),
 
                 // ── Payment section ───────────────────────────────────────
-                _SectionLabel(label: 'Forma de Pagamento'),
+                _SectionLabel(label: l.quoteBuilderPaymentCondition),
                 const SizedBox(height: 12),
                 Wrap(
                   spacing: 8,
@@ -190,9 +194,8 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
                           _paymentDescription(m),
                           style: TextStyle(
                             fontSize: 13,
-                            fontWeight: selected
-                                ? FontWeight.w600
-                                : FontWeight.w400,
+                            fontWeight:
+                                selected ? FontWeight.w600 : FontWeight.w400,
                             color: selected ? _primary : _onSurfaceVariant,
                           ),
                         ),
@@ -230,9 +233,8 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
                           '${h}h',
                           style: TextStyle(
                             fontSize: 13,
-                            fontWeight: selected
-                                ? FontWeight.w600
-                                : FontWeight.w400,
+                            fontWeight:
+                                selected ? FontWeight.w600 : FontWeight.w400,
                             color: selected ? _primary : _onSurfaceVariant,
                           ),
                         ),
@@ -258,6 +260,7 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
   }
 
   PreferredSizeWidget _buildAppBar() {
+    final l = AppLocalizations.of(context)!;
     return AppBar(
       backgroundColor: _surfaceContainerLowest,
       surfaceTintColor: Colors.transparent,
@@ -267,9 +270,9 @@ class _QuoteBuilderScreenState extends ConsumerState<QuoteBuilderScreen> {
         icon: const Icon(Icons.arrow_back, color: _onSurface),
         onPressed: () => context.pop(),
       ),
-      title: const Text(
-        'Novo Orçamento',
-        style: TextStyle(
+      title: Text(
+        l.quoteBuilderTitle,
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w700,
           color: _onSurface,
@@ -437,8 +440,7 @@ class _DeliveryCard extends StatelessWidget {
             onTap: () => onChanged(mode),
             borderRadius: BorderRadius.circular(12),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               child: Row(
                 children: [
                   Icon(
@@ -450,11 +452,10 @@ class _DeliveryCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    mode.label,
+                    mode.localizedLabel(context),
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight:
-                          selected ? FontWeight.w600 : FontWeight.w400,
+                      fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
                       color: selected ? _onSurface : _onSurfaceVariant,
                     ),
                   ),
@@ -480,6 +481,7 @@ class _SummaryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     // We don't have real unit prices in the cart model; show item count as proxy.
     // When prices are available they'd be summed here.
     final itemCount = cart.fold<double>(0, (s, i) => s + i.quantity);
@@ -489,7 +491,8 @@ class _SummaryBar extends StatelessWidget {
         color: _surfaceContainerLowest,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
         boxShadow: [
-          BoxShadow(color: _ambientShadow, blurRadius: 16, offset: Offset(0, -4)),
+          BoxShadow(
+              color: _ambientShadow, blurRadius: 16, offset: Offset(0, -4)),
         ],
       ),
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
@@ -548,7 +551,7 @@ class _SummaryBar extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${cart.length} item(s)',
+                  l.quoteBuilderItemCount(cart.length),
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
@@ -588,7 +591,7 @@ class _SummaryBar extends StatelessWidget {
                         )
                       : const Icon(Icons.send, color: Colors.white, size: 18),
                   label: Text(
-                    isSubmitting ? 'Enviando...' : 'Enviar Cotação',
+                    isSubmitting ? 'Enviando...' : l.quoteBuilderSubmit,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,

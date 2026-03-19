@@ -5,7 +5,10 @@ class SecureStorage {
 
   static const _storage = FlutterSecureStorage(
     aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
+    iOptions: IOSOptions(
+      accessibility: KeychainAccessibility.first_unlock,
+      synchronizable: false,
+    ),
   );
 
   static const _keyAccessToken = 'access_token';
@@ -32,21 +35,18 @@ class SecureStorage {
   static Future<void> saveFarmerId(String id) =>
       _storage.write(key: _keyFarmerId, value: id);
 
-  static Future<String?> getFarmerId() =>
-      _storage.read(key: _keyFarmerId);
+  static Future<String?> getFarmerId() => _storage.read(key: _keyFarmerId);
 
   // User info
   static Future<void> saveUserEmail(String email) =>
       _storage.write(key: _keyUserEmail, value: email);
 
-  static Future<String?> getUserEmail() =>
-      _storage.read(key: _keyUserEmail);
+  static Future<String?> getUserEmail() => _storage.read(key: _keyUserEmail);
 
   static Future<void> saveUserName(String name) =>
       _storage.write(key: _keyUserName, value: name);
 
-  static Future<String?> getUserName() =>
-      _storage.read(key: _keyUserName);
+  static Future<String?> getUserName() => _storage.read(key: _keyUserName);
 
   // Save all tokens at once
   static Future<void> saveTokens({

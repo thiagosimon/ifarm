@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/constants/enums.dart';
+import '../../core/constants/enum_extensions.dart';
 import '../../core/storage/secure_storage.dart';
 import '../../providers/quotation_provider.dart';
 import '../../data/repositories/quotation_repository.dart';
@@ -28,8 +31,7 @@ class RecurringQuotesScreen extends ConsumerStatefulWidget {
       _RecurringQuotesScreenState();
 }
 
-class _RecurringQuotesScreenState
-    extends ConsumerState<RecurringQuotesScreen> {
+class _RecurringQuotesScreenState extends ConsumerState<RecurringQuotesScreen> {
   String? _farmerId;
 
   @override
@@ -41,6 +43,7 @@ class _RecurringQuotesScreenState
   }
 
   void _showCreate() {
+    final l = AppLocalizations.of(context)!;
     final productCtrl = TextEditingController();
     final qtyCtrl = TextEditingController(text: '1');
     RecurringFrequency freq = RecurringFrequency.monthly;
@@ -76,8 +79,8 @@ class _RecurringQuotesScreenState
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Nova Cotação Recorrente',
+              Text(
+                l.recurringQuotesNew,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -88,7 +91,7 @@ class _RecurringQuotesScreenState
               TextField(
                 controller: productCtrl,
                 decoration: InputDecoration(
-                  labelText: 'Produto (ID ou nome)',
+                  labelText: l.recurringQuotesProductLabel,
                   filled: true,
                   fillColor: _surfaceContainerHigh,
                   border: OutlineInputBorder(
@@ -102,7 +105,7 @@ class _RecurringQuotesScreenState
                 controller: qtyCtrl,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Quantidade',
+                  labelText: l.recurringQuotesQuantityLabel,
                   filled: true,
                   fillColor: _surfaceContainerHigh,
                   border: OutlineInputBorder(
@@ -115,7 +118,7 @@ class _RecurringQuotesScreenState
               DropdownButtonFormField<RecurringFrequency>(
                 initialValue: freq,
                 decoration: InputDecoration(
-                  labelText: 'Frequência',
+                  labelText: l.recurringQuotesFrequency,
                   filled: true,
                   fillColor: _surfaceContainerHigh,
                   border: OutlineInputBorder(
@@ -126,7 +129,7 @@ class _RecurringQuotesScreenState
                 items: RecurringFrequency.values
                     .map((f) => DropdownMenuItem(
                           value: f,
-                          child: Text(f.label),
+                          child: Text(f.localizedLabel(ctx)),
                         ))
                     .toList(),
                 onChanged: (v) => setLocal(() => freq = v!),
@@ -159,14 +162,11 @@ class _RecurringQuotesScreenState
                             .createRecurring({
                           'farmerId': _farmerId,
                           'productId': productCtrl.text.trim(),
-                          'quantity':
-                              double.tryParse(qtyCtrl.text) ?? 1,
+                          'quantity': double.tryParse(qtyCtrl.text) ?? 1,
                           'frequency': freq.value,
                           'autoAccept': false,
-                          'deliveryMode':
-                              DeliveryMode.deliveryAddress.value,
-                          'preferredPaymentMethod':
-                              PaymentMethod.pix.value,
+                          'deliveryMode': DeliveryMode.deliveryAddress.value,
+                          'preferredPaymentMethod': PaymentMethod.pix.value,
                         });
                         ref.invalidate(recurringListProvider(_farmerId!));
                         if (ctx.mounted) Navigator.pop(ctx);
@@ -181,8 +181,8 @@ class _RecurringQuotesScreenState
                         }
                       }
                     },
-                    child: const Text(
-                      'Criar Recorrente',
+                    child: Text(
+                      l.recurringQuotesNew,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -202,6 +202,7 @@ class _RecurringQuotesScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: _surface,
       appBar: AppBar(
@@ -210,10 +211,10 @@ class _RecurringQuotesScreenState
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: _onSurface),
-          onPressed: () => Navigator.of(context).maybePop(),
+          onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Cotações Recorrentes',
+        title: Text(
+          l.recurringQuotesTitle,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -232,8 +233,7 @@ class _RecurringQuotesScreenState
           ? const Center(child: CircularProgressIndicator(color: _primary))
           : Consumer(
               builder: (ctx, ref, _) {
-                final listAsync =
-                    ref.watch(recurringListProvider(_farmerId!));
+                final listAsync = ref.watch(recurringListProvider(_farmerId!));
                 return RefreshIndicator(
                   color: _primary,
                   onRefresh: () async =>
@@ -246,19 +246,16 @@ class _RecurringQuotesScreenState
                     ),
                     data: (list) {
                       if (list.isEmpty) {
-                        return const IFarmEmptyState(
-                          title: 'Sem cotações recorrentes',
-                          subtitle:
-                              'Crie uma para automatizar suas compras',
+                        return IFarmEmptyState(
+                          title: l.recurringQuotesEmpty,
+                          subtitle: l.recurringQuotesEmptyHint,
                           icon: Icons.repeat,
                         );
                       }
                       return ListView.separated(
-                        padding:
-                            const EdgeInsets.fromLTRB(16, 16, 16, 96),
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 96),
                         itemCount: list.length,
-                        separatorBuilder: (_, __) =>
-                            const SizedBox(height: 12),
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
                         itemBuilder: (_, i) {
                           final r = list[i];
                           return _RecurringCard(
@@ -285,6 +282,7 @@ class _RecurringCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final r = recurring;
     final isActive = r.status == RecurringStatus.active;
 
@@ -292,8 +290,8 @@ class _RecurringCard extends StatelessWidget {
     String nextDateLabel = '';
     if (r.nextExecutionAt != null) {
       final d = r.nextExecutionAt as DateTime;
-      nextDateLabel =
-          'Próxima Data: ${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}';
+      nextDateLabel = l.recurringQuotesNextDate(
+          '${d.day.toString().padLeft(2, '0')}/${d.month.toString().padLeft(2, '0')}');
     }
 
     return Container(
@@ -302,8 +300,7 @@ class _RecurringCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _ghostBorder, width: 1),
         boxShadow: const [
-          BoxShadow(
-              color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
+          BoxShadow(color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
         ],
       ),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -344,7 +341,7 @@ class _RecurringCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  '${(r.quantity as double).toStringAsFixed((r.quantity as double) == (r.quantity as double).truncateToDouble() ? 0 : 1)} ${r.measurementUnit as String} · ${(r.frequency as RecurringFrequency).label}',
+                  '${(r.quantity as double).toStringAsFixed((r.quantity as double) == (r.quantity as double).truncateToDouble() ? 0 : 1)} ${r.measurementUnit as String} · ${(r.frequency as RecurringFrequency).localizedLabel(context)}',
                   style: const TextStyle(
                     fontSize: 12,
                     color: _onSurfaceVariant,

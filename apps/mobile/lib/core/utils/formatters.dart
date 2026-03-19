@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 
 class AppFormatters {
   AppFormatters._();
@@ -33,13 +34,13 @@ class AppFormatters {
   }
 
   // Time ago
-  static String timeAgo(DateTime dateTime) {
+  static String timeAgo(DateTime dateTime, AppLocalizations l) {
     final now = DateTime.now();
     final diff = now.difference(dateTime);
-    if (diff.inSeconds < 60) return 'Agora';
-    if (diff.inMinutes < 60) return 'Há ${diff.inMinutes}min';
-    if (diff.inHours < 24) return 'Há ${diff.inHours}h';
-    if (diff.inDays < 7) return 'Há ${diff.inDays}d';
+    if (diff.inSeconds < 60) return l.timeAgoNow;
+    if (diff.inMinutes < 60) return l.timeAgoMinutes(diff.inMinutes);
+    if (diff.inHours < 24) return l.timeAgoHours(diff.inHours);
+    if (diff.inDays < 7) return l.timeAgoDays(diff.inDays);
     return date(dateTime);
   }
 

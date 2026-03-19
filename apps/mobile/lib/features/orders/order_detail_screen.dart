@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -7,6 +8,7 @@ import '../../core/theme/app_typography.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/formatters.dart';
 import '../../core/constants/enums.dart';
+import '../../core/constants/enum_extensions.dart';
 import '../../core/utils/extensions.dart';
 import '../../data/models/order_model.dart';
 import '../../providers/order_provider.dart';
@@ -25,16 +27,17 @@ class OrderDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final orderAsync = ref.watch(orderDetailProvider(orderId));
 
     return orderAsync.when(
       loading: () => Scaffold(
-        appBar: const IFarmAppBar(title: 'Pedido'),
+        appBar: IFarmAppBar(title: l.orderDetailTitle),
         backgroundColor: AppColors.background,
         body: const ListSkeleton(),
       ),
       error: (e, _) => Scaffold(
-        appBar: const IFarmAppBar(title: 'Pedido'),
+        appBar: IFarmAppBar(title: l.orderDetailTitle),
         backgroundColor: AppColors.background,
         body: IFarmErrorState(
           onRetry: () => ref.invalidate(orderDetailProvider(orderId)),
@@ -162,28 +165,29 @@ class _OrderDetailBodyState extends ConsumerState<_OrderDetailBody> {
   }
 
   void _showDisputeSheet() {
+    final l = AppLocalizations.of(context)!;
     showIFarmBottomSheet(
       context: context,
-      title: 'Abrir Disputa',
+      title: l.orderDetailOpenDispute,
       content: Padding(
         padding: const EdgeInsets.fromLTRB(
             AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.xxl),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Descreva o motivo da disputa:',
+            Text(l.orderDetailDisputeReason,
                 style: AppTypography.bodyMedium
                     .copyWith(color: AppColors.textSecondary)),
             const SizedBox(height: AppSpacing.md),
             IFarmTextField(
               controller: _disputeController,
-              label: 'Motivo',
-              hint: 'Ex: Produto não chegou, produto avariado...',
+              label: l.orderDetailDisputeReason,
+              hint: l.orderDetailDisputeHint,
               maxLines: 4,
             ),
             const SizedBox(height: AppSpacing.xl),
             IFarmButton(
-              label: 'Enviar Disputa',
+              label: l.orderDetailSubmitDispute,
               variant: IFarmButtonVariant.danger,
               isLoading: _isDisputing,
               onPressed: () => _submitDispute(_disputeController.text),
@@ -196,6 +200,7 @@ class _OrderDetailBodyState extends ConsumerState<_OrderDetailBody> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final order = widget.order;
 
     return Scaffold(
@@ -252,6 +257,7 @@ class _OrderDetailBodyState extends ConsumerState<_OrderDetailBody> {
   }
 
   Widget? _buildBottomActions(OrderModel order) {
+    final l = AppLocalizations.of(context)!;
     final showConfirm = order.canConfirmDelivery;
     final showDispute = order.canDispute;
     final showReview = order.canReview;
@@ -276,7 +282,7 @@ class _OrderDetailBodyState extends ConsumerState<_OrderDetailBody> {
               const SizedBox(height: AppSpacing.sm),
             if (showDispute)
               IFarmButton(
-                label: 'Abrir Disputa',
+                label: l.orderDetailOpenDispute,
                 variant: IFarmButtonVariant.danger,
                 icon: Icons.flag_outlined,
                 onPressed: _showDisputeSheet,
@@ -305,13 +311,8 @@ class _OrderStepper extends StatelessWidget {
   final OrderModel order;
   const _OrderStepper({required this.order});
 
-  // 4 steps only: Criado → Pago → Em Trânsito → Entregue
-  static const _steps = [
-    (status: OrderStatus.awaitingPayment, label: 'Criado', icon: Icons.receipt_outlined),
-    (status: OrderStatus.paid, label: 'Pago', icon: Icons.payments_outlined),
-    (status: OrderStatus.dispatched, label: 'Em Trânsito', icon: Icons.local_shipping_outlined),
-    (status: OrderStatus.delivered, label: 'Entregue', icon: Icons.inventory_2_outlined),
-  ];
+  // 4 steps only: Created → Paid → In Transit → Delivered
+  // Steps built in build() with localized labels
 
   int get _currentIndex {
     switch (order.status) {
@@ -334,6 +335,31 @@ class _OrderStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+
+    final _steps = [
+      (
+        status: OrderStatus.awaitingPayment,
+        label: l.orderDetailCreatedAt,
+        icon: Icons.receipt_outlined
+      ),
+      (
+        status: OrderStatus.paid,
+        label: l.orderDetailPaymentConfirmed,
+        icon: Icons.payments_outlined
+      ),
+      (
+        status: OrderStatus.dispatched,
+        label: l.orderDetailShipped,
+        icon: Icons.local_shipping_outlined
+      ),
+      (
+        status: OrderStatus.delivered,
+        label: l.orderDetailDelivered,
+        icon: Icons.inventory_2_outlined
+      ),
+    ];
+
     if (order.status == OrderStatus.cancelled ||
         order.status == OrderStatus.refunded ||
         order.status == OrderStatus.disputed) {
@@ -346,9 +372,9 @@ class _OrderStepper extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Status do Pedido', style: AppTypography.labelMedium),
+                  Text(l.orderDetailStatus, style: AppTypography.labelMedium),
                   const SizedBox(height: AppSpacing.xs),
-                  Text(order.status.label,
+                  Text(order.status.localizedLabel(context),
                       style: AppTypography.titleMedium
                           .copyWith(color: order.status.color)),
                   if (order.disputeReason != null) ...[
@@ -380,7 +406,9 @@ class _OrderStepper extends StatelessWidget {
                 return Expanded(
                   child: Container(
                     height: 2,
-                    color: filled ? AppColors.primary : AppColors.surfaceContainerHighest,
+                    color: filled
+                        ? AppColors.primary
+                        : AppColors.surfaceContainerHighest,
                   ),
                 );
               }
@@ -430,8 +458,7 @@ class _OrderStepper extends StatelessWidget {
                         color: completed || current
                             ? AppColors.primary
                             : AppColors.textTertiary,
-                        fontWeight:
-                            current ? FontWeight.w700 : FontWeight.w500,
+                        fontWeight: current ? FontWeight.w700 : FontWeight.w500,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -530,6 +557,8 @@ class _ItemsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+
     return IFarmCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -539,7 +568,7 @@ class _ItemsSection extends StatelessWidget {
               const Icon(Icons.inventory_2_outlined,
                   size: AppSpacing.iconSm, color: AppColors.textSecondary),
               const SizedBox(width: AppSpacing.xs),
-              Text('Itens do Pedido', style: AppTypography.titleMedium),
+              Text(l.orderDetailItems, style: AppTypography.titleMedium),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
@@ -552,14 +581,14 @@ class _ItemsSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Subtotal',
+              Text(l.orderDetailSubtotal,
                   style: AppTypography.bodyMedium
                       .copyWith(fontWeight: FontWeight.w600)),
               Text(
                 AppFormatters.currency(
                     items.fold(0.0, (sum, i) => sum + i.totalPrice)),
-                style:
-                    AppTypography.titleMedium.copyWith(color: AppColors.primary),
+                style: AppTypography.titleMedium
+                    .copyWith(color: AppColors.primary),
               ),
             ],
           ),
@@ -622,6 +651,8 @@ class _PaymentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+
     return IFarmCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -631,21 +662,23 @@ class _PaymentSection extends StatelessWidget {
               const Icon(Icons.payment_outlined,
                   size: AppSpacing.iconSm, color: AppColors.textSecondary),
               const SizedBox(width: AppSpacing.xs),
-              Text('Pagamento', style: AppTypography.titleMedium),
+              Text(l.paymentTitle, style: AppTypography.titleMedium),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
-          _InfoRow(label: 'Método', value: order.paymentMethod.label),
+          _InfoRow(
+              label: 'Método',
+              value: order.paymentMethod.localizedLabel(context)),
           const SizedBox(height: AppSpacing.sm),
           _InfoRow(
-            label: 'Subtotal',
+            label: l.orderDetailSubtotal,
             value: AppFormatters.currency(
                 order.items.fold(0.0, (s, i) => s + i.totalPrice)),
           ),
           const SizedBox(height: AppSpacing.sm),
           // Freight as separate line
           _InfoRow(
-            label: 'Frete',
+            label: l.orderDetailFreight,
             value: AppFormatters.currency(_freight),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -654,13 +687,13 @@ class _PaymentSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Total',
+              Text(l.orderDetailTotal,
                   style: AppTypography.titleMedium
                       .copyWith(fontWeight: FontWeight.w700)),
               Text(
                 AppFormatters.currency(order.totalAmount),
-                style: AppTypography.titleLarge
-                    .copyWith(color: AppColors.primary, fontWeight: FontWeight.w800),
+                style: AppTypography.titleLarge.copyWith(
+                    color: AppColors.primary, fontWeight: FontWeight.w800),
               ),
             ],
           ),
@@ -855,6 +888,8 @@ class _TaxSummarySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+
     return IFarmCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -864,18 +899,18 @@ class _TaxSummarySection extends StatelessWidget {
               const Icon(Icons.receipt_outlined,
                   size: AppSpacing.iconSm, color: AppColors.textSecondary),
               const SizedBox(width: AppSpacing.xs),
-              Text('Resumo Fiscal', style: AppTypography.titleMedium),
+              Text(l.orderDetailSummary, style: AppTypography.titleMedium),
             ],
           ),
           const SizedBox(height: AppSpacing.md),
           _InfoRow(
-            label: 'Subtotal (produtos)',
+            label: l.orderDetailSubtotal,
             value: AppFormatters.currency(
                 order.items.fold(0.0, (s, i) => s + i.totalPrice)),
           ),
           const SizedBox(height: AppSpacing.sm),
           _InfoRow(
-            label: 'ICMS estimado (12%)',
+            label: l.orderDetailTaxes,
             value: AppFormatters.currency(_estimatedIcms),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -884,19 +919,19 @@ class _TaxSummarySection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Total com impostos', style: AppTypography.titleMedium),
+              Text(l.orderDetailTotal, style: AppTypography.titleMedium),
               Text(
                 AppFormatters.currency(order.totalAmount),
-                style: AppTypography.titleLarge
-                    .copyWith(color: AppColors.primary),
+                style:
+                    AppTypography.titleLarge.copyWith(color: AppColors.primary),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
           Text(
             'Valores de ICMS calculados com base na alíquota estadual aplicável (RCQ-001).',
-            style: AppTypography.bodySmall
-                .copyWith(color: AppColors.textTertiary),
+            style:
+                AppTypography.bodySmall.copyWith(color: AppColors.textTertiary),
           ),
         ],
       ),

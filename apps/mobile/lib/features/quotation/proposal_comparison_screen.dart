@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/quotation_provider.dart';
 import '../../widgets/ifarm_error_state.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../widgets/ifarm_star_rating.dart';
 
 // Stitch design tokens
@@ -24,6 +25,7 @@ class ProposalComparisonScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final proposalsAsync = ref.watch(proposalComparisonProvider(quoteId));
 
     return Scaffold(
@@ -34,10 +36,10 @@ class ProposalComparisonScreen extends ConsumerWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: _onSurface),
-          onPressed: () => Navigator.of(context).maybePop(),
+          onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Comparar Propostas',
+        title: Text(
+          l.proposalComparisonTitle,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -53,28 +55,26 @@ class ProposalComparisonScreen extends ConsumerWidget {
         ),
         data: (proposals) {
           if (proposals.isEmpty) {
-            return const Center(
+            return Center(
               child: Text(
-                'Nenhuma proposta disponível',
-                style: TextStyle(color: _outline),
+                l.proposalComparisonEmpty,
+                style: const TextStyle(color: _outline),
               ),
             );
           }
 
           // Sort cheapest first
-          final sorted = [...proposals]
-            ..sort((a, b) =>
-                a.totalWithTaxAndDelivery.compareTo(b.totalWithTaxAndDelivery));
+          final sorted = [...proposals]..sort((a, b) =>
+              a.totalWithTaxAndDelivery.compareTo(b.totalWithTaxAndDelivery));
 
           final bestPrice = sorted.first.totalWithTaxAndDelivery;
-          final fastestDays = sorted
-              .map((p) => p.deliveryDays)
-              .reduce((a, b) => a < b ? a : b);
+          final fastestDays =
+              sorted.map((p) => p.deliveryDays).reduce((a, b) => a < b ? a : b);
 
           // Compute average for savings bar
-          final avg = sorted.fold<double>(
-                  0, (s, p) => s + p.totalWithTaxAndDelivery) /
-              sorted.length;
+          final avg =
+              sorted.fold<double>(0, (s, p) => s + p.totalWithTaxAndDelivery) /
+                  sorted.length;
           final savings = avg - bestPrice;
 
           return Column(
@@ -123,14 +123,14 @@ class ProposalComparisonScreen extends ConsumerWidget {
                                   children: [
                                     if (isBest)
                                       _Badge(
-                                        label: 'MELHOR VALOR',
+                                        label: l.proposalComparisonBestPrice,
                                         bgColor: _primaryFixed,
                                         textColor: _primary,
                                       ),
                                     if (isFastest) ...[
                                       if (isBest) const SizedBox(width: 6),
                                       _Badge(
-                                        label: 'ENTREGA RÁPIDA',
+                                        label: l.proposalComparisonFastDelivery,
                                         bgColor: _secondaryContainer,
                                         textColor: _secondary,
                                       ),
@@ -160,8 +160,7 @@ class ProposalComparisonScreen extends ConsumerWidget {
 
                             // Per-item pricing (productId only — name/qty not in ProposalItem)
                             ...p.items.map((item) => Padding(
-                                  padding:
-                                      const EdgeInsets.only(bottom: 6),
+                                  padding: const EdgeInsets.only(bottom: 6),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -189,35 +188,35 @@ class ProposalComparisonScreen extends ConsumerWidget {
 
                             // Summary rows
                             _SummaryRow(
-                              label: 'Subtotal',
-                              value: 'R\$ ${p.subtotalAmount.toStringAsFixed(2)}',
+                              label: l.proposalDetailSubtotal,
+                              value:
+                                  'R\$ ${p.subtotalAmount.toStringAsFixed(2)}',
                             ),
                             _SummaryRow(
-                              label: 'Frete',
+                              label: l.proposalComparisonFreight,
                               value: p.deliveryFee == 0
-                                  ? 'Grátis'
+                                  ? l.proposalDetailFreeShipping
                                   : 'R\$ ${p.deliveryFee.toStringAsFixed(2)}',
                             ),
                             if (p.taxInfo != null)
                               _SummaryRow(
-                                label: 'Impostos',
+                                label: l.proposalDetailTaxes,
                                 value:
                                     'R\$ ${(p.taxInfo!.stateSalesTaxAmount + p.taxInfo!.taxSubstitutionAmount + p.taxInfo!.interstateVatDifferential).toStringAsFixed(2)}',
                               ),
                             _SummaryRow(
-                              label: 'Entrega',
-                              value: '${p.deliveryDays} dias úteis',
+                              label: l.proposalComparisonDeliveryTime,
+                              value: l.proposalComparisonDays(p.deliveryDays),
                             ),
 
                             const Divider(color: _ghostBorder, height: 16),
 
                             // Total
                             Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
-                                  'TOTAL',
+                                Text(
+                                  l.proposalComparisonTotalPrice,
                                   style: TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w700,
@@ -246,20 +245,17 @@ class ProposalComparisonScreen extends ConsumerWidget {
                                 decoration: BoxDecoration(
                                   gradient: isBest
                                       ? const LinearGradient(
-                                          colors: [
-                                            _primary,
-                                            Color(0xFF1A6B3C)
-                                          ],
+                                          colors: [_primary, Color(0xFF1A6B3C)],
                                           begin: Alignment.centerLeft,
                                           end: Alignment.centerRight,
                                         )
                                       : null,
-                                  color: isBest ? null : _surfaceContainerLowest,
+                                  color:
+                                      isBest ? null : _surfaceContainerLowest,
                                   borderRadius: BorderRadius.circular(12),
                                   border: isBest
                                       ? null
-                                      : Border.all(
-                                          color: _primary, width: 1.5),
+                                      : Border.all(color: _primary, width: 1.5),
                                   boxShadow: isBest
                                       ? const [
                                           BoxShadow(
@@ -271,14 +267,12 @@ class ProposalComparisonScreen extends ConsumerWidget {
                                       : null,
                                 ),
                                 child: TextButton(
-                                  onPressed: () => context.push(
-                                      '/quote/$quoteId/proposal/${p.id}'),
+                                  onPressed: () => context
+                                      .push('/quote/$quoteId/proposal/${p.id}'),
                                   child: Text(
-                                    'Aceitar Proposta',
+                                    l.proposalComparisonSelect,
                                     style: TextStyle(
-                                      color: isBest
-                                          ? Colors.white
-                                          : _primary,
+                                      color: isBest ? Colors.white : _primary,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -316,8 +310,9 @@ class ProposalComparisonScreen extends ConsumerWidget {
                       Expanded(
                         child: Text(
                           savings > 0
-                              ? 'Economia estimada de R\$ ${savings.toStringAsFixed(2)} vs. média regional'
-                              : 'Economia estimada vs. média regional',
+                              ? l.proposalComparisonEstimatedSavings(
+                                  savings.toStringAsFixed(2))
+                              : l.proposalComparisonEstimatedSavingsGeneric,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 13,
@@ -342,9 +337,7 @@ class _Badge extends StatelessWidget {
   final Color bgColor;
   final Color textColor;
   const _Badge(
-      {required this.label,
-      required this.bgColor,
-      required this.textColor});
+      {required this.label, required this.bgColor, required this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -380,8 +373,7 @@ class _SummaryRow extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label,
-              style:
-                  const TextStyle(fontSize: 12, color: _onSurfaceVariant)),
+              style: const TextStyle(fontSize: 12, color: _onSurfaceVariant)),
           Text(value,
               style: const TextStyle(
                   fontSize: 12,

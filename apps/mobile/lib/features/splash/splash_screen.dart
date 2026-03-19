@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/router/app_router.dart';
 import '../../providers/auth_provider.dart';
@@ -42,7 +43,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
       duration: const Duration(milliseconds: 1000),
     );
 
-    _fadeAnim = CurvedAnimation(parent: _entryController, curve: Curves.easeOut);
+    _fadeAnim =
+        CurvedAnimation(parent: _entryController, curve: Curves.easeOut);
     _scaleAnim = Tween<double>(begin: 0.82, end: 1.0).animate(
       CurvedAnimation(parent: _entryController, curve: Curves.easeOutBack),
     );
@@ -153,7 +155,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'DIGITAL ESTATE',
+                      AppLocalizations.of(context)!.splashDigitalEstate,
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 11,
@@ -184,9 +186,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         builder: (context, _) {
                           return Opacity(
                             opacity: _pulseAnim.value,
-                            child: const Text(
-                              'INICIANDO SAFRA',
-                              style: TextStyle(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .splashStartingSeason,
+                              style: const TextStyle(
                                 fontFamily: 'Inter',
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
@@ -219,7 +222,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         builder: (context, _) {
                           return LinearProgressIndicator(
                             value: _progressAnim.value,
-                            backgroundColor: Colors.white.withValues(alpha: 0.15),
+                            backgroundColor:
+                                Colors.white.withValues(alpha: 0.15),
                             valueColor: AlwaysStoppedAnimation<Color>(
                               Color.lerp(
                                 AppColors.primaryFixed,

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../core/router/app_router.dart';
 import '../../core/constants/enums.dart';
 import '../../data/models/farmer_model.dart';
 import '../../data/repositories/farmer_repository.dart';
 import '../../providers/farmer_provider.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
+import 'package:ifarm_mobile/core/constants/enum_extensions.dart';
 
 // ─── Document descriptor ──────────────────────────────────────────────────────
 class _DocItem {
@@ -62,6 +66,10 @@ class KycHubScreen extends ConsumerWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+          onPressed: () => context.pop(),
+        ),
         title: const Text(
           'iFarm',
           style: TextStyle(
@@ -112,6 +120,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
   }
 
   Future<void> _pickDocument(int index) async {
+    final l = AppLocalizations.of(context)!;
     final source = await _showSourcePicker();
     if (source == null || !mounted) return;
 
@@ -133,7 +142,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Documento enviado com sucesso!'),
+            content: Text(l.kycDocumentSentSuccess),
             backgroundColor: const Color(0xFF005129),
             behavior: SnackBarBehavior.floating,
             shape:
@@ -145,7 +154,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Erro ao enviar documento.'),
+            content: Text(l.kycDocumentSentError),
             backgroundColor: const Color(0xFFBA1A1A),
             behavior: SnackBarBehavior.floating,
             shape:
@@ -159,6 +168,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
   }
 
   Future<ImageSource?> _showSourcePicker() {
+    final l = AppLocalizations.of(context)!;
     return showModalBottomSheet<ImageSource>(
       context: context,
       backgroundColor: const Color(0xFFFFFFFF),
@@ -182,15 +192,17 @@ class _KycBodyState extends ConsumerState<_KycBody> {
             ListTile(
               leading: const Icon(Icons.camera_alt_outlined,
                   color: Color(0xFF005129)),
-              title: const Text('Câmera',
-                  style: TextStyle(fontSize: 15, color: Color(0xFF191C1E))),
+              title: Text(l.kycCamera,
+                  style:
+                      const TextStyle(fontSize: 15, color: Color(0xFF191C1E))),
               onTap: () => Navigator.pop(ctx, ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library_outlined,
                   color: Color(0xFF005129)),
-              title: const Text('Galeria',
-                  style: TextStyle(fontSize: 15, color: Color(0xFF191C1E))),
+              title: Text(l.kycGallery,
+                  style:
+                      const TextStyle(fontSize: 15, color: Color(0xFF191C1E))),
               onTap: () => Navigator.pop(ctx, ImageSource.gallery),
             ),
             const SizedBox(height: 8),
@@ -202,6 +214,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
 
   // ─── KYC status banner ────────────────────────────────────────────────────
   Widget _statusBanner(FarmerModel? farmer) {
+    final l = AppLocalizations.of(context)!;
     final kycStatus = farmer?.kycStatus ?? KycStatus.notStarted;
     final isApproved = kycStatus == KycStatus.approved;
 
@@ -216,7 +229,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
         end: Alignment.centerRight,
       );
       statusIcon = Icons.verified_outlined;
-      statusLabel = 'Identidade Verificada';
+      statusLabel = l.kycIdentityVerified;
     } else {
       gradient = const LinearGradient(
         colors: [Color(0xFF795900), Color(0xFFFFC641)],
@@ -224,7 +237,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
         end: Alignment.centerRight,
       );
       statusIcon = Icons.hourglass_empty_rounded;
-      statusLabel = kycStatus.label;
+      statusLabel = kycStatus.localizedLabel(context);
     }
 
     return Container(
@@ -246,9 +259,9 @@ class _KycBodyState extends ConsumerState<_KycBody> {
             ),
           ),
           const Spacer(),
-          const Text(
-            'Em análise',
-            style: TextStyle(
+          Text(
+            l.kycUnderReview,
+            style: const TextStyle(
               fontSize: 12,
               color: Colors.white70,
             ),
@@ -259,9 +272,21 @@ class _KycBodyState extends ConsumerState<_KycBody> {
   }
 
   // ─── Document card ────────────────────────────────────────────────────────
-  Widget _docCard(int index) {
+  Widget _docCard(int index, AppLocalizations l) {
     final doc = _kDocs[index];
     final uploaded = _isDocUploaded(index);
+    final docNames = [
+      l.kycIdFront,
+      l.kycIdBack,
+      l.kycAddressProof,
+      l.kycRuralDoc
+    ];
+    final docHints = [
+      l.kycIdFrontDesc,
+      l.kycIdBackDesc,
+      l.kycAddressProofDesc,
+      l.kycRuralDocDesc
+    ];
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -286,9 +311,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
           // Status icon
           Icon(
             uploaded ? Icons.check_circle : Icons.upload_file_outlined,
-            color: uploaded
-                ? const Color(0xFF005129)
-                : const Color(0xFF707A70),
+            color: uploaded ? const Color(0xFF005129) : const Color(0xFF707A70),
             size: 28,
           ),
           const SizedBox(width: 12),
@@ -299,7 +322,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  doc.name,
+                  docNames[index],
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -308,7 +331,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  doc.hint,
+                  docHints[index],
                   style: const TextStyle(
                     fontSize: 12,
                     color: Color(0xFF707A70),
@@ -329,8 +352,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               textStyle: const TextStyle(
@@ -338,7 +360,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            child: Text(uploaded ? 'Re-enviar' : 'Enviar'),
+            child: Text(uploaded ? l.kycResend : l.kycSendButton),
           ),
         ],
       ),
@@ -347,6 +369,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final farmer = widget.farmer;
     final uploadedCount = _uploadedCount;
     final total = _kDocs.length;
@@ -363,9 +386,9 @@ class _KycBodyState extends ConsumerState<_KycBody> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ─── Heading ────────────────────────────────────────────────────
-          const Text(
-            'Central de Documentos',
-            style: TextStyle(
+          Text(
+            l.kycDocumentCenter,
+            style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.w800,
               letterSpacing: -1,
@@ -376,9 +399,9 @@ class _KycBodyState extends ConsumerState<_KycBody> {
 
           const SizedBox(height: 8),
 
-          const Text(
-            'Mantenha sua propriedade regularizada e em conformidade.',
-            style: TextStyle(
+          Text(
+            l.kycDocumentCenterDesc,
+            style: const TextStyle(
               fontSize: 14,
               color: Color(0xFF404940),
               height: 1.5,
@@ -407,7 +430,7 @@ class _KycBodyState extends ConsumerState<_KycBody> {
           Row(
             children: [
               Text(
-                '$uploadedCount/$total enviados',
+                '$uploadedCount/$total ${l.kycSent}',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
@@ -442,17 +465,17 @@ class _KycBodyState extends ConsumerState<_KycBody> {
           const SizedBox(height: 12),
 
           // Real-time analysis note
-          const Row(
+          Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.verified_user,
                 color: Color(0xFF005129),
                 size: 16,
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
-                'Análise em tempo real · 4 horas úteis',
-                style: TextStyle(
+                l.kycRealtimeAnalysis,
+                style: const TextStyle(
                   fontSize: 12,
                   color: Color(0xFF707A70),
                 ),
@@ -463,9 +486,34 @@ class _KycBodyState extends ConsumerState<_KycBody> {
           const SizedBox(height: 24),
 
           // ─── Document cards ──────────────────────────────────────────────
-          for (int i = 0; i < _kDocs.length; i++) _docCard(i),
+          for (int i = 0; i < _kDocs.length; i++) _docCard(i, l),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
+
+          // ─── Continue button ─────────────────────────────────────────────
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: FilledButton(
+              onPressed: () => context.go(Routes.home),
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFF005129),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                l.kycContinue,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 24),
         ],
       ),
     );

@@ -6,6 +6,7 @@ import '../../core/theme/app_spacing.dart';
 import '../../core/router/app_router.dart';
 import '../../core/utils/validators.dart';
 import '../../providers/auth_provider.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -94,6 +95,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final isLoading = ref.watch(authNotifierProvider).isLoading;
 
     return Scaffold(
@@ -106,8 +108,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                // ─── Back button ──────────────────────────────────────────
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+                      onPressed: () => context.pop(),
+                    ),
+                  ),
+                ),
+
                 // ─── Top spacing ──────────────────────────────────────────
-                const SizedBox(height: 48),
+                const SizedBox(height: 16),
 
                 // ─── Logo + Brand name ────────────────────────────────────
                 Center(
@@ -136,11 +150,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 8),
 
                 // ─── Tagline ──────────────────────────────────────────────
-                const Center(
+                Center(
                   child: Text(
-                    'Gerencie seu patrimônio com precisão digital.',
+                    l.loginSubtitle,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF404940),
                       height: 1.5,
@@ -155,13 +169,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   controller: _emailCtrl,
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
-                  validator: AppValidators.email,
+                  validator: (v) => AppValidators.email(l, v),
                   style: const TextStyle(
                     fontSize: 16,
                     color: Color(0xFF191C1E),
                   ),
                   decoration: _inputDeco(
-                    label: 'E-mail',
+                    label: l.loginEmail,
                     prefixIcon: Icons.email_outlined,
                   ),
                 ),
@@ -173,14 +187,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   controller: _passCtrl,
                   obscureText: _obscurePass,
                   textInputAction: TextInputAction.done,
-                  validator: AppValidators.password,
+                  validator: (v) => AppValidators.password(l, v),
                   onFieldSubmitted: (_) => _submit(),
                   style: const TextStyle(
                     fontSize: 16,
                     color: Color(0xFF191C1E),
                   ),
                   decoration: _inputDeco(
-                    label: 'Senha',
+                    label: l.loginPassword,
                     prefixIcon: Icons.lock_outlined,
                     suffix: IconButton(
                       icon: Icon(
@@ -208,9 +222,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         vertical: 4,
                       ),
                     ),
-                    child: const Text(
-                      'Esqueci a senha?',
-                      style: TextStyle(
+                    child: Text(
+                      l.loginForgotPassword,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF005129),
@@ -250,18 +264,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Row(
+                            : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.arrow_forward,
                                     color: Colors.white,
                                     size: 18,
                                   ),
-                                  SizedBox(width: 8),
+                                  const SizedBox(width: 8),
                                   Text(
-                                    'Entrar',
-                                    style: TextStyle(
+                                    l.loginButton,
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                       color: Colors.white,
@@ -285,7 +299,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
-                        'Ou acesse com',
+                        l.loginOrAccessWith,
                         style: AppTypography.bodySmall.copyWith(
                           fontSize: 13,
                           color: const Color(0xFF707A70),
@@ -306,13 +320,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   children: [
                     _SocialButton(
                       icon: Icons.g_mobiledata,
-                      label: 'Google',
+                      label: l.loginGoogle,
                       onPressed: () {},
                     ),
                     const SizedBox(width: 16),
                     _SocialButton(
                       icon: Icons.fingerprint,
-                      label: 'Biometria',
+                      label: l.loginBiometrics,
                       onPressed: () {},
                     ),
                   ],
@@ -331,14 +345,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         color: Color(0xFF404940),
                       ),
                       children: [
-                        const TextSpan(text: 'Ainda não tem conta? '),
+                        TextSpan(text: l.loginNoAccount),
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
                           child: GestureDetector(
                             onTap: () => context.go(Routes.register),
-                            child: const Text(
-                              'Criar conta',
-                              style: TextStyle(
+                            child: Text(
+                              l.loginCreateAccount,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xFF005129),

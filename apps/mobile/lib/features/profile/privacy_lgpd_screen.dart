@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/app_spacing.dart';
@@ -72,6 +73,7 @@ class _PrivacyLgpdScreenState extends ConsumerState<PrivacyLgpdScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final farmerAsync = ref.watch(currentFarmerProvider);
 
     return Scaffold(
@@ -80,20 +82,19 @@ class _PrivacyLgpdScreenState extends ConsumerState<PrivacyLgpdScreen> {
         backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: false,
-        // AppBar title: "Privacidade" (NOT "Privacidade e LGPD")
-        title: const Text('Privacidade', style: AppTypography.headlineSmall),
+        title: Text(l.privacyTitle, style: AppTypography.headlineSmall),
       ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           // ── LGPD Rights ──────────────────────────────────────────────────
-          _SectionLabel(label: 'Seus Direitos LGPD'),
+          _SectionLabel(label: l.privacyYourRights),
           const SizedBox(height: AppSpacing.sm),
           ..._lgpdRights.map((r) => _ExpandableRight(right: r)),
           const SizedBox(height: AppSpacing.xl),
 
           // ── Consent cards (3 SwitchListTile cards) ───────────────────────
-          _SectionLabel(label: 'Consentimentos'),
+          _SectionLabel(label: l.privacyConsents),
           const SizedBox(height: AppSpacing.sm),
 
           // 1. Termos de Uso — switch disabled (always on)
@@ -128,8 +129,8 @@ class _PrivacyLgpdScreenState extends ConsumerState<PrivacyLgpdScreen> {
           const SizedBox(height: AppSpacing.sm),
           // 3. Comunicações de Marketing — toggleable
           _ConsentCard(
-            title: 'Comunicações de Marketing',
-            subtitle: 'Receba promoções e novidades do iFarm',
+            title: l.privacyMarketing,
+            subtitle: l.privacyMarketingDesc,
             value: _marketingEnabled,
             disabled: false,
             onChanged: (v) => setState(() => _marketingEnabled = v),
@@ -177,7 +178,7 @@ class _PrivacyLgpdScreenState extends ConsumerState<PrivacyLgpdScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: Text(
-              'Zona de Risco',
+              l.privacyDangerZone,
               style: AppTypography.titleSmall.copyWith(
                 color: AppColors.error,
                 fontWeight: FontWeight.w700,
@@ -191,7 +192,7 @@ class _PrivacyLgpdScreenState extends ConsumerState<PrivacyLgpdScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Excluir minha conta',
+                Text(l.privacyDeleteAccount,
                     style: AppTypography.titleMedium
                         .copyWith(color: AppColors.error)),
                 const SizedBox(height: AppSpacing.xs),
@@ -202,7 +203,7 @@ class _PrivacyLgpdScreenState extends ConsumerState<PrivacyLgpdScreen> {
                 ),
                 const SizedBox(height: AppSpacing.lg),
                 IFarmButton(
-                  label: 'Excluir minha conta',
+                  label: l.privacyDeleteAccountButton,
                   variant: IFarmButtonVariant.danger,
                   icon: Icons.delete_forever_outlined,
                   onPressed: _showDeleteSheet,
@@ -276,8 +277,7 @@ const _lgpdRights = [
   _LgpdRight(
     icon: Icons.swap_horiz_outlined,
     title: 'Portabilidade',
-    description:
-        'Você tem direito a receber seus dados em formato estruturado '
+    description: 'Você tem direito a receber seus dados em formato estruturado '
         'e legível por máquina para transferência a outro fornecedor.',
   ),
   _LgpdRight(
@@ -520,8 +520,8 @@ class _ExportConfirmDialog extends StatelessWidget {
         'Seus dados foram preparados com sucesso.\n\n'
         'Em produção, os arquivos JSON e CSV seriam baixados '
         'ou enviados ao seu e-mail cadastrado.',
-        style: AppTypography.bodyMedium
-            .copyWith(color: AppColors.textSecondary),
+        style:
+            AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
       ),
       actions: [
         TextButton(
@@ -635,8 +635,8 @@ class _DeleteAccountBottomSheetState
         Text(
           'Ao excluir sua conta todos os seus dados, pedidos, cotações e '
           'histórico serão permanentemente removidos da plataforma iFarm.',
-          style: AppTypography.bodyMedium
-              .copyWith(color: AppColors.textSecondary),
+          style:
+              AppTypography.bodyMedium.copyWith(color: AppColors.textSecondary),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.xl),

@@ -1,13 +1,10 @@
-import 'dart:io';
+import '../config/app_config.dart';
 
 class ApiEndpoints {
   ApiEndpoints._();
 
-  // Base URL — Android emulator: 10.0.2.2, iOS simulator: localhost
-  // Production: https://api.ifarm.com.br
-  static final String baseUrl = Platform.isAndroid
-      ? 'http://10.0.2.2:3000'
-      : 'http://localhost:3000';
+  /// Resolved via --dart-define=APP_ENV and --dart-define=API_URL
+  static final String baseUrl = AppConfig.apiUrl;
 
   // AUTH
   static const String login = '/api/v1/auth/login';
@@ -18,7 +15,8 @@ class ApiEndpoints {
   // IDENTITY — Farmers
   static const String farmers = '/api/v1/identity/v1/farmers';
   static String farmerById(String id) => '/api/v1/identity/v1/farmers/$id';
-  static String farmerDocuments(String id) => '/api/v1/identity/v1/farmers/$id/documents';
+  static String farmerDocuments(String id) =>
+      '/api/v1/identity/v1/farmers/$id/documents';
   static String farmerDocumentById(String id, int idx) =>
       '/api/v1/identity/v1/farmers/$id/documents/$idx';
   static const String farmerExport = '/api/v1/identity/v1/farmers/me/export';
@@ -39,19 +37,24 @@ class ApiEndpoints {
   static String acceptProposal(String quoteId, String proposalId) =>
       '/api/v1/quotes/quotes/$quoteId/proposals/$proposalId/accept';
   static const String recurringQuotes = '/api/v1/quotes/quotes/recurring';
-  static String recurringById(String id) => '/api/v1/quotes/quotes/recurring/$id';
+  static String recurringById(String id) =>
+      '/api/v1/quotes/quotes/recurring/$id';
 
   // ORDERS
   static const String orders = '/api/v1/orders/orders';
   static String orderById(String id) => '/api/v1/orders/orders/$id';
-  static String orderTimeline(String id) => '/api/v1/orders/orders/$id/timeline';
-  static String confirmDelivery(String id) => '/api/v1/orders/orders/$id/confirm-delivery';
+  static String orderTimeline(String id) =>
+      '/api/v1/orders/orders/$id/timeline';
+  static String confirmDelivery(String id) =>
+      '/api/v1/orders/orders/$id/confirm-delivery';
   static String disputeOrder(String id) => '/api/v1/orders/orders/$id/dispute';
 
   // PAYMENTS
-  static String paymentByOrderId(String orderId) => '/api/v1/payments/payments/$orderId';
+  static String paymentByOrderId(String orderId) =>
+      '/api/v1/payments/payments/$orderId';
 
   // NOTIFICATIONS
+  static const String notifications = '/api/v1/notifications/v1/notifications';
   static const String notificationPrefs =
       '/api/v1/notifications/v1/notifications/preferences';
 

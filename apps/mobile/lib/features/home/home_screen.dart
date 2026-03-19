@@ -8,14 +8,17 @@ import '../../providers/auth_provider.dart';
 import '../../providers/farmer_provider.dart';
 import '../../providers/quotation_provider.dart';
 import '../../data/models/quote_model.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
+import 'package:ifarm_mobile/core/constants/enum_extensions.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final user = ref.watch(currentUserProvider);
-    final firstName = user?.name.split(' ').first ?? 'Agricultor';
+    final firstName = user?.name.split(' ').first ?? l.homeFarmerDefault;
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -31,7 +34,7 @@ class HomeScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Bom dia,',
+                        l.homeGreeting,
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 14,
@@ -41,7 +44,7 @@ class HomeScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Olá, $firstName!',
+                        l.homeHello(firstName),
                         style: const TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 30,
@@ -74,8 +77,8 @@ class HomeScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: _SectionHeader(
-                    title: 'Categorias',
-                    actionLabel: 'Ver Tudo',
+                    title: l.homeCategories,
+                    actionLabel: l.homeViewAllCaps,
                     onAction: () {},
                   ),
                 ),
@@ -87,8 +90,8 @@ class HomeScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: _SectionHeader(
-                    title: 'Cotações Recentes',
-                    actionLabel: 'Ver Todas',
+                    title: l.homeRecentQuotes,
+                    actionLabel: l.homeViewAllCaps,
                     onAction: () => context.go(Routes.myQuotes),
                   ),
                 ),
@@ -156,7 +159,8 @@ class _GlassmorphicHeader extends StatelessWidget {
                     icon: const Icon(Icons.search, color: AppColors.onSurface),
                     onPressed: () => context.push(Routes.search),
                     padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                    constraints:
+                        const BoxConstraints(minWidth: 40, minHeight: 40),
                   ),
                   const SizedBox(width: 4),
                   _NotificationButton(),
@@ -202,6 +206,7 @@ class _NotificationButton extends StatelessWidget {
 class _SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: () => context.push(Routes.search),
       child: Container(
@@ -216,7 +221,7 @@ class _SearchBar extends StatelessWidget {
             const Icon(Icons.search, color: AppColors.outline, size: 20),
             const SizedBox(width: 12),
             Text(
-              'Buscar insumos, máquinas ou pedidos...',
+              l.homeSearchPlaceholder,
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 14,
@@ -234,6 +239,7 @@ class _SearchBar extends StatelessWidget {
 class _QuickActionsGrid extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
@@ -243,28 +249,28 @@ class _QuickActionsGrid extends ConsumerWidget {
       childAspectRatio: 1.55,
       children: [
         _QuickActionCard(
-          label: 'Nova Cotação',
+          label: l.homeNewQuote,
           icon: Icons.add_circle,
           isPrimary: true,
-          onTap: () => context.go(Routes.quoteBuilder),
+          onTap: () => context.push(Routes.quoteBuilder),
         ),
         _QuickActionCard(
-          label: 'Minhas Cotações',
+          label: l.homeMyQuotes,
           icon: Icons.list_alt,
           isPrimary: false,
           onTap: () => context.go(Routes.myQuotes),
         ),
         _QuickActionCard(
-          label: 'Meus Pedidos',
+          label: l.homeMyOrders,
           icon: Icons.shopping_bag,
           isPrimary: false,
           onTap: () => context.go(Routes.orders),
         ),
         _QuickActionCard(
-          label: 'Recorrentes',
+          label: l.homeRecurring,
           icon: Icons.history,
           isPrimary: false,
-          onTap: () => context.go(Routes.recurringQuotes),
+          onTap: () => context.push(Routes.recurringQuotes),
         ),
       ],
     );
@@ -293,7 +299,9 @@ class _QuickActionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         child: Container(
           decoration: BoxDecoration(
-            color: isPrimary ? AppColors.primary : AppColors.surfaceContainerLowest,
+            color: isPrimary
+                ? AppColors.primary
+                : AppColors.surfaceContainerLowest,
             borderRadius: BorderRadius.circular(12),
             border: isPrimary
                 ? null
@@ -361,9 +369,9 @@ class _SectionHeader extends StatelessWidget {
         ),
         GestureDetector(
           onTap: onAction,
-          child: const Text(
-            'VER TUDO',
-            style: TextStyle(
+          child: Text(
+            actionLabel,
+            style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 12,
               fontWeight: FontWeight.w700,
@@ -387,23 +395,23 @@ class _CategoryChips extends StatefulWidget {
 class _CategoryChipsState extends State<_CategoryChips> {
   int _activeIndex = 0;
 
-  static const _categories = [
-    'Tudo',
-    'Defensivos',
-    'Sementes',
-    'Nutrição',
-    'Máquinas',
-    'Irrigação',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final categories = [
+      l.homeCategoryAll,
+      l.homeCategoryPesticides,
+      l.homeCategorySeeds,
+      l.homeCategoryNutrition,
+      l.homeCategoryMachinery,
+      l.homeCategoryIrrigation,
+    ];
     return SizedBox(
       height: 40,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        itemCount: _categories.length,
+        itemCount: categories.length,
         itemBuilder: (context, i) {
           final isActive = i == _activeIndex;
           return GestureDetector(
@@ -413,11 +421,13 @@ class _CategoryChipsState extends State<_CategoryChips> {
               margin: const EdgeInsets.only(right: 10),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: isActive ? AppColors.primary : AppColors.surfaceContainerLow,
+                color: isActive
+                    ? AppColors.primary
+                    : AppColors.surfaceContainerLow,
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
-                _categories[i],
+                categories[i],
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 13,
@@ -437,7 +447,8 @@ class _RecentQuotesList extends ConsumerWidget {
   const _RecentQuotesList();
 
   static final _dateFmt = DateFormat('dd MMM yyyy', 'pt_BR');
-  static final _currencyFmt = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+  static final _currencyFmt =
+      NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -462,7 +473,10 @@ class _RecentQuotesList extends ConsumerWidget {
             final recent = quotes.take(3).toList();
             if (recent.isEmpty) return const SizedBox.shrink();
             return Column(
-              children: recent.map((q) => _QuoteCard(quote: q, dateFmt: _dateFmt, currencyFmt: _currencyFmt)).toList(),
+              children: recent
+                  .map((q) => _QuoteCard(
+                      quote: q, dateFmt: _dateFmt, currencyFmt: _currencyFmt))
+                  .toList(),
             );
           },
         );
@@ -476,17 +490,20 @@ class _QuoteCard extends StatelessWidget {
   final DateFormat dateFmt;
   final NumberFormat currencyFmt;
 
-  const _QuoteCard({required this.quote, required this.dateFmt, required this.currencyFmt});
+  const _QuoteCard(
+      {required this.quote, required this.dateFmt, required this.currencyFmt});
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final statusColor = quote.status.color;
     final statusBg = quote.status.color.withValues(alpha: 0.15);
     final itemNames = quote.items.map((i) => i.productSnapshot.name).join(', ');
-    final dateStr = quote.createdAt != null ? dateFmt.format(quote.createdAt!) : '';
+    final dateStr =
+        quote.createdAt != null ? dateFmt.format(quote.createdAt!) : '';
     final amountStr = quote.bestProposal != null
         ? currencyFmt.format(quote.bestProposal!.totalWithTaxAndDelivery)
-        : '${quote.items.length} ${quote.items.length == 1 ? 'item' : 'itens'}';
+        : l.homeItemCount(quote.items.length);
 
     return GestureDetector(
       onTap: () => context.push('/quote/${quote.id}'),
@@ -513,13 +530,14 @@ class _QuoteCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: statusBg,
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
-                      quote.status.label,
+                      quote.status.localizedLabel(context),
                       style: TextStyle(
                         fontFamily: 'Inter',
                         fontSize: 11,

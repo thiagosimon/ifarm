@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../core/theme/app_colors.dart';
 import '../core/router/app_router.dart';
 
@@ -18,11 +19,21 @@ class ScaffoldWithBottomNav extends StatelessWidget {
 
   void _onTap(BuildContext context, int index) {
     switch (index) {
-      case 0: context.go(Routes.home); break;
-      case 1: context.go(Routes.myQuotes); break;
-      case 2: context.go(Routes.orders); break;
-      case 3: context.go(Routes.notifications); break;
-      case 4: context.go(Routes.profile); break;
+      case 0:
+        context.go(Routes.home);
+        break;
+      case 1:
+        context.go(Routes.myQuotes);
+        break;
+      case 2:
+        context.go(Routes.orders);
+        break;
+      case 3:
+        context.go(Routes.notifications);
+        break;
+      case 4:
+        context.go(Routes.profile);
+        break;
     }
   }
 
@@ -62,12 +73,27 @@ class ScaffoldWithBottomNav extends StatelessWidget {
           showUnselectedLabels: true,
           type: BottomNavigationBarType.fixed,
           elevation: 0,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home_outlined), activeIcon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.description_outlined), activeIcon: Icon(Icons.description), label: 'Cotações'),
-            BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), activeIcon: Icon(Icons.shopping_bag), label: 'Pedidos'),
-            BottomNavigationBarItem(icon: Icon(Icons.notifications_outlined), activeIcon: Icon(Icons.notifications), label: 'Alertas'),
-            BottomNavigationBarItem(icon: Icon(Icons.person_outline), activeIcon: Icon(Icons.person), label: 'Perfil'),
+          items: [
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.home_outlined),
+                activeIcon: const Icon(Icons.home),
+                label: AppLocalizations.of(context)!.navHome),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.description_outlined),
+                activeIcon: const Icon(Icons.description),
+                label: AppLocalizations.of(context)!.navQuotes),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.shopping_bag_outlined),
+                activeIcon: const Icon(Icons.shopping_bag),
+                label: AppLocalizations.of(context)!.navOrders),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.notifications_outlined),
+                activeIcon: const Icon(Icons.notifications),
+                label: AppLocalizations.of(context)!.navAlerts),
+            BottomNavigationBarItem(
+                icon: const Icon(Icons.person_outline),
+                activeIcon: const Icon(Icons.person),
+                label: AppLocalizations.of(context)!.navProfile),
           ],
         ),
       ),

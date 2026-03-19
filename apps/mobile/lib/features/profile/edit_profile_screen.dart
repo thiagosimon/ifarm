@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/app_spacing.dart';
@@ -97,7 +98,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       };
       await ref.read(farmerRepositoryProvider).updateFarmer(_farmer!.id, data);
       ref.invalidate(currentFarmerProvider);
-      if (mounted) context.showSnackBar('Perfil atualizado com sucesso!');
+      if (mounted)
+        context.showSnackBar(AppLocalizations.of(context)!.editProfileSuccess);
     } catch (e) {
       if (mounted) {
         context.showSnackBar('Erro ao salvar perfil. Tente novamente.',
@@ -118,13 +120,14 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: false,
-        title: const Text('Editar Perfil', style: AppTypography.headlineSmall),
+        title: Text(l.editProfileTitle, style: AppTypography.headlineSmall),
         // No AppBar save action — only bottom button
       ),
       body: _farmer == null
@@ -149,7 +152,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         // Full name
                         IFarmTextField(
                           controller: _nameCtrl,
-                          label: 'Nome completo',
+                          label: l.editProfileFullName,
                           hint: 'Seu nome completo',
                           prefixIcon: Icons.person_outline,
                           textCapitalization: TextCapitalization.words,
@@ -162,7 +165,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         // Phone
                         IFarmTextField(
                           controller: _phoneCtrl,
-                          label: 'Telefone / WhatsApp',
+                          label: l.editProfilePhone,
                           hint: '(00) 00000-0000',
                           prefixIcon: Icons.call_outlined,
                           keyboardType: TextInputType.phone,
@@ -181,7 +184,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         // CPF — read-only, fingerprint icon, lock suffix
                         _ReadOnlyField(
                           controller: _cpfCtrl,
-                          label: 'CPF',
+                          label: l.editProfileCpf,
                           hint: '000.000.000-00',
                           prefixIcon: Icons.fingerprint,
                         ),
@@ -201,7 +204,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         // Farm name
                         IFarmTextField(
                           controller: _farmNameCtrl,
-                          label: 'Nome da fazenda',
+                          label: l.editProfilePropertyName,
                           hint: 'Ex: Fazenda Santa Fé',
                           prefixIcon: Icons.agriculture_outlined,
                           textCapitalization: TextCapitalization.words,
@@ -211,8 +214,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         // State dropdown
                         _StateDropdown(
                           value: _selectedState,
-                          onChanged: (v) =>
-                              setState(() => _selectedState = v),
+                          onChanged: (v) => setState(() => _selectedState = v),
                         ),
                         const SizedBox(height: AppSpacing.md),
 
@@ -243,7 +245,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         // Total area
                         IFarmTextField(
                           controller: _areaCtrl,
-                          label: 'Área total (ha)',
+                          label: l.editProfileTotalArea,
                           hint: 'Ex: 500',
                           prefixIcon: Icons.straighten_outlined,
                           keyboardType: const TextInputType.numberWithOptions(
@@ -271,10 +273,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
 
                   // ── Only bottom save button (NO AppBar action) ──────────
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.lg),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                     child: IFarmButton(
-                      label: 'Salvar Alterações',
+                      label: l.editProfileSave,
                       isLoading: _isSaving,
                       onPressed: _save,
                     ),
@@ -345,7 +347,9 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                   horizontal: AppSpacing.md, vertical: AppSpacing.xs),
             ),
             child: Text(
-              'ALTERAR FOTO',
+              AppLocalizations.of(context)!
+                  .editProfileChangePhoto
+                  .toUpperCase(),
               style: AppTypography.labelMedium.copyWith(
                 color: AppColors.primary,
                 fontWeight: FontWeight.w700,
@@ -460,10 +464,11 @@ class _StateDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Estado',
+        Text(l.editProfileState,
             style: AppTypography.labelMedium
                 .copyWith(color: AppColors.textSecondary)),
         const SizedBox(height: 6),
@@ -472,9 +477,9 @@ class _StateDropdown extends StatelessWidget {
           decoration: InputDecoration(
             prefixIcon: const Icon(Icons.map_outlined,
                 size: AppSpacing.iconMd, color: AppColors.textTertiary),
-            hintText: 'Selecione o estado',
-            hintStyle:
-                AppTypography.bodyMedium.copyWith(color: AppColors.textTertiary),
+            hintText: l.editProfileSelectState,
+            hintStyle: AppTypography.bodyMedium
+                .copyWith(color: AppColors.textTertiary),
             filled: true,
             fillColor: AppColors.surfaceContainerLowest,
             contentPadding: const EdgeInsets.symmetric(

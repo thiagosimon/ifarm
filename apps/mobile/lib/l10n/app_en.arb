@@ -1,0 +1,683 @@
+{
+  "@@locale": "en",
+
+  "appName": "iFarm",
+
+  "tryAgain": "Try Again",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "save": "Save",
+  "send": "Send",
+  "errorGeneric": "Something went wrong",
+  "errorGenericMessage": "Check your connection and try again.",
+  "errorUnknown": "Unknown error",
+  "errorTimeout": "Connection timed out. Check your internet.",
+  "errorNoConnection": "No internet connection.",
+  "errorSomethingWrong": "Something went wrong. Try again.",
+  "subtotal": "Subtotal",
+  "total": "TOTAL",
+  "freight": "Freight",
+  "free": "Free",
+  "businessDays": "business days",
+  "toNegotiate": "To be arranged",
+
+  "navHome": "Home",
+  "navQuotes": "Quotes",
+  "navOrders": "Orders",
+  "navAlerts": "Alerts",
+  "navProfile": "Profile",
+
+  "welcomeSlideTitle1": "Buy at the\nbest price",
+  "welcomeSlideDesc1": "Access a global network of agricultural suppliers straight from your phone.",
+  "welcomeSlideTitle2": "Receive multiple\nquotations",
+  "welcomeSlideDesc2": "Compare offers in real time and ensure the best profitability for your harvest.",
+  "welcomeSlideTitle3": "Manage\nfrom the field",
+  "welcomeSlideDesc3": "All input and logistics management in the palm of your hand, wherever you are.",
+  "welcomeCreateAccount": "Create Account",
+  "welcomeLogin": "Log In",
+  "welcomeTagline": "THE DIGITAL MARKETPLACE OF AGRIBUSINESS",
+
+  "loginSubtitle": "Manage your assets with digital precision.",
+  "loginEmail": "E-mail",
+  "loginPassword": "Password",
+  "loginForgotPassword": "Forgot password?",
+  "loginButton": "Log In",
+  "loginOrAccessWith": "Or access with",
+  "loginGoogle": "Google",
+  "loginBiometrics": "Biometrics",
+  "loginNoAccount": "Don't have an account yet? ",
+  "loginCreateAccount": "Create account",
+
+  "registrationTitle": "Create Account",
+  "registrationPersonalData": "Personal Data",
+  "registrationFullName": "Full name",
+  "registrationCpf": "CPF",
+  "registrationEmail": "E-mail",
+  "registrationPhone": "Phone",
+  "registrationPassword": "Password",
+  "registrationPropertyDetails": "Property Details",
+  "registrationPropertyName": "Property name",
+  "registrationTotalArea": "Total area (ha)",
+  "registrationZipCode": "ZIP Code",
+  "registrationState": "State",
+  "registrationSelectState": "Select a state",
+  "registrationGpsCoordinates": "GPS Coordinates",
+  "registrationTapToCapture": "Tap to capture location",
+  "registrationCapture": "CAPTURE",
+  "registrationTermsTitle": "Terms and Privacy",
+  "registrationAcceptTerms": "I accept the Terms of Use. I understand how my data will be processed in accordance with LGPD guidelines.",
+  "registrationReadTerms": "Read Terms of Use",
+  "registrationMarketingConsent": "I want to receive quotation reports and agribusiness news via Email and WhatsApp.",
+  "registrationCreateAccountButton": "Create Account",
+  "registrationLoginButton": "Log In",
+  "registrationAcceptTermsError": "Accept the Terms of Use to continue.",
+
+  "homeGreeting": "Good morning,",
+  "homeHello": "Hello, {firstName}!",
+  "@homeHello": {
+    "placeholders": {
+      "firstName": {"type": "String"}
+    }
+  },
+  "homeFarmerDefault": "Farmer",
+  "homeSearchPlaceholder": "Search inputs, machines or orders...",
+  "homeNewQuote": "New Quote",
+  "homeMyQuotes": "My Quotes",
+  "homeMyOrders": "My Orders",
+  "homeRecurring": "Recurring",
+  "homeCategories": "Categories",
+  "homeViewAll": "View All",
+  "homeViewAllCaps": "VIEW ALL",
+  "homeRecentQuotes": "Recent Quotes",
+  "homeViewAllQuotes": "View All",
+  "homeCategoryAll": "All",
+  "homeCategoryPesticides": "Pesticides",
+  "homeCategorySeeds": "Seeds",
+  "homeCategoryNutrition": "Nutrition",
+  "homeCategoryMachinery": "Machinery",
+  "homeCategoryIrrigation": "Irrigation",
+  "homeItemCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@homeItemCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+
+  "splashDigitalEstate": "DIGITAL ESTATE",
+  "splashStartingSeason": "STARTING SEASON",
+
+  "kycIdFront": "ID (Front)",
+  "kycIdFrontDesc": "National ID or Driver's License (front)",
+  "kycIdBack": "ID (Back)",
+  "kycIdBackDesc": "National ID or Driver's License (back)",
+  "kycAddressProof": "Proof of Address",
+  "kycAddressProofDesc": "Utility Bill",
+  "kycRuralDoc": "Rural Producer Doc.",
+  "kycRuralDocDesc": "State registration or DAP",
+  "kycDocumentSentSuccess": "Document sent successfully!",
+  "kycDocumentSentError": "Error sending document.",
+  "kycCamera": "Camera",
+  "kycGallery": "Gallery",
+  "kycIdentityVerified": "Identity Verified",
+  "kycUnderReview": "Under review",
+  "kycDocumentCenter": "Document Center",
+  "kycDocumentCenterDesc": "Keep your property compliant and up to date.",
+  "kycSent": "sent",
+  "kycRealtimeAnalysis": "Real-time analysis · 4 business hours",
+  "kycResend": "Resend",
+  "kycSendButton": "Send",
+  "kycContinue": "Continue",
+
+  "productSearchTitle": "Find the best\nfor your harvest.",
+  "productSearchPlaceholder": "Search pesticides, seeds...",
+  "productSearchFilters": "Filters",
+  "productSearchRuralCredit": "RURAL CREDIT",
+  "productSearchEligible": "Eligible",
+  "productSearchAll": "All",
+  "productSearchApplyFilters": "Apply Filters",
+  "productSearchAvailable": "AVAILABLE PRODUCTS",
+  "productSearchError": "Error loading products",
+  "productSearchNoResults": "No product found",
+  "productSearchNoResultsHint": "Try other terms or remove filters",
+  "productSearchAddedToQuote": "Added to quote",
+
+  "productDetailError": "Error loading product",
+  "productDetailRuralCredit": "RURAL CREDIT",
+  "productDetailPriceOnRequest": "Price on request",
+  "productDetailAvailable": "Available",
+  "productDetailDemandIndex": "REGIONAL DEMAND INDEX",
+  "productDetailDescription": "ASSET DESCRIPTION",
+  "productDetailDefaultDesc": "Premium product for your harvest.",
+  "productDetailSpecs": "SPECIFICATIONS",
+  "productDetailGuarantee": "iFarm Guarantee",
+  "productDetailInspection": "Certified technical inspection included",
+  "productDetailAddToQuote": "Add to Quote",
+  "productDetailAddedToQuote": "Added to quote",
+
+  "quoteBuilderPaymentPix": "PIX · immediate",
+  "quoteBuilderPaymentRural": "Rural Credit · approval 48h",
+  "quoteBuilderPaymentBoleto": "Boleto · 30/60 days",
+  "quoteBuilderPaymentCard": "Credit Card",
+  "quoteBuilderSentSuccess": "Quote sent successfully!",
+  "quoteBuilderEmptyCart": "Empty cart",
+  "quoteBuilderEmptyCartHint": "Add products to create a quote",
+  "quoteBuilderSearchProducts": "Search Products",
+  "quoteBuilderItems": "Items ({count})",
+  "@quoteBuilderItems": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "quoteBuilderDeliveryMode": "Delivery Mode",
+  "quoteBuilderPaymentMethod": "Payment Method",
+  "quoteBuilderValidity": "Validity Period",
+  "quoteBuilderTitle": "New Quote",
+  "quoteBuilderSending": "Sending...",
+  "quoteBuilderSendQuote": "Send Quote",
+
+  "myQuotesTabActive": "Active",
+  "myQuotesTabWithProposals": "With Proposals",
+  "myQuotesTabAccepted": "Accepted",
+  "myQuotesTabExpired": "Expired",
+  "myQuotesSearch": "Search",
+  "myQuotesRecurring": "Recurring",
+  "myQuotesEmpty": "No quotes",
+  "myQuotesEmptyHint": "Your quotes will appear here",
+  "myQuotesBestOffer": "Best offer: ",
+
+  "quoteDetailTitle": "Quote Detail",
+  "quoteDetailExpiresIn": "Expires in",
+  "quoteDetailPayment": "Payment",
+  "quoteDetailDelivery": "Delivery",
+  "quoteDetailRequestedItems": "Requested Items",
+  "quoteDetailProposals": "Proposals ({count})",
+  "@quoteDetailProposals": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "quoteDetailCompare": "Compare",
+  "quoteDetailRecommended": "RECOMMENDED",
+
+  "proposalComparisonTitle": "Compare Proposals",
+  "proposalComparisonEmpty": "No proposals available",
+  "proposalComparisonBestValue": "BEST VALUE",
+  "proposalComparisonFastDelivery": "FAST DELIVERY",
+  "proposalComparisonTaxes": "Taxes",
+  "proposalComparisonAccept": "Accept Proposal",
+  "proposalComparisonSavings": "Estimated savings of R$ {value} vs. regional average",
+  "@proposalComparisonSavings": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+
+  "proposalDetailAccepted": "Proposal accepted! Order created.",
+  "proposalDetailTitle": "Proposal Details",
+  "proposalDetailFreightCif": "CIF FREIGHT",
+  "proposalDetailFreightFob": "FOB FREIGHT",
+  "proposalDetailItems": "Items",
+  "proposalDetailIcms": "ICMS",
+  "proposalDetailDifal": "DIFAL",
+  "proposalDetailSt": "ST",
+  "proposalDetailTotalWithTaxes": "TOTAL W/ TAXES AND FREIGHT",
+  "proposalDetailNotes": "Notes",
+  "proposalDetailConfirmOrder": "Yes, Confirm Order",
+  "proposalDetailGoBack": "Go Back and Review",
+  "proposalDetailConfirmTitle": "Confirm Order",
+  "proposalDetailConfirmMessage": "This action cannot be undone. By confirming, an order will be created.",
+
+  "recurringQuotesNewTitle": "New Recurring Quote",
+  "recurringQuotesProduct": "Product (ID or name)",
+  "recurringQuotesQuantity": "Quantity",
+  "recurringQuotesFrequency": "Frequency",
+  "recurringQuotesCreate": "Create Recurring",
+  "recurringQuotesTitle": "Recurring Quotes",
+  "recurringQuotesEmpty": "No recurring quotes",
+  "recurringQuotesEmptyHint": "Create one to automate your purchases",
+  "recurringQuotesNextDate": "Next Date: {date}",
+  "@recurringQuotesNextDate": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+
+  "ordersTabAwaitingPayment": "Awaiting Payment",
+  "ordersTabPaid": "Paid",
+  "ordersTabDispatched": "Dispatched",
+  "ordersTabDelivered": "Delivered",
+  "ordersNoOrders": "No orders",
+  "ordersNoOrdersHint": "No orders with this status.",
+  "ordersPayNow": "Pay Now",
+  "ordersViewDetails": "View Details",
+  "ordersTrack": "Track",
+  "ordersConfirmReceipt": "Confirm Receipt",
+  "ordersUnknownRetailer": "Unknown retailer",
+  "ordersItemCount": "{count} item(s)",
+  "@ordersItemCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "ordersTotal": "Total",
+
+  "orderDetailTitle": "Order",
+  "orderDetailReceiptConfirmed": "Receipt confirmed successfully!",
+  "orderDetailReceiptError": "Error confirming receipt.",
+  "orderDetailDisputeOpened": "Dispute opened successfully.",
+  "orderDetailDisputeError": "Error opening dispute.",
+  "orderDetailConfirmReceiptTitle": "Confirm Receipt",
+  "orderDetailConfirmReceiptMessage": "Confirm you received the order?",
+  "orderDetailConfirmReceiptWarning": "By confirming, payment will be released to the supplier. This action cannot be undone.",
+  "orderDetailOpenDispute": "Open Dispute",
+  "orderDetailDisputeReason": "Describe the reason for the dispute:",
+  "orderDetailDisputeReasonLabel": "Reason",
+  "orderDetailDisputeReasonHint": "E.g.: Product didn't arrive, damaged product...",
+  "orderDetailSendDispute": "Send Dispute",
+  "orderDetailRateSupplier": "Rate Supplier",
+  "orderDetailRateComingSoon": "Rating feature coming soon.",
+  "orderDetailStepCreated": "Created",
+  "orderDetailStepPaid": "Paid",
+  "orderDetailStepInTransit": "In Transit",
+  "orderDetailStepDelivered": "Delivered",
+  "orderDetailOrderStatus": "Order Status",
+  "orderDetailReasonLabel": "Reason:",
+  "orderDetailTimeline": "Timeline",
+  "orderDetailTracking": "Tracking: ",
+  "orderDetailCityState": "City, State",
+  "orderDetailOrderItems": "Order Items",
+
+  "paymentCopied": "{label} copied!",
+  "@paymentCopied": {
+    "placeholders": {
+      "label": {"type": "String"}
+    }
+  },
+  "paymentViaPix": "Payment via PIX",
+  "paymentError": "Error loading payment",
+  "paymentPixTitle": "PIX Payment",
+  "paymentPixInstructions": "Open your bank app and choose the Pay with QR Code option",
+  "paymentCopyPixCode": "Copy PIX code",
+  "paymentPixCode": "PIX Code",
+  "paymentNeedHelp": "I need help with PIX",
+  "paymentSecure": "Payment processed securely",
+  "paymentOrderGenerated": "Order Generated",
+  "paymentAwaitingPayment": "Awaiting Payment",
+  "paymentCodeExpires": "The code expires in 2 hours",
+  "paymentPreparingShipment": "Preparing for Shipment",
+  "paymentPending": "Pending",
+  "paymentBoleto": "Bank Slip",
+  "paymentBoletoExpiry": "Due date: {date}",
+  "@paymentBoletoExpiry": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "paymentDigitableLine": "Digitable line",
+  "paymentCopyDigitableLine": "Copy digitable line",
+  "paymentOpenBoleto": "Open bank slip in browser",
+  "paymentConfirmed": "Payment confirmed!",
+  "paymentProcessing": "Your order is being processed.",
+  "paymentBackToOrder": "Back to order",
+  "paymentExpired": "This payment has expired. Contact support.",
+  "paymentAboutBoleto": "About the bank slip:",
+  "paymentBoletoClearing": "Clearing time: up to 3 business days",
+  "paymentBoletoWhere": "Pay at any bank, lottery shop or via internet banking",
+  "paymentBoletoExpiredNote": "After the due date, the slip cannot be paid",
+
+  "profileError": "Error loading profile.",
+  "profileMyAccount": "My Account",
+  "profileEditProfile": "Edit Profile",
+  "profilePayment": "Payment",
+  "profileNotifications": "Notifications",
+  "profileSettings": "Settings",
+  "profilePrivacyLgpd": "Privacy and LGPD",
+  "profileHelp": "Help",
+  "profileSecurity": "Security",
+  "profileLogout": "Log Out",
+  "profileFarmerDefault": "Farmer",
+  "profileAssets": "Assets",
+  "profileQuotes": "Quotes",
+  "profileOrders": "Orders",
+  "profileSeasonGoal": "SEASON GOAL",
+  "profileSacks": "2,400 Sacks",
+  "profileGoalReached": "85% reached",
+  "profileLogoutConfirm": "Do you want to log out?",
+  "profileLogoutMessage": "You will need to log in again to access iFarm.",
+
+  "editProfileSuccess": "Profile updated successfully!",
+  "editProfileError": "Error saving profile. Try again.",
+  "editProfileTitle": "Edit Profile",
+  "editProfilePersonalData": "PERSONAL DATA",
+  "editProfileFullName": "Full name",
+  "editProfileFullNameHint": "Your full name",
+  "editProfileNameRequired": "Name is required",
+  "editProfilePhone": "Phone / WhatsApp",
+  "editProfilePhoneHint": "(00) 00000-0000",
+  "editProfilePhoneRequired": "Phone is required",
+  "editProfilePhoneInvalid": "Invalid phone",
+  "editProfileCpf": "CPF",
+  "editProfileCpfHint": "000.000.000-00",
+  "editProfileFarm": "FARM",
+  "editProfileFarmName": "Farm name",
+  "editProfileFarmNameHint": "E.g.: Santa Fé Farm",
+  "editProfileState": "State",
+  "editProfileSelectState": "Select the state",
+  "editProfileAddress": "Property Address",
+  "editProfileAddressHint": "E.g.: Highway BR-163, km 45",
+  "editProfileAdjustOnMap": "Adjust on Map",
+  "editProfileTotalArea": "Total area (ha)",
+  "editProfileTotalAreaHint": "E.g.: 500",
+  "editProfileCrops": "Crops (comma separated)",
+  "editProfileCropsHint": "E.g.: Soybean, Corn, Wheat",
+  "editProfileSave": "Save Changes",
+  "editProfileChangePhoto": "CHANGE PHOTO",
+
+  "settingsTitle": "Settings",
+  "settingsPreferencesSaved": "Preferences saved!",
+  "settingsPreferencesError": "Error saving preferences.",
+  "settingsNewQuotes": "New quotes",
+  "settingsProposalsReceived": "Proposals received",
+  "settingsOrderUpdates": "Order updates",
+  "settingsPaymentConfirmations": "Payment confirmations",
+  "settingsAppSection": "App",
+  "settingsAppVersion": "App version",
+  "settingsAccountSection": "Account",
+  "settingsPrivacyPolicy": "Privacy Policy",
+  "settingsExportData": "Export my data",
+  "settingsDeleteAccount": "Delete account",
+  "settingsSavePreferences": "Save Preferences",
+  "settingsDeleteAccountMessage": "To delete your account access the Privacy and LGPD section. The process is irreversible.",
+  "settingsContinue": "Continue",
+
+  "privacyTitle": "Privacy",
+  "privacyYourRights": "Your LGPD Rights",
+  "privacyConsents": "Consents",
+  "privacyTermsOfUse": "Terms of Use",
+  "privacyPrivacyPolicy": "Privacy Policy",
+  "privacyMarketingComms": "Marketing Communications",
+  "privacyMarketingDesc": "Receive promotions and news from iFarm",
+  "privacyAcceptedOn": "Accepted on {date}",
+  "@privacyAcceptedOn": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "privacyStorageUsage": "STORAGE USAGE",
+  "privacyExportData": "Export my data",
+  "privacyExportDataDesc": "Receive a JSON and CSV file with all your personal data stored on the iFarm platform.",
+  "privacyDangerZone": "Danger Zone",
+  "privacyDeleteAccount": "Delete my account",
+  "privacyDeleteAccountDesc": "Request permanent deletion of all your data. This action is irreversible and implies termination of active contracts.",
+  "privacyRightAccess": "Access",
+  "privacyRightCorrection": "Correction",
+  "privacyRightDeletion": "Deletion",
+  "privacyRightPortability": "Portability",
+  "privacyRightRevocation": "Consent Revocation",
+  "privacyExportError": "Error exporting data. Try again.",
+  "privacyStorageInfo": "{used} of {total} used",
+  "@privacyStorageInfo": {
+    "placeholders": {
+      "used": {"type": "String"},
+      "total": {"type": "String"}
+    }
+  },
+  "privacyCompanyInfo": "iFarm Tecnologia Ltda. • CNPJ 00.000.000/0001-00 • v{version}",
+  "@privacyCompanyInfo": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+
+  "notificationsTitle": "Notifications",
+  "notificationsMarkAllRead": "Mark all as read",
+  "notificationsError": "Error loading notifications.",
+  "notificationsAllClear": "All clear here",
+  "notificationsAllClearHint": "You will be notified about quotes,\norders and payments here.",
+  "notificationsChipQuote": "Quote",
+  "notificationsChipOrder": "Order",
+  "notificationsChipPayment": "Payment",
+  "notificationsChipDelivery": "Delivery",
+  "notificationsChipKyc": "KYC",
+  "notificationsChipSystem": "System",
+  "notificationsGroupToday": "Today",
+  "notificationsGroupYesterday": "Yesterday",
+  "notificationsGroupThisWeek": "This week",
+  "notificationsGroupOlder": "Older",
+
+  "quoteStatusOpen": "Open",
+  "quoteStatusInProposals": "With Proposals",
+  "quoteStatusAccepted": "Accepted",
+  "quoteStatusExpired": "Expired",
+  "quoteStatusCancelled": "Cancelled",
+
+  "orderStatusAwaitingPayment": "Awaiting Payment",
+  "orderStatusPaid": "Paid",
+  "orderStatusPreparing": "Preparing",
+  "orderStatusDispatched": "Dispatched",
+  "orderStatusDelivered": "Delivered",
+  "orderStatusDisputed": "Disputed",
+  "orderStatusCancelled": "Cancelled",
+  "orderStatusRefunded": "Refunded",
+
+  "paymentMethodPix": "PIX",
+  "paymentMethodBoleto": "Boleto",
+  "paymentMethodCreditCard": "Credit Card",
+  "paymentMethodRuralCredit": "Rural Credit",
+
+  "deliveryModeAddress": "Delivery to Address",
+  "deliveryModeGeolocation": "GPS Delivery",
+  "deliveryModeStorePickup": "Store Pickup",
+
+  "kycStatusNotStarted": "Not Started",
+  "kycStatusDocumentsSubmitted": "Documents Submitted",
+  "kycStatusUnderReview": "Under Review",
+  "kycStatusApproved": "Approved",
+  "kycStatusRejected": "Rejected",
+  "kycStatusResubmissionRequired": "Resubmission Required",
+
+  "recurringFrequencyWeekly": "Weekly",
+  "recurringFrequencyBiweekly": "Biweekly",
+  "recurringFrequencyMonthly": "Monthly",
+  "recurringFrequencyCustom": "Custom",
+
+  "recurringStatusActive": "Active",
+  "recurringStatusPaused": "Paused",
+  "recurringStatusCancelled": "Cancelled",
+
+  "productCategoryFertilizers": "Fertilizers",
+  "productCategoryPesticides": "Pesticides",
+  "productCategorySeeds": "Seeds",
+  "productCategoryMachinery": "Machinery",
+  "productCategoryIrrigation": "Irrigation",
+  "productCategoryAnimalNutrition": "Animal Nutrition",
+  "productCategoryPpeSafety": "PPE",
+  "productCategoryVeterinary": "Veterinary",
+  "productCategoryOther": "Other",
+
+  "kycDocTypeFront": "ID (Front)",
+  "kycDocTypeBack": "ID (Back)",
+  "kycDocTypeAddress": "Proof of Address",
+  "kycDocTypeRural": "Rural Producer Doc.",
+
+  "validatorRequired": "{field} is required",
+  "@validatorRequired": {
+    "placeholders": {
+      "field": {"type": "String"}
+    }
+  },
+  "validatorFieldDefault": "Field",
+  "validatorEmailRequired": "Email is required",
+  "validatorEmailInvalid": "Invalid email",
+  "validatorPasswordRequired": "Password is required",
+  "validatorPasswordMinLength": "Password must have at least 8 characters",
+  "validatorCpfRequired": "CPF is required",
+  "validatorCpfInvalid": "Invalid CPF",
+  "validatorCnpjRequired": "CNPJ is required",
+  "validatorCnpjInvalid": "Invalid CNPJ",
+  "validatorFederalTaxIdRequired": "CPF/CNPJ is required",
+  "validatorFederalTaxIdInvalid": "Invalid CPF/CNPJ",
+  "validatorPhoneRequired": "Phone is required",
+  "validatorPhoneInvalid": "Invalid phone",
+  "validatorNcmRequired": "NCM is required",
+  "validatorNcmInvalid": "NCM must have 8 digits",
+  "validatorMinLength": "{field} must have at least {min} characters",
+  "@validatorMinLength": {
+    "placeholders": {
+      "field": {"type": "String"},
+      "min": {"type": "int"}
+    }
+  },
+  "validatorMaxLength": "{field} must have at most {max} characters",
+  "@validatorMaxLength": {
+    "placeholders": {
+      "field": {"type": "String"},
+      "max": {"type": "int"}
+    }
+  },
+  "validatorDisputeReasonRequired": "Reason is required",
+  "validatorDisputeReasonMinLength": "Describe the issue with at least 20 characters",
+
+  "timeAgoNow": "Now",
+  "timeAgoMinutes": "{minutes}min ago",
+  "@timeAgoMinutes": {
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "timeAgoHours": "{hours}h ago",
+  "@timeAgoHours": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "timeAgoDays": "{days}d ago",
+  "@timeAgoDays": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+
+  "badgeNcm": "NCM {code}",
+  "@badgeNcm": {
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  },
+  "badgeRuralCredit": "Rural Credit",
+
+  "editProfilePropertyName": "Property name",
+  "errorCheckConnection": "Check your connection and try again",
+  "notificationsEmpty": "All clear!",
+  "notificationsEmptyHint": "You have no notifications",
+  "notificationsOlder": "Older",
+  "notificationsOrders": "Orders",
+  "notificationsQuotes": "Quotes",
+  "notificationsSystem": "System",
+  "notificationsThisWeek": "This week",
+  "notificationsToday": "Today",
+  "orderDetailCreatedAt": "Created",
+  "orderDetailDelivered": "Delivered",
+  "orderDetailDisputeHint": "Describe the issue with your order",
+  "orderDetailFreight": "Freight",
+  "orderDetailItems": "Items",
+  "orderDetailPaymentConfirmed": "Payment confirmed",
+  "orderDetailShipped": "Shipped",
+  "orderDetailStatus": "Status",
+  "orderDetailSubmitDispute": "Submit dispute",
+  "orderDetailSubtotal": "Subtotal",
+  "orderDetailSummary": "Summary",
+  "orderDetailTaxes": "Taxes",
+  "orderDetailTotal": "Total",
+  "ordersEmpty": "No orders yet",
+  "ordersTabCancelled": "Cancelled",
+  "ordersTabInProgress": "In progress",
+  "paymentBarcodeCopied": "Barcode copied!",
+  "paymentCopyBarcode": "Copy barcode",
+  "paymentDueDate": "Due date",
+  "paymentExpiresIn": "Expires in",
+  "paymentTitle": "Payment",
+  "paymentViaBoleto": "Pay via Boleto",
+  "privacyDeleteAccountButton": "Delete account",
+  "privacyMarketing": "Marketing",
+  "productDetailDefaultDescription": "No description available",
+  "productDetailRegionalDemandIndex": "Regional demand index",
+  "productDetailRetry": "Retry",
+  "productDetailTechnicalInfo": "Technical information",
+  "productDetailWarrantyDescription": "Product covered by manufacturer warranty",
+  "productDetailWarrantyTitle": "Warranty",
+  "productSearchAvailableProducts": "Available products",
+  "productSearchDefaultUnit": "unit",
+  "productSearchEmpty": "No products found",
+  "productSearchEmptyHint": "Try adjusting your filters",
+  "productSearchHeroTitle": "Find the best agricultural products",
+  "productSearchLoadError": "Error loading products",
+  "productSearchPriceOnRequest": "Price on request",
+  "productSearchRetry": "Retry",
+  "productSearchRuralCreditLabel": "Accepts rural credit",
+  "profileCancel": "Cancel",
+  "profileConfirm": "Confirm",
+  "profilePrivacy": "Privacy",
+  "proposalComparisonBestPrice": "Best price",
+  "proposalComparisonDeliveryTime": "Delivery time",
+  "proposalComparisonEstimatedSavingsGeneric": "Compare proposals to find savings",
+  "proposalComparisonFreight": "Freight",
+  "proposalComparisonSelect": "Select",
+  "proposalComparisonTotalPrice": "Total price",
+  "proposalDetailAccept": "Accept",
+  "proposalDetailAcceptSuccess": "Proposal accepted successfully!",
+  "proposalDetailCancel": "Cancel",
+  "proposalDetailConfirm": "Confirm",
+  "proposalDetailConfirmAccept": "Confirm acceptance?",
+  "proposalDetailFreeShipping": "Free shipping",
+  "proposalDetailObservations": "Observations",
+  "proposalDetailSubtotal": "Subtotal",
+  "proposalDetailTaxes": "Taxes",
+  "proposalDetailTotal": "Total",
+  "quoteBuilderDeliveryAddress": "Delivery address",
+  "quoteBuilderPaymentCondition": "Payment condition",
+  "quoteBuilderSubmit": "Submit quote",
+  "quoteDetailCompareProposals": "Compare proposals",
+  "quoteDetailExpiration": "Expiration",
+  "quoteDetailItems": "Items",
+  "recurringQuotesNew": "New recurring quote",
+  "recurringQuotesProductLabel": "Product",
+  "recurringQuotesQuantityLabel": "Quantity",
+  "settingsNotifications": "Notifications",
+  "settingsOrderAlerts": "Order alerts",
+  "settingsQuoteAlerts": "Quote alerts",
+  "paymentCopyPixKey": "Copy PIX key",
+  "paymentPixKeyCopied": "PIX key copied!",
+  "quoteBuilderSuccess": "Quote submitted successfully!",
+
+  "myQuotesItemCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@myQuotesItemCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "proposalComparisonDays": "{count, plural, =1{1 day} other{{count} days}}",
+  "@proposalComparisonDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "proposalComparisonEstimatedSavings": "Estimated savings: {value}",
+  "@proposalComparisonEstimatedSavings": {
+    "placeholders": {
+      "value": {"type": "String"}
+    }
+  },
+  "proposalDetailBusinessDays": "{count, plural, =1{1 business day} other{{count} business days}}",
+  "@proposalDetailBusinessDays": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "quoteBuilderItemCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@quoteBuilderItemCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  }
+}

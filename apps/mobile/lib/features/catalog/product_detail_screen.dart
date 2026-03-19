@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../providers/catalog_provider.dart';
 import '../../providers/quotation_provider.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
+import 'package:ifarm_mobile/core/constants/enum_extensions.dart';
 
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const _primary = Color(0xFF005129);
@@ -24,6 +27,7 @@ class ProductDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final productAsync = ref.watch(productDetailProvider(productId));
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
@@ -38,7 +42,7 @@ class ProductDetailScreen extends ConsumerWidget {
             backgroundColor: _surfaceLowest,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new, color: _onSurface),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
             ),
           ),
           body: Center(
@@ -47,16 +51,16 @@ class ProductDetailScreen extends ConsumerWidget {
               children: [
                 const Icon(Icons.error_outline, size: 48, color: _outline),
                 const SizedBox(height: 12),
-                const Text(
-                  'Erro ao carregar produto',
-                  style: TextStyle(color: _onSurfaceVariant),
+                Text(
+                  l.productDetailError,
+                  style: const TextStyle(color: _onSurfaceVariant),
                 ),
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () =>
                       ref.invalidate(productDetailProvider(productId)),
-                  child: const Text('Tentar novamente',
-                      style: TextStyle(color: _primary)),
+                  child: Text(l.productDetailRetry,
+                      style: const TextStyle(color: _primary)),
                 ),
               ],
             ),
@@ -66,7 +70,7 @@ class ProductDetailScreen extends ConsumerWidget {
           final imageUrl = product.primaryImageUrl;
           final brand = product.brand;
           final name = product.name;
-          final category = product.category.label;
+          final category = product.category.localizedLabel(context);
           final isRuralCredit = product.isRuralCreditEligible;
           final description = product.description;
           final attributes = product.attributes;
@@ -79,9 +83,8 @@ class ProductDetailScreen extends ConsumerWidget {
                 pinned: true,
                 backgroundColor: _surfaceLowest,
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new,
-                      color: _onSurface),
-                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.arrow_back_ios_new, color: _onSurface),
+                  onPressed: () => context.pop(),
                 ),
                 title: const Text(
                   'iFarm',
@@ -97,8 +100,7 @@ class ProductDetailScreen extends ConsumerWidget {
                     onPressed: () {},
                   ),
                   IconButton(
-                    icon: const Icon(Icons.favorite_border,
-                        color: _onSurface),
+                    icon: const Icon(Icons.favorite_border, color: _onSurface),
                     onPressed: () {},
                   ),
                 ],
@@ -152,9 +154,9 @@ class ProductDetailScreen extends ConsumerWidget {
                                 color: _secondary,
                                 borderRadius: BorderRadius.circular(100),
                               ),
-                              child: const Text(
-                                'CRÉDITO RURAL',
-                                style: TextStyle(
+                              child: Text(
+                                l.productDetailRuralCredit,
+                                style: const TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white,
@@ -194,9 +196,9 @@ class ProductDetailScreen extends ConsumerWidget {
                       // Price / availability row
                       Row(
                         children: [
-                          const Text(
-                            'Preço sob consulta',
-                            style: TextStyle(
+                          Text(
+                            l.productDetailPriceOnRequest,
+                            style: const TextStyle(
                               fontSize: 14,
                               color: _onSurfaceVariant,
                             ),
@@ -209,18 +211,18 @@ class ProductDetailScreen extends ConsumerWidget {
                               color: _primaryFixed,
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.circle,
                                   color: _primary,
                                   size: 8,
                                 ),
-                                SizedBox(width: 4),
+                                const SizedBox(width: 4),
                                 Text(
-                                  'Disponível',
-                                  style: TextStyle(
+                                  l.productDetailAvailable,
+                                  style: const TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w700,
                                     color: _primary,
@@ -234,9 +236,9 @@ class ProductDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 16),
 
                       // Regional demand index
-                      const Text(
-                        'ÍNDICE DE DEMANDA REGIONAL',
-                        style: TextStyle(
+                      Text(
+                        l.productDetailRegionalDemandIndex,
+                        style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
                           color: _outline,
@@ -266,9 +268,9 @@ class ProductDetailScreen extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'DESCRIÇÃO DO ATIVO',
-                              style: TextStyle(
+                            Text(
+                              l.productDetailDescription,
+                              style: const TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
                                 color: _onSurface,
@@ -279,7 +281,7 @@ class ProductDetailScreen extends ConsumerWidget {
                             Text(
                               description.isNotEmpty
                                   ? description
-                                  : 'Produto premium para sua safra.',
+                                  : l.productDetailDefaultDescription,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: _onSurfaceVariant,
@@ -302,11 +304,12 @@ class ProductDetailScreen extends ConsumerWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(20, 20, 20, 12),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 20, 20, 12),
                                 child: Text(
-                                  'ESPECIFICAÇÕES',
-                                  style: TextStyle(
+                                  l.productDetailTechnicalInfo,
+                                  style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w700,
                                     color: _onSurface,
@@ -318,7 +321,8 @@ class ProductDetailScreen extends ConsumerWidget {
                                 final i = entry.key;
                                 final attr = entry.value;
                                 return Container(
-                                  color: i.isEven ? _surfaceLow : _surfaceLowest,
+                                  color:
+                                      i.isEven ? _surfaceLow : _surfaceLowest,
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 12),
                                   child: Row(
@@ -355,26 +359,26 @@ class ProductDetailScreen extends ConsumerWidget {
                           color: const Color(0xFFECEEF0),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Row(
+                        child: Row(
                           children: [
-                            Icon(Icons.verified_user,
+                            const Icon(Icons.verified_user,
                                 color: _primary, size: 32),
-                            SizedBox(width: 16),
+                            const SizedBox(width: 16),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Garantia iFarm',
-                                    style: TextStyle(
+                                    l.productDetailWarrantyTitle,
+                                    style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w700,
                                       color: _onSurface,
                                     ),
                                   ),
                                   Text(
-                                    'Inspeção técnica certificada incluída',
-                                    style: TextStyle(
+                                    l.productDetailWarrantyDescription,
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: _outline,
                                     ),
@@ -439,8 +443,7 @@ class ProductDetailScreen extends ConsumerWidget {
                           );
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content:
-                              const Text('Adicionado à cotação'),
+                          content: Text(l.productDetailAddedToQuote),
                           backgroundColor: _primaryContainer,
                           behavior: SnackBarBehavior.floating,
                           shape: RoundedRectangleBorder(
@@ -450,14 +453,14 @@ class ProductDetailScreen extends ConsumerWidget {
                       );
                     },
                     borderRadius: BorderRadius.circular(12),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.add_shopping_cart,
+                        const Icon(Icons.add_shopping_cart,
                             color: Colors.white, size: 20),
-                        SizedBox(width: 12),
+                        const SizedBox(width: 12),
                         Text(
-                          'Adicionar à Cotação',
+                          l.productDetailAddToQuote,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,

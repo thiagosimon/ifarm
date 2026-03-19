@@ -6,98 +6,9 @@ import '../../core/theme/app_typography.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/utils/formatters.dart';
 import '../../core/router/app_router.dart';
-
-// ---------------------------------------------------------------------------
-// Model
-// ---------------------------------------------------------------------------
-
-class NotificationModel {
-  final String id;
-  final String type;
-  final String title;
-  final String body;
-  final bool isRead;
-  final DateTime createdAt;
-  final Map<String, dynamic>? data;
-
-  const NotificationModel({
-    required this.id,
-    required this.type,
-    required this.title,
-    required this.body,
-    required this.isRead,
-    required this.createdAt,
-    this.data,
-  });
-
-  factory NotificationModel.fromJson(Map<String, dynamic> json) {
-    return NotificationModel(
-      id: (json['_id'] ?? json['id'] ?? '') as String,
-      type: json['type'] as String? ?? '',
-      title: json['title'] as String? ?? '',
-      body: json['body'] as String? ?? json['message'] as String? ?? '',
-      isRead: json['isRead'] as bool? ?? false,
-      createdAt:
-          DateTime.tryParse(json['createdAt'] as String? ?? '') ?? DateTime.now(),
-      data: json['data'] as Map<String, dynamic>?,
-    );
-  }
-
-  NotificationModel copyWith({bool? isRead}) {
-    return NotificationModel(
-      id: id,
-      type: type,
-      title: title,
-      body: body,
-      isRead: isRead ?? this.isRead,
-      createdAt: createdAt,
-      data: data,
-    );
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Provider
-// ---------------------------------------------------------------------------
-
-class NotificationListNotifier
-    extends StateNotifier<AsyncValue<List<NotificationModel>>> {
-  NotificationListNotifier() : super(const AsyncValue.loading()) {
-    _load();
-  }
-
-  Future<void> _load() async {
-    state = const AsyncValue.loading();
-    try {
-      await Future<void>.delayed(const Duration(milliseconds: 300));
-      state = const AsyncValue.data([]);
-    } catch (e, s) {
-      state = AsyncValue.error(e, s);
-    }
-  }
-
-  Future<void> refresh() => _load();
-
-  void markAllAsRead() {
-    final current = state.value;
-    if (current == null) return;
-    state =
-        AsyncValue.data(current.map((n) => n.copyWith(isRead: true)).toList());
-  }
-
-  void markAsRead(String id) {
-    final current = state.value;
-    if (current == null) return;
-    state = AsyncValue.data(
-      current.map((n) => n.id == id ? n.copyWith(isRead: true) : n).toList(),
-    );
-  }
-}
-
-final notificationListProvider = StateNotifierProvider<NotificationListNotifier,
-    AsyncValue<List<NotificationModel>>>(
-  (ref) => NotificationListNotifier(),
-);
+import '../../data/models/app_notification_model.dart';
+import '../../providers/notification_provider.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
 // Type helpers
@@ -110,14 +21,14 @@ class _NotificationTypeConfig {
   const _NotificationTypeConfig(this.icon, this.color, this.chipLabel);
 }
 
-_NotificationTypeConfig _configForType(String type) {
+_NotificationTypeConfig _configForType(String type, AppLocalizations l) {
   if (type.contains('quote')) {
-    return _NotificationTypeConfig(
-        Icons.request_quote_outlined, AppColors.statusOpen, 'Cotação');
+    return _NotificationTypeConfig(Icons.request_quote_outlined,
+        AppColors.statusOpen, l.notificationsQuotes);
   }
   if (type.contains('order')) {
     return _NotificationTypeConfig(
-        Icons.shopping_bag_outlined, AppColors.primary, 'Pedido');
+        Icons.shopping_bag_outlined, AppColors.primary, l.notificationsOrders);
   }
   if (type.contains('payment')) {
     return _NotificationTypeConfig(
@@ -133,33 +44,35 @@ _NotificationTypeConfig _configForType(String type) {
   }
   if (type.contains('profile')) {
     return _NotificationTypeConfig(
-        Icons.person_outlined, AppColors.textSecondary, 'Sistema');
+        Icons.person_outlined, AppColors.textSecondary, l.notificationsSystem);
   }
-  return _NotificationTypeConfig(
-      Icons.notifications_outlined, AppColors.textTertiary, 'Sistema');
+  return _NotificationTypeConfig(Icons.notifications_outlined,
+      AppColors.textTertiary, l.notificationsSystem);
 }
 
-String _groupLabel(DateTime date) {
+String _groupLabel(DateTime date, AppLocalizations l) {
   final now = DateTime.now();
   final today = DateTime(now.year, now.month, now.day);
-  final yesterday = today.subtract(const Duration(days: 1));
   final weekAgo = today.subtract(const Duration(days: 7));
   final d = DateTime(date.year, date.month, date.day);
-  if (d == today) return 'Hoje';
-  if (d == yesterday) return 'Ontem';
-  if (d.isAfter(weekAgo)) return 'Esta semana';
-  return 'Mais antigas';
+  if (d == today) return l.notificationsToday;
+  if (d.isAfter(weekAgo)) return l.notificationsThisWeek;
+  return l.notificationsOlder;
 }
 
-Map<String, List<NotificationModel>> _groupByDate(
-    List<NotificationModel> items) {
-  final grouped = <String, List<NotificationModel>>{};
-  const order = ['Hoje', 'Ontem', 'Esta semana', 'Mais antigas'];
+Map<String, List<AppNotificationModel>> _groupByDate(
+    List<AppNotificationModel> items, AppLocalizations l) {
+  final grouped = <String, List<AppNotificationModel>>{};
+  final order = [
+    l.notificationsToday,
+    l.notificationsThisWeek,
+    l.notificationsOlder
+  ];
   for (final label in order) {
     grouped[label] = [];
   }
   for (final item in items) {
-    final label = _groupLabel(item.createdAt);
+    final label = _groupLabel(item.createdAt, l);
     grouped[label]!.add(item);
   }
   grouped.removeWhere((_, v) => v.isEmpty);
@@ -173,7 +86,7 @@ Map<String, List<NotificationModel>> _groupByDate(
 class NotificationCenterScreen extends ConsumerWidget {
   const NotificationCenterScreen({super.key});
 
-  void _onTap(BuildContext context, WidgetRef ref, NotificationModel n) {
+  void _onTap(BuildContext context, WidgetRef ref, AppNotificationModel n) {
     ref.read(notificationListProvider.notifier).markAsRead(n.id);
     final relatedId = n.data?['relatedId'] as String?;
     final type = n.type;
@@ -188,6 +101,7 @@ class NotificationCenterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final notificationsAsync = ref.watch(notificationListProvider);
 
     return Scaffold(
@@ -196,13 +110,13 @@ class NotificationCenterScreen extends ConsumerWidget {
         backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: false,
-        title: const Text('Notificações', style: AppTypography.headlineSmall),
+        title: Text(l.notificationsTitle, style: AppTypography.headlineSmall),
         actions: [
           TextButton(
             onPressed: () =>
                 ref.read(notificationListProvider.notifier).markAllAsRead(),
             child: Text(
-              'Marcar todas como lidas',
+              l.notificationsMarkAllRead,
               style: AppTypography.labelMedium
                   .copyWith(color: AppColors.primary, fontSize: 13),
             ),
@@ -229,7 +143,7 @@ class NotificationCenterScreen extends ConsumerWidget {
             return const _EmptyState();
           }
 
-          final grouped = _groupByDate(notifications);
+          final grouped = _groupByDate(notifications, l);
 
           return RefreshIndicator(
             color: AppColors.primary,
@@ -265,6 +179,7 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.xxl),
@@ -282,12 +197,10 @@ class _EmptyState extends StatelessWidget {
                   size: 40, color: AppColors.textTertiary),
             ),
             const SizedBox(height: AppSpacing.lg),
-            // "Tudo limpo por aqui" — NOT "Nenhuma notificação"
-            const Text('Tudo limpo por aqui',
-                style: AppTypography.headlineSmall),
+            Text(l.notificationsEmpty, style: AppTypography.headlineSmall),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Você será notificado sobre cotações,\npedidos e pagamentos aqui.',
+              l.notificationsEmptyHint,
               textAlign: TextAlign.center,
               style: AppTypography.bodyMedium
                   .copyWith(color: AppColors.textSecondary),
@@ -318,14 +231,15 @@ class _GroupHeader extends StatelessWidget {
 }
 
 class _NotificationTile extends StatelessWidget {
-  final NotificationModel notification;
+  final AppNotificationModel notification;
   final VoidCallback onTap;
 
   const _NotificationTile({required this.notification, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final config = _configForType(notification.type);
+    final l = AppLocalizations.of(context)!;
+    final config = _configForType(notification.type, l);
 
     return InkWell(
       onTap: onTap,
@@ -385,7 +299,7 @@ class _NotificationTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    AppFormatters.timeAgo(notification.createdAt),
+                    AppFormatters.timeAgo(notification.createdAt, l),
                     style: AppTypography.labelSmall
                         .copyWith(color: AppColors.textTertiary),
                   ),

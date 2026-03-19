@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/constants/enum_extensions.dart';
 import '../../core/utils/formatters.dart';
 import '../../providers/quotation_provider.dart';
 import '../../widgets/ifarm_error_state.dart';
@@ -25,6 +27,7 @@ class QuoteDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final detailAsync = ref.watch(quoteDetailProvider(quoteId));
 
     return Scaffold(
@@ -35,11 +38,11 @@ class QuoteDetailScreen extends ConsumerWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: _onSurface),
-          onPressed: () => Navigator.of(context).maybePop(),
+          onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Detalhe da Cotação',
-          style: TextStyle(
+        title: Text(
+          l.quoteDetailTitle,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: _onSurface,
@@ -119,7 +122,7 @@ class QuoteDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 12),
                       _InfoRow(
                         icon: Icons.calendar_today_outlined,
-                        label: 'Expira em',
+                        label: l.quoteDetailExpiration,
                         value: AppFormatters.dateFromString(
                             quote.expiresAt.toIso8601String()),
                       ),
@@ -127,13 +130,14 @@ class QuoteDetailScreen extends ConsumerWidget {
                       _InfoRow(
                         icon: Icons.payments_outlined,
                         label: 'Pagamento',
-                        value: quote.preferredPaymentMethod.label,
+                        value: quote.preferredPaymentMethod
+                            .localizedLabel(context),
                       ),
                       const SizedBox(height: 6),
                       _InfoRow(
                         icon: Icons.local_shipping_outlined,
                         label: 'Entrega',
-                        value: quote.deliveryMode.label,
+                        value: quote.deliveryMode.localizedLabel(context),
                       ),
                     ],
                   ),
@@ -142,7 +146,7 @@ class QuoteDetailScreen extends ConsumerWidget {
                 const SizedBox(height: 20),
 
                 // ── Items section ──────────────────────────────────────
-                const _SectionTitle(text: 'Itens solicitados'),
+                _SectionTitle(text: l.quoteDetailItems),
                 const SizedBox(height: 10),
                 ...quote.items.map((item) => _ItemCard(item: item)),
 
@@ -153,7 +157,8 @@ class QuoteDetailScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _SectionTitle(
-                          text: 'Propostas (${proposals.length})'),
+                          text:
+                              '${l.quoteDetailProposals} (${proposals.length})'),
                       TextButton(
                         onPressed: () =>
                             context.push('/quote/$quoteId/compare'),
@@ -164,7 +169,7 @@ class QuoteDetailScreen extends ConsumerWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        child: const Text('Comparar'),
+                        child: Text(l.quoteDetailCompareProposals),
                       ),
                     ],
                   ),
@@ -175,8 +180,8 @@ class QuoteDetailScreen extends ConsumerWidget {
                     return _ProposalCard(
                       proposal: p,
                       isBest: isBest,
-                      onTap: () => context
-                          .push('/quote/$quoteId/proposal/${p.id}'),
+                      onTap: () =>
+                          context.push('/quote/$quoteId/proposal/${p.id}'),
                     );
                   }),
                 ],
@@ -201,8 +206,7 @@ class _StitchCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _ghostBorder, width: 1),
         boxShadow: const [
-          BoxShadow(
-              color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
+          BoxShadow(color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
         ],
       ),
       padding: const EdgeInsets.all(16),
@@ -271,8 +275,7 @@ class _ItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _ghostBorder, width: 1),
         boxShadow: const [
-          BoxShadow(
-              color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
+          BoxShadow(color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
         ],
       ),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -399,7 +402,8 @@ class _ProposalCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                CurrencyText(value: proposal.totalWithTaxAndDelivery, large: true),
+                CurrencyText(
+                    value: proposal.totalWithTaxAndDelivery, large: true),
                 const SizedBox(height: 4),
                 const Icon(Icons.chevron_right, color: _outline, size: 24),
               ],

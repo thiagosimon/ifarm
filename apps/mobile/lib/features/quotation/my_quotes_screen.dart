@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/router/app_router.dart';
@@ -34,13 +35,12 @@ class _MyQuotesScreenState extends ConsumerState<MyQuotesScreen>
   late TabController _tabController;
   String? _farmerId;
 
-  final _tabs = const ['Ativas', 'Com Propostas', 'Aceitas', 'Expiradas'];
   final _statuses = ['OPEN', 'IN_PROPOSALS', 'ACCEPTED', 'EXPIRED'];
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController = TabController(length: _statuses.length, vsync: this);
     SecureStorage.getFarmerId().then((id) {
       if (mounted) setState(() => _farmerId = id);
     });
@@ -54,13 +54,20 @@ class _MyQuotesScreenState extends ConsumerState<MyQuotesScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final tabs = [
+      l.myQuotesTabActive,
+      l.myQuotesTabWithProposals,
+      l.myQuotesTabAccepted,
+      l.myQuotesTabExpired
+    ];
     return Scaffold(
       backgroundColor: _surface,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(104),
         child: _GlassmorphicAppBar(
           tabController: _tabController,
-          tabs: _tabs,
+          tabs: tabs,
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -75,7 +82,7 @@ class _MyQuotesScreenState extends ConsumerState<MyQuotesScreen>
           : TabBarView(
               controller: _tabController,
               children: List.generate(
-                _tabs.length,
+                _statuses.length,
                 (i) => _QuoteTab(
                   farmerId: _farmerId!,
                   status: _statuses[i],
@@ -119,7 +126,8 @@ class _GlassmorphicAppBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(
                     children: [
                       Container(
@@ -147,18 +155,22 @@ class _GlassmorphicAppBar extends StatelessWidget {
                       ),
                       const Spacer(),
                       IconButton(
-                        icon: const Icon(Icons.search, color: _onSurface, size: 24),
+                        icon: const Icon(Icons.search,
+                            color: _onSurface, size: 24),
                         onPressed: () => context.push(Routes.search),
                         tooltip: 'Buscar',
                         padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                        constraints:
+                            const BoxConstraints(minWidth: 40, minHeight: 40),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.repeat, color: _onSurface, size: 24),
+                        icon: const Icon(Icons.repeat,
+                            color: _onSurface, size: 24),
                         onPressed: () => context.push(Routes.recurringQuotes),
                         tooltip: 'Recorrentes',
                         padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                        constraints:
+                            const BoxConstraints(minWidth: 40, minHeight: 40),
                       ),
                     ],
                   ),
@@ -199,6 +211,7 @@ class _QuoteTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final quotesAsync = ref.watch(quoteListProvider(farmerId));
     return RefreshIndicator(
       color: _primary,
@@ -207,8 +220,9 @@ class _QuoteTab extends ConsumerWidget {
       child: quotesAsync.when(
         loading: () => const ListSkeleton(),
         error: (e, _) => IFarmErrorState(
-          onRetry: () =>
-              ref.read(quoteListProvider(farmerId).notifier).load(status: status),
+          onRetry: () => ref
+              .read(quoteListProvider(farmerId).notifier)
+              .load(status: status),
         ),
         data: (quotes) {
           final filtered = status == null
@@ -216,8 +230,8 @@ class _QuoteTab extends ConsumerWidget {
               : quotes.where((q) => q.status.value == status).toList();
           if (filtered.isEmpty) {
             return IFarmEmptyState(
-              title: 'Nenhuma cotação',
-              subtitle: 'Suas cotações aparecerão aqui',
+              title: l.myQuotesEmpty,
+              subtitle: l.myQuotesEmptyHint,
               icon: Icons.description_outlined,
             );
           }
@@ -246,6 +260,7 @@ class _QuoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: () => context.push('/quote/${quote.id}'),
       child: Container(
@@ -299,7 +314,7 @@ class _QuoteCard extends StatelessWidget {
                           size: 13, color: _onSurfaceVariant),
                       const SizedBox(width: 4),
                       Text(
-                        '${quote.items.length} item(s)',
+                        l.myQuotesItemCount(quote.items.length),
                         style: const TextStyle(
                             fontSize: 12, color: _onSurfaceVariant),
                       ),
@@ -321,8 +336,8 @@ class _QuoteCard extends StatelessWidget {
                       children: [
                         const Text(
                           'Melhor oferta: ',
-                          style: TextStyle(
-                              fontSize: 12, color: _onSurfaceVariant),
+                          style:
+                              TextStyle(fontSize: 12, color: _onSurfaceVariant),
                         ),
                         Text(
                           AppFormatters.currency(

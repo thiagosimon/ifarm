@@ -6,6 +6,7 @@ import '../../providers/quotation_provider.dart';
 import '../../data/repositories/quotation_repository.dart';
 import '../../widgets/ifarm_error_state.dart';
 import '../../widgets/ifarm_star_rating.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../widgets/currency_text.dart';
 
 // Stitch design tokens
@@ -29,6 +30,7 @@ class ProposalDetailScreen extends ConsumerWidget {
   });
 
   Future<void> _accept(BuildContext context, WidgetRef ref) async {
+    final l = AppLocalizations.of(context)!;
     final confirmed = await showModalBottomSheet<bool>(
       context: context,
       backgroundColor: Colors.transparent,
@@ -41,7 +43,7 @@ class ProposalDetailScreen extends ConsumerWidget {
           .acceptProposal(quoteId: quoteId, proposalId: proposalId);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Proposta aceita! Pedido criado.')),
+          SnackBar(content: Text(l.proposalDetailAcceptSuccess)),
         );
         context.go(Routes.orders);
       }
@@ -56,6 +58,7 @@ class ProposalDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final detailAsync = ref.watch(quoteDetailProvider(quoteId));
 
     return Scaffold(
@@ -66,10 +69,10 @@ class ProposalDetailScreen extends ConsumerWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: _onSurface),
-          onPressed: () => Navigator.of(context).maybePop(),
+          onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Detalhes da Proposta',
+        title: Text(
+          l.proposalDetailTitle,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -161,12 +164,11 @@ class ProposalDetailScreen extends ConsumerWidget {
               const SizedBox(height: 20),
 
               // ── Items section ────────────────────────────────────────
-              const _SectionTitle(text: 'Itens'),
+              _SectionTitle(text: l.proposalDetailItems),
               const SizedBox(height: 10),
               ...data.quote.items.asMap().entries.map((entry) {
                 final quoteItem = entry.value;
-                final proposalItem =
-                    proposal.items.elementAtOrNull(entry.key);
+                final proposalItem = proposal.items.elementAtOrNull(entry.key);
                 return _ItemRow(
                   name: quoteItem.productSnapshot.name,
                   quantity: quoteItem.quantity,
@@ -183,7 +185,7 @@ class ProposalDetailScreen extends ConsumerWidget {
                 child: Column(
                   children: [
                     _FinancialRow(
-                      label: 'Subtotal',
+                      label: l.proposalDetailSubtotal,
                       value:
                           'R\$ ${proposal.subtotalAmount.toStringAsFixed(2)}',
                     ),
@@ -215,10 +217,10 @@ class ProposalDetailScreen extends ConsumerWidget {
                     _FinancialRow(
                       label: freightLabel,
                       value: proposal.deliveryFee == 0
-                          ? 'Grátis'
+                          ? l.proposalDetailFreeShipping
                           : 'R\$ ${proposal.deliveryFee.toStringAsFixed(2)}',
                       subLabel:
-                          '${proposal.deliveryDays} dias úteis',
+                          l.proposalDetailBusinessDays(proposal.deliveryDays),
                     ),
 
                     const SizedBox(height: 12),
@@ -228,8 +230,8 @@ class ProposalDetailScreen extends ConsumerWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'TOTAL C/ IMPOSTOS E FRETE',
+                        Text(
+                          l.proposalDetailTotal,
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
@@ -248,7 +250,7 @@ class ProposalDetailScreen extends ConsumerWidget {
 
               if (proposal.observations.isNotEmpty) ...[
                 const SizedBox(height: 16),
-                const _SectionTitle(text: 'Observações'),
+                _SectionTitle(text: l.proposalDetailObservations),
                 const SizedBox(height: 8),
                 Text(
                   proposal.observations,
@@ -283,9 +285,10 @@ class ProposalDetailScreen extends ConsumerWidget {
                   ),
                   child: TextButton.icon(
                     onPressed: () => _accept(context, ref),
-                    icon: const Icon(Icons.check, color: Colors.white, size: 18),
-                    label: const Text(
-                      'Sim, Confirmar Pedido',
+                    icon:
+                        const Icon(Icons.check, color: Colors.white, size: 18),
+                    label: Text(
+                      l.proposalDetailAccept,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -303,7 +306,7 @@ class ProposalDetailScreen extends ConsumerWidget {
                 width: double.infinity,
                 height: 50,
                 child: OutlinedButton(
-                  onPressed: () => Navigator.of(context).maybePop(),
+                  onPressed: () => context.pop(),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: _primary,
                     side: const BorderSide(color: _primary, width: 1.5),
@@ -311,9 +314,9 @@ class ProposalDetailScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    'Voltar e Revisar',
-                    style: TextStyle(
+                  child: Text(
+                    l.proposalDetailCancel,
+                    style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                     ),
@@ -335,6 +338,7 @@ class ProposalDetailScreen extends ConsumerWidget {
 class _AcceptBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Container(
       decoration: const BoxDecoration(
         color: _surfaceContainerLowest,
@@ -355,18 +359,18 @@ class _AcceptBottomSheet extends StatelessWidget {
           const SizedBox(height: 24),
           const Icon(Icons.check_circle_outline, size: 52, color: _primary),
           const SizedBox(height: 16),
-          const Text(
-            'Confirmar Pedido',
-            style: TextStyle(
+          Text(
+            l.proposalDetailConfirm,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: _onSurface,
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Esta ação não pode ser desfeita. Ao confirmar, um pedido será criado.',
-            style: TextStyle(
+          Text(
+            l.proposalDetailConfirmAccept,
+            style: const TextStyle(
               fontSize: 13,
               color: _onSurfaceVariant,
               height: 1.5,
@@ -388,9 +392,9 @@ class _AcceptBottomSheet extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () => Navigator.pop(context, true),
-                child: const Text(
-                  'Sim, Confirmar Pedido',
-                  style: TextStyle(
+                child: Text(
+                  l.proposalDetailConfirm,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
@@ -412,9 +416,10 @@ class _AcceptBottomSheet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
-                'Voltar e Revisar',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              child: Text(
+                l.proposalDetailCancel,
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -438,8 +443,7 @@ class _StitchCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _ghostBorder, width: 1),
         boxShadow: const [
-          BoxShadow(
-              color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
+          BoxShadow(color: _ambientShadow, blurRadius: 8, offset: Offset(0, 2)),
         ],
       ),
       padding: const EdgeInsets.all(16),
@@ -489,8 +493,7 @@ class _ItemRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: _ghostBorder, width: 1),
         boxShadow: const [
-          BoxShadow(
-              color: _ambientShadow, blurRadius: 6, offset: Offset(0, 1)),
+          BoxShadow(color: _ambientShadow, blurRadius: 6, offset: Offset(0, 1)),
         ],
       ),
       child: Row(
@@ -511,8 +514,8 @@ class _ItemRow extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     'R\$ ${unitPrice!.toStringAsFixed(2)} / $unit',
-                    style: const TextStyle(
-                        fontSize: 11, color: _onSurfaceVariant),
+                    style:
+                        const TextStyle(fontSize: 11, color: _onSurfaceVariant),
                   ),
                 ],
               ],
@@ -549,7 +552,8 @@ class _FinancialRow extends StatelessWidget {
   final String label;
   final String value;
   final String? subLabel;
-  const _FinancialRow({required this.label, required this.value, this.subLabel});
+  const _FinancialRow(
+      {required this.label, required this.value, this.subLabel});
 
   @override
   Widget build(BuildContext context) {

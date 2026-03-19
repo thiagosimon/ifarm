@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/app_spacing.dart';
@@ -95,13 +96,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: false,
-        title: const Text('Configurações', style: AppTypography.headlineSmall),
+        title: Text(l.settingsTitle, style: AppTypography.headlineSmall),
       ),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -109,13 +111,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           // ----------------------------------------------------------------
           // Notification Preferences
           // ----------------------------------------------------------------
-          _SectionHeader(label: 'Preferências de Notificação'),
+          _SectionHeader(label: l.settingsNotifications),
           const SizedBox(height: AppSpacing.sm),
           _Card(
             children: [
               _SwitchTile(
                 icon: Icons.request_quote_outlined,
-                label: 'Novas cotações',
+                label: l.settingsQuoteAlerts,
                 value: _prefs.newQuotes,
                 onChanged: (v) =>
                     setState(() => _prefs = _prefs.copyWith(newQuotes: v)),
@@ -131,7 +133,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               _Divider(),
               _SwitchTile(
                 icon: Icons.local_shipping_outlined,
-                label: 'Atualizações de pedidos',
+                label: l.settingsOrderAlerts,
                 value: _prefs.orderUpdates,
                 onChanged: (v) =>
                     setState(() => _prefs = _prefs.copyWith(orderUpdates: v)),
@@ -290,8 +292,8 @@ class _SwitchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SwitchListTile(
-      secondary: Icon(icon,
-          color: AppColors.textSecondary, size: AppSpacing.iconLg),
+      secondary:
+          Icon(icon, color: AppColors.textSecondary, size: AppSpacing.iconLg),
       title: Text(label, style: AppTypography.bodyMedium),
       value: value,
       activeThumbColor: AppColors.primary,
@@ -337,7 +339,8 @@ class _DeleteAccountPromptSheet extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
             const Text('Excluir conta',
-                style: AppTypography.headlineSmall, textAlign: TextAlign.center),
+                style: AppTypography.headlineSmall,
+                textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.sm),
             Text(
               'Para excluir sua conta acesse a seção Privacidade e LGPD. '

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_typography.dart';
 import '../../core/theme/app_spacing.dart';
@@ -19,8 +20,8 @@ class ProfileScreen extends ConsumerWidget {
       context: context,
       backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-            top: Radius.circular(AppSpacing.radiusLg)),
+        borderRadius:
+            BorderRadius.vertical(top: Radius.circular(AppSpacing.radiusLg)),
       ),
       builder: (ctx) => _LogoutBottomSheet(
         onConfirm: () async {
@@ -35,6 +36,7 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l = AppLocalizations.of(context)!;
     final farmerAsync = ref.watch(currentFarmerProvider);
 
     return Scaffold(
@@ -61,29 +63,31 @@ class ProfileScreen extends ConsumerWidget {
               if (farmer != null) ...[
                 // ── Stats row ─────────────────────────────────────────────
                 SliverToBoxAdapter(child: _StatsRow(farmer: farmer)),
-                const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+                const SliverToBoxAdapter(
+                    child: SizedBox(height: AppSpacing.lg)),
 
                 // ── Harvest goal card ─────────────────────────────────────
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.lg),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
                     child: _HarvestGoalCard(),
                   ),
                 ),
-                const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.lg)),
+                const SliverToBoxAdapter(
+                    child: SizedBox(height: AppSpacing.lg)),
               ],
 
               // ── "Minha Conta" section ────────────────────────────────────
               SliverToBoxAdapter(
-                child: _SectionTitle(label: 'Minha Conta'),
+                child: _SectionTitle(label: l.profileMyAccount),
               ),
               SliverToBoxAdapter(
                 child: _MenuCard(
                   items: [
                     _MenuItem(
                       icon: Icons.edit_outlined,
-                      label: 'Editar Perfil',
+                      label: l.profileEditProfile,
                       onTap: () => context.push(Routes.editProfile),
                     ),
                     _MenuItem(
@@ -98,17 +102,17 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                     _MenuItem(
                       icon: Icons.settings_outlined,
-                      label: 'Configurações',
+                      label: l.profileSettings,
                       onTap: () => context.push(Routes.settings),
                     ),
                     _MenuItem(
                       icon: Icons.privacy_tip_outlined,
-                      label: 'Privacidade e LGPD',
+                      label: l.profilePrivacy,
                       onTap: () => context.push(Routes.privacyLgpd),
                     ),
                     _MenuItem(
                       icon: Icons.help_outline,
-                      label: 'Ajuda',
+                      label: l.profileHelp,
                       onTap: () {},
                     ),
                   ],
@@ -124,7 +128,7 @@ class ProfileScreen extends ConsumerWidget {
                   items: [
                     _MenuItem(
                       icon: Icons.logout,
-                      label: 'Sair',
+                      label: l.profileLogout,
                       iconColor: AppColors.error,
                       labelColor: AppColors.error,
                       onTap: () => _showLogoutSheet(context, ref),
@@ -169,7 +173,11 @@ class _ProfileHeader extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [AppColors.primaryDark, AppColors.primary, AppColors.primaryContainer],
+          colors: [
+            AppColors.primaryDark,
+            AppColors.primary,
+            AppColors.primaryContainer
+          ],
         ),
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(28)),
       ),
@@ -260,7 +268,8 @@ class _StatItem extends StatelessWidget {
         children: [
           Text(
             value,
-            style: AppTypography.headlineSmall.copyWith(color: AppColors.primary),
+            style:
+                AppTypography.headlineSmall.copyWith(color: AppColors.primary),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 2),
@@ -454,6 +463,7 @@ class _LogoutBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.xxl),
@@ -479,7 +489,7 @@ class _LogoutBottomSheet extends StatelessWidget {
               child: const Icon(Icons.logout, color: AppColors.error, size: 32),
             ),
             const SizedBox(height: AppSpacing.lg),
-            const Text('Deseja sair da conta?',
+            Text(l.profileLogoutConfirm,
                 style: AppTypography.headlineSmall,
                 textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.sm),
@@ -494,7 +504,7 @@ class _LogoutBottomSheet extends StatelessWidget {
               children: [
                 Expanded(
                   child: IFarmButton(
-                    label: 'Cancelar',
+                    label: l.profileCancel,
                     variant: IFarmButtonVariant.outline,
                     onPressed: onCancel,
                   ),
@@ -502,7 +512,7 @@ class _LogoutBottomSheet extends StatelessWidget {
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
                   child: IFarmButton(
-                    label: 'Sair',
+                    label: l.profileConfirm,
                     variant: IFarmButtonVariant.danger,
                     onPressed: onConfirm,
                   ),

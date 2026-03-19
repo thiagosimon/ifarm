@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_typography.dart';
 
@@ -26,10 +27,10 @@ class IFarmAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor ?? AppColors.surface,
       elevation: 0,
       scrolledUnderElevation: 1,
-      leading: showBack && Navigator.of(context).canPop()
+      leading: showBack && context.canPop()
           ? IconButton(
               icon: const Icon(Icons.arrow_back_ios_new, size: 20),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
             )
           : leading,
       title: titleWidget ?? Text(title, style: AppTypography.headlineSmall),

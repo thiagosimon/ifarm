@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/router/app_router.dart';
 
@@ -18,23 +19,20 @@ const _slides = [
   _SlideData(
     imageUrl:
         'https://lh3.googleusercontent.com/aida-public/AB6AXuD6IUSruWOLsVX65COISvy4nGzU4Vp5TXTRIsc6sbre_Dghf7rB1h4cmyI_MVizzE8SojBEz_Nrm0FC7OgcqElp5IcPA1XXq2-fJauP1qq3z7gTt_yAaDary3pJeWKhPkdpTo6BisWPlEUxMLz4Yofld3Bu1r46UZ6HkMupx1vGn_iomoLG5xciRYhaRwLdymm2CR8vSk3iIEn_UM7SONQsxP96OVA3wV85gTOxGkbuy43kLxhKAesCFzC7NumaIVuFFKBL5xM4xI6k',
-    headline: 'Compre pelo\nmelhor preço',
-    subtitle:
-        'Acesse uma rede global de fornecedores agrícolas direto do seu celular.',
+    headline: '',
+    subtitle: '',
   ),
   _SlideData(
     imageUrl:
         'https://lh3.googleusercontent.com/aida-public/AB6AXuAJ_yzrM14GeS6x3eUS0TlAuALQpeGjRvs3NDtTNdiAgRT0fzPGzNEpFDrhezJCFxowRv_WnQQrvh4ZUivBFV42xPlKwjlqXwHu43BLQPGJL1HFJEr7tZ2Hv5XtbnlvcGaxnyvGeA4_0L7Bc0PxOrYpLOwTUXKp-pf8VXzxl3EG-CqSzltoH7C5RczsY3RwAqF9DQIPskL_IlzawJCbA7UeuUw8psTUA2tKmH-3oesyeD53Wa2gpXrSwVNUHcS4sYbKZhkSOhjLSm2o',
-    headline: 'Receba múltiplas\ncotações',
-    subtitle:
-        'Compare ofertas em tempo real e garanta a melhor rentabilidade para sua safra.',
+    headline: '',
+    subtitle: '',
   ),
   _SlideData(
     imageUrl:
         'https://lh3.googleusercontent.com/aida-public/AB6AXuDFPI01OtP7ibugBydiTz9ge4nLpM9JOo677gu1hTa7updaXZIom1Cs9LyKEM6UzK82dcaI_ZmOGkC2Z43qsgvxQAtGGssfmKuO-H-6xduaQQ_ddl1gVCSWT6uHJzv97-GAPAEz0zxIbok4J4wFZhyle9DBo74c_82cl5vtbKmnNOg9OjFHlg-8PY6bJg8w-8JLKV2GTKPKcW51yLIGai0EfvxesjnX37PciXwGEV_13pdo4idF5QhopRBGAddIi5zFBevhwGWgSJ4j',
-    headline: 'Gerencie\ndo campo',
-    subtitle:
-        'Toda a gestão de insumos e logística na palma da sua mão, onde quer que você esteja.',
+    headline: '',
+    subtitle: '',
   ),
 ];
 
@@ -65,7 +63,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             controller: _pageController,
             onPageChanged: (i) => setState(() => _currentPage = i),
             itemCount: _slides.length,
-            itemBuilder: (context, i) => _SlideView(slide: _slides[i]),
+            itemBuilder: (context, i) {
+              final l = AppLocalizations.of(context)!;
+              final titles = [
+                l.welcomeSlideTitle1,
+                l.welcomeSlideTitle2,
+                l.welcomeSlideTitle3
+              ];
+              final descs = [
+                l.welcomeSlideDesc1,
+                l.welcomeSlideDesc2,
+                l.welcomeSlideDesc3
+              ];
+              return _SlideView(
+                slide: _slides[i],
+                headline: titles[i],
+                subtitle: descs[i],
+              );
+            },
           ),
           Positioned(
             top: 0,
@@ -73,10 +88,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             right: 0,
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Row(
                   children: [
-                    const Icon(Icons.agriculture, color: Colors.white, size: 28),
+                    const Icon(Icons.agriculture,
+                        color: Colors.white, size: 28),
                     const SizedBox(width: 8),
                     const Text(
                       'iFarm',
@@ -112,7 +129,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
 class _SlideView extends StatelessWidget {
   final _SlideData slide;
-  const _SlideView({required this.slide});
+  final String headline;
+  final String subtitle;
+  const _SlideView(
+      {required this.slide, required this.headline, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +142,8 @@ class _SlideView extends StatelessWidget {
         Image.network(
           slide.imageUrl,
           fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) => Container(color: AppColors.primaryContainer),
+          errorBuilder: (_, __, ___) =>
+              Container(color: AppColors.primaryContainer),
         ),
         DecoratedBox(
           decoration: const BoxDecoration(
@@ -146,7 +167,7 @@ class _SlideView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                slide.headline,
+                headline,
                 style: const TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 36,
@@ -158,7 +179,7 @@ class _SlideView extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                slide.subtitle,
+                subtitle,
                 style: TextStyle(
                   fontFamily: 'Inter',
                   fontSize: 18,
@@ -238,9 +259,9 @@ class _BottomControls extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Criar Conta',
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.welcomeCreateAccount,
+                  style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -264,9 +285,9 @@ class _BottomControls extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Entrar',
-                  style: TextStyle(
+                child: Text(
+                  AppLocalizations.of(context)!.welcomeLogin,
+                  style: const TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -276,7 +297,7 @@ class _BottomControls extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'O MERCADO DIGITAL DO AGRONEGÓCIO',
+              AppLocalizations.of(context)!.welcomeTagline,
               style: TextStyle(
                 fontFamily: 'Inter',
                 fontSize: 10,

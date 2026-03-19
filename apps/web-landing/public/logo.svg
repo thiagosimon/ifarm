@@ -1,0 +1,10 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="iFarm logo">
+  <!-- Icon: stylized sprout -->
+  <circle cx="20" cy="20" r="18" fill="#005129"/>
+  <path d="M20 30C20 30 13 24.5 13 19.5C13 16.46 15.24 14 18 14C18.93 14 19.8 14.28 20.5 14.75" stroke="#A5F4B8" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M20 30C20 30 27 24.5 27 19.5C27 16.46 24.76 14 22 14C21.07 14 20.2 14.28 19.5 14.75" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <line x1="20" y1="20" x2="20" y2="30" stroke="#A5F4B8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="20" cy="19" r="2.5" fill="#FFC641"/>
+  <!-- Wordmark: iFarm -->
+  <text x="45" y="27" font-family="Inter, sans-serif" font-size="20" font-weight="800" fill="#005129">i<tspan fill="#FFC641">Farm</tspan></text>
+</svg>

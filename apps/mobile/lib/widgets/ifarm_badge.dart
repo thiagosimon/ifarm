@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
 import '../core/theme/app_typography.dart';
 import '../core/theme/app_spacing.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 
 class IFarmBadge extends StatelessWidget {
   final String label;
@@ -18,22 +19,22 @@ class IFarmBadge extends StatelessWidget {
   });
 
   factory IFarmBadge.ncm(String code) => IFarmBadge(
-    label: 'NCM $code',
-    backgroundColor: AppColors.surfaceVariant,
-    textColor: AppColors.textSecondary,
-  );
+        label: 'NCM $code',
+        backgroundColor: AppColors.surfaceVariant,
+        textColor: AppColors.textSecondary,
+      );
 
-  factory IFarmBadge.ruralCredit() => IFarmBadge(
-    label: 'Crédito Rural',
-    backgroundColor: AppColors.secondaryContainer,
-    textColor: AppColors.secondaryDark,
-  );
+  factory IFarmBadge.ruralCredit(BuildContext context) => IFarmBadge(
+        label: AppLocalizations.of(context)!.badgeRuralCredit,
+        backgroundColor: AppColors.secondaryContainer,
+        textColor: AppColors.secondaryDark,
+      );
 
   factory IFarmBadge.category(String label) => IFarmBadge(
-    label: label,
-    backgroundColor: AppColors.primaryContainer,
-    textColor: AppColors.primaryDark,
-  );
+        label: label,
+        backgroundColor: AppColors.primaryContainer,
+        textColor: AppColors.primaryDark,
+      );
 
   @override
   Widget build(BuildContext context) {

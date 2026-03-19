@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import 'api_endpoints.dart';
 import 'auth_interceptor.dart';
 
@@ -49,7 +50,8 @@ class ApiClient {
     Map<String, dynamic>? queryParams,
     Options? options,
   }) =>
-      _dio.post(path, data: data, queryParameters: queryParams, options: options);
+      _dio.post(path,
+          data: data, queryParameters: queryParams, options: options);
 
   // PATCH
   Future<Response> patch(
@@ -58,7 +60,8 @@ class ApiClient {
     Map<String, dynamic>? queryParams,
     Options? options,
   }) =>
-      _dio.patch(path, data: data, queryParameters: queryParams, options: options);
+      _dio.patch(path,
+          data: data, queryParameters: queryParams, options: options);
 
   // DELETE
   Future<Response> delete(
@@ -82,21 +85,21 @@ class ApiClient {
       );
 
   // Error message extraction
-  static String extractErrorMessage(DioException e) {
+  static String extractErrorMessage(DioException e, AppLocalizations l) {
     try {
       final data = e.response?.data;
       if (data is Map) {
-        return data['message']?.toString() ?? 'Erro desconhecido';
+        return data['message']?.toString() ?? l.errorUnknown;
       }
     } catch (_) {}
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.receiveTimeout:
-        return 'Tempo de conexão esgotado. Verifique sua internet.';
+        return l.errorTimeout;
       case DioExceptionType.connectionError:
-        return 'Sem conexão com a internet.';
+        return l.errorNoConnection;
       default:
-        return 'Algo deu errado. Tente novamente.';
+        return l.errorSomethingWrong;
     }
   }
 }

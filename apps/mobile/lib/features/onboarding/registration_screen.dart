@@ -8,6 +8,7 @@ import '../../core/router/app_router.dart';
 import '../../core/utils/validators.dart';
 import '../../data/repositories/farmer_repository.dart';
 import '../../providers/auth_provider.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 
 // ─── 27 Brazilian states ──────────────────────────────────────────────────────
 const _kBrazilianStates = [
@@ -104,11 +105,12 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
   }
 
   Future<void> _submit() async {
+    final l = AppLocalizations.of(context)!;
     if (!(_formKey.currentState?.validate() ?? false)) return;
     if (!_termsAccepted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Aceite os Termos de Uso para continuar.'),
+          content: Text(l.registrationAcceptTermsError),
           backgroundColor: const Color(0xFFBA1A1A),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -184,8 +186,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide:
-              const BorderSide(color: Color(0xFF005129), width: 1.5),
+          borderSide: const BorderSide(color: Color(0xFF005129), width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -193,8 +194,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide:
-              const BorderSide(color: Color(0xFFBA1A1A), width: 1.5),
+          borderSide: const BorderSide(color: Color(0xFFBA1A1A), width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppSpacing.lg,
@@ -268,6 +268,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FB),
       appBar: AppBar(
@@ -278,9 +279,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
           icon: const Icon(Icons.arrow_back, color: Color(0xFF191C1E)),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Criar Conta',
-          style: TextStyle(
+        title: Text(
+          l.registrationTitle,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: Color(0xFF191C1E),
@@ -298,16 +299,17 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
               // ═══════════════════════════════════════════════════════════════
               // SECTION 1 — Dados Pessoais
               // ═══════════════════════════════════════════════════════════════
-              _sectionHeader(Icons.person_outline, 'Dados Pessoais'),
+              _sectionHeader(Icons.person_outline, l.registrationPersonalData),
 
               // Nome completo
               TextFormField(
                 controller: _nameCtrl,
                 textCapitalization: TextCapitalization.words,
                 textInputAction: TextInputAction.next,
-                validator: (v) => AppValidators.required(v, 'Nome'),
+                validator: (v) =>
+                    AppValidators.required(l, v, l.registrationFullName),
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('Nome completo'),
+                decoration: _inputDeco(l.registrationFullName),
               ),
               const SizedBox(height: 12),
 
@@ -317,9 +319,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 inputFormatters: [_cpfMask],
-                validator: AppValidators.federalTaxId,
+                validator: (v) => AppValidators.federalTaxId(l, v),
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('CPF'),
+                decoration: _inputDeco(l.registrationCpf),
               ),
               const SizedBox(height: 12),
 
@@ -328,9 +330,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 controller: _emailCtrl,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
-                validator: AppValidators.email,
+                validator: (v) => AppValidators.email(l, v),
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('E-mail'),
+                decoration: _inputDeco(l.registrationEmail),
               ),
               const SizedBox(height: 12),
 
@@ -340,9 +342,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 keyboardType: TextInputType.phone,
                 textInputAction: TextInputAction.next,
                 inputFormatters: [_phoneMask],
-                validator: AppValidators.phone,
+                validator: (v) => AppValidators.phone(l, v),
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('Telefone'),
+                decoration: _inputDeco(l.registrationPhone),
               ),
               const SizedBox(height: 12),
 
@@ -351,9 +353,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 controller: _senhaCtrl,
                 obscureText: _obscurePass,
                 textInputAction: TextInputAction.next,
-                validator: AppValidators.password,
+                validator: (v) => AppValidators.password(l, v),
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('Senha').copyWith(
+                decoration: _inputDeco(l.registrationPassword).copyWith(
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscurePass
@@ -371,7 +373,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
               // ═══════════════════════════════════════════════════════════════
               // SECTION 2 — Detalhes da Propriedade
               // ═══════════════════════════════════════════════════════════════
-              _sectionHeader(Icons.eco_outlined, 'Detalhes da Propriedade'),
+              _sectionHeader(Icons.eco_outlined, l.registrationPropertyDetails),
 
               // Nome da propriedade
               TextFormField(
@@ -379,9 +381,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 textCapitalization: TextCapitalization.words,
                 textInputAction: TextInputAction.next,
                 validator: (v) =>
-                    AppValidators.required(v, 'Nome da propriedade'),
+                    AppValidators.required(l, v, l.registrationPropertyName),
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('Nome da propriedade'),
+                decoration: _inputDeco(l.registrationPropertyName),
               ),
               const SizedBox(height: 12),
 
@@ -392,7 +394,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     const TextInputType.numberWithOptions(decimal: true),
                 textInputAction: TextInputAction.next,
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('Área total (ha)'),
+                decoration: _inputDeco(l.registrationTotalArea),
               ),
               const SizedBox(height: 12),
 
@@ -403,20 +405,20 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 textInputAction: TextInputAction.next,
                 inputFormatters: [_cepMask],
                 style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco('CEP'),
+                decoration: _inputDeco(l.registrationZipCode),
               ),
               const SizedBox(height: 12),
 
               // Estado dropdown
               DropdownButtonFormField<String>(
                 value: _selectedState,
-                validator: (v) => v == null ? 'Selecione um estado' : null,
+                validator: (v) => v == null ? l.registrationSelectState : null,
                 onChanged: (v) => setState(() => _selectedState = v),
                 style: const TextStyle(
                   fontSize: 16,
                   color: Color(0xFF191C1E),
                 ),
-                decoration: _inputDeco('Estado'),
+                decoration: _inputDeco(l.registrationState),
                 dropdownColor: const Color(0xFFFFFFFF),
                 items: _kBrazilianStates
                     .map((s) => DropdownMenuItem(
@@ -437,9 +439,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Coordenadas GPS',
-                      style: TextStyle(
+                    Text(
+                      l.registrationGpsCoordinates,
+                      style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
                         color: Color(0xFF191C1E),
@@ -449,7 +451,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     Text(
                       _lat != null && _lng != null
                           ? '${_lat!.toStringAsFixed(4)}, ${_lng!.toStringAsFixed(4)}'
-                          : 'Toque para capturar localização',
+                          : l.registrationTapToCapture,
                       style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xFF707A70),
@@ -459,7 +461,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     OutlinedButton.icon(
                       onPressed: _captureGPS,
                       icon: const Icon(Icons.my_location, size: 16),
-                      label: const Text('CAPTURAR'),
+                      label: Text(l.registrationCapture),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: const Color(0xFF005129),
                         side: const BorderSide(color: Color(0xFF005129)),
@@ -484,7 +486,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
               // ═══════════════════════════════════════════════════════════════
               // SECTION 3 — Termos e Privacidade
               // ═══════════════════════════════════════════════════════════════
-              _sectionHeader(Icons.gavel_outlined, 'Termos e Privacidade'),
+              _sectionHeader(Icons.gavel_outlined, l.registrationTermsTitle),
 
               // Terms checkbox
               CheckboxListTile(
@@ -496,9 +498,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
-                title: const Text(
-                  'Aceito os Termos de Uso. Compreendo como meus dados serão processados conforme as diretrizes da LGPD.',
-                  style: TextStyle(
+                title: Text(
+                  l.registrationAcceptTerms,
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF404940),
                     height: 1.5,
@@ -513,9 +515,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     minimumSize: Size.zero,
                     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
-                  child: const Text(
-                    'Ler Termos de Uso',
-                    style: TextStyle(fontSize: 13),
+                  child: Text(
+                    l.registrationReadTerms,
+                    style: const TextStyle(fontSize: 13),
                   ),
                 ),
               ),
@@ -531,9 +533,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
-                title: const Text(
-                  'Quero receber relatórios de cotações e novidades do agronegócio via E-mail e WhatsApp.',
-                  style: TextStyle(
+                title: Text(
+                  l.registrationMarketingConsent,
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF404940),
                     height: 1.5,
@@ -545,7 +547,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
 
               // ─── Criar Conta button ───────────────────────────────────────
               _gradientButton(
-                label: 'Criar Conta',
+                label: l.registrationCreateAccountButton,
                 onPressed: _isLoading ? null : _submit,
                 isLoading: _isLoading,
               ),
@@ -559,9 +561,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                   style: TextButton.styleFrom(
                     foregroundColor: const Color(0xFF005129),
                   ),
-                  child: const Text(
-                    'Fazer Login',
-                    style: TextStyle(
+                  child: Text(
+                    l.registrationLoginButton,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF005129),

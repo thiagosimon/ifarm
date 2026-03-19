@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -74,12 +75,12 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
     return '$m:$s';
   }
 
-  Future<void> _copyToClipboard(String text, String label) async {
+  Future<void> _copyToClipboard(String text, String successMessage) async {
     await Clipboard.setData(ClipboardData(text: text));
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('$label copiado!'),
+          content: Text(successMessage),
           backgroundColor: AppColors.success,
           duration: const Duration(seconds: 2),
         ),
@@ -97,6 +98,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final paymentAsync = ref.watch(paymentProvider(widget.orderId));
 
     return Scaffold(
@@ -105,8 +107,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
         backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: false,
-        title: const Text('Pagamento via PIX',
-            style: AppTypography.headlineSmall),
+        title: Text(l.paymentTitle, style: AppTypography.headlineSmall),
         leading: IconButton(
           icon: const Icon(Icons.close, color: AppColors.onSurface),
           onPressed: () => context.pop(),
@@ -126,7 +127,8 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
               const SizedBox(height: AppSpacing.sm),
               IFarmButton(
                 label: 'Tentar novamente',
-                onPressed: () => ref.invalidate(paymentProvider(widget.orderId)),
+                onPressed: () =>
+                    ref.invalidate(paymentProvider(widget.orderId)),
                 variant: IFarmButtonVariant.outline,
               ),
             ],
@@ -145,6 +147,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
   }
 
   Widget _buildPixView(TransactionModel tx) {
+    final l = AppLocalizations.of(context)!;
     final isPaid = tx.isPaid;
     final isExpired =
         tx.expiresAt != null && _remaining == Duration.zero && !isPaid;
@@ -179,9 +182,9 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                 ),
                 const SizedBox(height: AppSpacing.xs),
                 // "Pagamento PIX" — 20px w700 white
-                const Text(
-                  'Pagamento PIX',
-                  style: TextStyle(
+                Text(
+                  l.paymentViaPix,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
@@ -282,14 +285,13 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                   side: const BorderSide(color: AppColors.primary),
                   foregroundColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(AppSpacing.radiusSm),
+                    borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
                   ),
                 ),
                 icon: const Icon(Icons.copy, size: 18),
-                label: const Text('Copiar código PIX'),
+                label: Text(l.paymentCopyPixKey),
                 onPressed: () =>
-                    _copyToClipboard(tx.pixQrCode!, 'Código PIX'),
+                    _copyToClipboard(tx.pixQrCode!, l.paymentPixKeyCopied),
               ),
           ],
 
@@ -331,6 +333,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
   }
 
   Widget _buildStatusTimeline() {
+    final l = AppLocalizations.of(context)!;
     final steps = [
       _StatusStep(
         icon: Icons.check_circle,
@@ -340,8 +343,8 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
       ),
       _StatusStep(
         icon: Icons.hourglass_top_outlined,
-        label: 'Aguardando Pagamento',
-        sublabel: 'O código expira em 2 horas',
+        label: l.paymentAwaitingPayment,
+        sublabel: l.paymentExpiresIn,
         state: _StepState.pending,
       ),
       _StatusStep(
@@ -372,6 +375,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
   }
 
   Widget _buildBoletoView(TransactionModel tx) {
+    final l = AppLocalizations.of(context)!;
     final isPaid = tx.isPaid;
     final isExpired = tx.expiresAt != null &&
         tx.expiresAt!.isBefore(DateTime.now()) &&
@@ -397,9 +401,9 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
               children: [
                 const Icon(Icons.receipt_long, color: Colors.white, size: 40),
                 const SizedBox(height: AppSpacing.sm),
-                const Text(
-                  'Boleto Bancário',
-                  style: TextStyle(
+                Text(
+                  l.paymentViaBoleto,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
@@ -415,9 +419,8 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
                 if (tx.expiresAt != null) ...[
                   const SizedBox(height: 6),
                   Text(
-                    'Vencimento: ${AppFormatters.date(tx.expiresAt!)}',
-                    style:
-                        const TextStyle(color: Colors.white70, fontSize: 13),
+                    '${l.paymentDueDate}: ${AppFormatters.date(tx.expiresAt!)}',
+                    style: const TextStyle(color: Colors.white70, fontSize: 13),
                   ),
                 ],
               ],
@@ -460,10 +463,10 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
               ),
               const SizedBox(height: AppSpacing.md),
               IFarmButton(
-                label: 'Copiar linha digitável',
+                label: l.paymentCopyBarcode,
                 icon: Icons.copy,
                 onPressed: () =>
-                    _copyToClipboard(tx.boletoBarcode!, 'Linha digitável'),
+                    _copyToClipboard(tx.boletoBarcode!, l.paymentBarcodeCopied),
                 variant: IFarmButtonVariant.outline,
                 fullWidth: true,
               ),
@@ -487,6 +490,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
   }
 
   Widget _buildPaidBadge() {
+    final l = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.xl),
@@ -499,9 +503,9 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
         children: [
           const Icon(Icons.check_circle, color: AppColors.success, size: 48),
           const SizedBox(height: AppSpacing.sm),
-          const Text(
-            'Pagamento confirmado!',
-            style: TextStyle(
+          Text(
+            l.paymentConfirmed,
+            style: const TextStyle(
                 color: AppColors.success,
                 fontSize: 18,
                 fontWeight: FontWeight.bold),
@@ -524,6 +528,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
   }
 
   Widget _buildExpiredBanner() {
+    final l = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -538,7 +543,7 @@ class _PaymentScreenState extends ConsumerState<PaymentScreen> {
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: Text(
-              'Este pagamento expirou. Entre em contato com o suporte.',
+              l.paymentExpired,
               style: AppTypography.bodyMedium
                   .copyWith(color: AppColors.onErrorContainer),
             ),

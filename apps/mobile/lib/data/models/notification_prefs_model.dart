@@ -57,38 +57,3 @@ class QuietHours {
 
   Map<String, dynamic> toJson() => {'start': start, 'end': end};
 }
-
-class AppNotificationModel {
-  final String id;
-  final String type;
-  final String title;
-  final String message;
-  final bool isRead;
-  final String? relatedId;
-  final String? relatedType;
-  final DateTime createdAt;
-
-  const AppNotificationModel({
-    required this.id,
-    required this.type,
-    required this.title,
-    required this.message,
-    required this.isRead,
-    this.relatedId,
-    this.relatedType,
-    required this.createdAt,
-  });
-
-  factory AppNotificationModel.fromJson(Map<String, dynamic> json) {
-    return AppNotificationModel(
-      id: (json['_id'] ?? json['id'] ?? '') as String,
-      type: json['type'] as String? ?? '',
-      title: json['title'] as String? ?? '',
-      message: json['message'] as String? ?? '',
-      isRead: json['isRead'] as bool? ?? false,
-      relatedId: json['relatedId'] as String?,
-      relatedType: json['relatedType'] as String?,
-      createdAt: DateTime.tryParse(json['createdAt'] as String? ?? '') ?? DateTime.now(),
-    );
-  }
-}

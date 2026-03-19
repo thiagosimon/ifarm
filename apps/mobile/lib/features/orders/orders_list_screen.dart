@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
@@ -24,13 +25,6 @@ class _OrdersListScreenState extends ConsumerState<OrdersListScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  static const _tabs = [
-    'Ag. Pagamento',
-    'Pagos',
-    'Enviados',
-    'Entregues',
-  ];
-
   static const _statuses = [
     'AWAITING_PAYMENT',
     'PAID',
@@ -41,7 +35,7 @@ class _OrdersListScreenState extends ConsumerState<OrdersListScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController = TabController(length: _statuses.length, vsync: this);
   }
 
   @override
@@ -52,6 +46,8 @@ class _OrdersListScreenState extends ConsumerState<OrdersListScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: NestedScrollView(
@@ -116,7 +112,12 @@ class _OrdersListScreenState extends ConsumerState<OrdersListScreen>
                 unselectedLabelColor: AppColors.textSecondary,
                 dividerColor: AppColors.surfaceContainerHigh,
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                tabs: _tabs.map((t) => Tab(text: t)).toList(),
+                tabs: [
+                  Tab(text: l.ordersTabAwaitingPayment),
+                  Tab(text: l.ordersTabInProgress),
+                  Tab(text: l.ordersTabDelivered),
+                  Tab(text: l.ordersTabCancelled),
+                ],
               ),
             ),
           ),
@@ -124,7 +125,7 @@ class _OrdersListScreenState extends ConsumerState<OrdersListScreen>
         body: TabBarView(
           controller: _tabController,
           children: List.generate(
-            _tabs.length,
+            _statuses.length,
             (i) => _OrderTab(status: _statuses[i]),
           ),
         ),
@@ -168,6 +169,7 @@ class _OrderTabState extends ConsumerState<_OrderTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final ordersAsync = ref.watch(orderListProvider);
 
     return RefreshIndicator(
@@ -181,9 +183,8 @@ class _OrderTabState extends ConsumerState<_OrderTab> {
               ref.read(orderListProvider.notifier).load(status: widget.status),
         ),
         data: (orders) {
-          final filtered = orders
-              .where((o) => o.status.value == widget.status)
-              .toList();
+          final filtered =
+              orders.where((o) => o.status.value == widget.status).toList();
 
           if (filtered.isEmpty) {
             return ListView(
@@ -194,8 +195,8 @@ class _OrderTabState extends ConsumerState<_OrderTab> {
                   height: MediaQuery.of(context).size.height * 0.6,
                   child: IFarmEmptyState(
                     icon: Icons.shopping_bag_outlined,
-                    title: 'Nenhum pedido',
-                    subtitle: 'Nenhum pedido com este status.',
+                    title: l.ordersEmpty,
+                    subtitle: l.ordersEmpty,
                   ),
                 ),
               ],
@@ -226,6 +227,7 @@ class _OrderCard extends StatelessWidget {
   String get _statusValue => order.status.value;
 
   Widget _buildActionButton(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     switch (_statusValue) {
       case 'AWAITING_PAYMENT':
         return Container(
@@ -268,7 +270,7 @@ class _OrderCard extends StatelessWidget {
             ),
           ),
           onPressed: () => context.push('/order/${order.id}'),
-          child: const Text('Ver Detalhes'),
+          child: Text(l.ordersViewDetails),
         );
       case 'DISPATCHED':
         return OutlinedButton(
@@ -305,6 +307,7 @@ class _OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     final retailerName =
         order.retailer?.displayName ?? 'Varejista desconhecido';
     final thumbnailUrl = order.items.isNotEmpty
@@ -378,7 +381,7 @@ class _OrderCard extends StatelessWidget {
                         const SizedBox(height: 2),
                         // Items count + date
                         Text(
-                          '${order.items.length} item(s) • ${AppFormatters.date(order.createdAt)}',
+                          '${l.ordersItemCount(order.items.length)} • ${AppFormatters.date(order.createdAt)}',
                           style: AppTypography.bodySmall.copyWith(
                             color: AppColors.textSecondary,
                           ),
