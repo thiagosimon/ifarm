@@ -1,0 +1,6 @@
+{
+  "name": "@ifarm/iot-alert",
+  "version": "0.0.1",
+  "private": true,
+  "description": "iFarm IoT Alert Service (Phase 3 - planned)"
+}

@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import Redis from 'ioredis';
@@ -61,7 +61,7 @@ const STATE_ICMS_RATES: Record<string, number> = {
 const REDIS_CACHE_TTL = 3600; // 1 hour in seconds
 
 @Injectable()
-export class TaxService {
+export class TaxService implements OnModuleDestroy {
   private readonly logger = new Logger(TaxService.name);
   private readonly redis: Redis;
 
@@ -78,6 +78,10 @@ export class TaxService {
     this.redis.on('error', (err) => {
       this.logger.error(`Redis error: ${err.message}`);
     });
+  }
+
+  async onModuleDestroy() {
+    await this.redis.quit();
   }
 
   /**

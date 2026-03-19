@@ -84,10 +84,8 @@ async function bootstrap(): Promise<void> {
         includeSubDomains: true,
         preload: true,
       },
-      ieNoOpen: true,
       noSniff: true,
       referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
-      xssFilter: true,
     }),
   );
 

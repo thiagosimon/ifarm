@@ -1,0 +1,6 @@
+{
+  "name": "@ifarm/iot-ingestion",
+  "version": "0.0.1",
+  "private": true,
+  "description": "iFarm IoT Ingestion Service (Phase 3 - planned)"
+}

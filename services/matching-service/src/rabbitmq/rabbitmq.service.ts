@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import * as amqp from 'amqp-connection-manager';
 import { ChannelWrapper } from 'amqp-connection-manager';
-import { ConfirmChannel } from 'amqplib';
+import { ConfirmChannel, ConsumeMessage } from 'amqplib';
 
 const EXCHANGE_NAME = 'ifarm.events';
 const EXCHANGE_TYPE = 'topic';
@@ -91,6 +91,52 @@ export class RabbitmqService implements OnModuleInit, OnModuleDestroy {
       );
       throw err;
     }
+  }
+
+  /**
+   * Subscribe to a routing key by creating a durable queue bound to the exchange.
+   */
+  async subscribe(
+    queueName: string,
+    routingKey: string,
+    handler: (msg: any) => Promise<void>,
+  ): Promise<void> {
+    await this.channelWrapper.addSetup(async (channel: ConfirmChannel) => {
+      await channel.assertQueue(queueName, {
+        durable: true,
+        arguments: {
+          'x-dead-letter-exchange': 'ifarm.events.dlx',
+          'x-dead-letter-routing-key': routingKey,
+        },
+      });
+      await channel.bindQueue(queueName, EXCHANGE_NAME, routingKey);
+      await channel.consume(queueName, async (msg: ConsumeMessage | null) => {
+        if (!msg) return;
+
+        try {
+          const content = JSON.parse(msg.content.toString());
+          await handler(content);
+          channel.ack(msg);
+        } catch (err: any) {
+          this.logger.error(
+            `Error processing message from ${queueName}: ${err.message}`,
+          );
+          // Nack and requeue up to 3 retries, then dead-letter
+          const retryCount =
+            (msg.properties.headers?.['x-retry-count'] as number) || 0;
+          if (retryCount < 3) {
+            channel.nack(msg, false, true);
+          } else {
+            this.logger.warn(
+              `Message from ${queueName} exceeded retry limit, sending to DLQ`,
+            );
+            channel.nack(msg, false, false);
+          }
+        }
+      });
+
+      this.logger.log(`Subscribed to ${routingKey} via queue ${queueName}`);
+    });
   }
 
   isHealthy(): boolean {

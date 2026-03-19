@@ -25,7 +25,7 @@ async function bootstrap() {
       logger: pinoLogger,
       autoLogging: {
         ignore: (req: any) =>
-          req.url === '/health' || req.url === '/metrics',
+          req.url === '/health' || req.url === '/v1/health' || req.url === '/metrics' || req.url === '/v1/metrics',
       },
     }),
   );

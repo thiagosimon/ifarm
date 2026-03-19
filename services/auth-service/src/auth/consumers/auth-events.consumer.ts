@@ -1,13 +1,15 @@
+import { randomBytes } from 'crypto';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { RabbitMQService } from '../../rabbitmq/rabbitmq.service';
 import { KeycloakAdapter } from '../keycloak.adapter';
 
 interface UserRegisteredEvent {
-  userId: string;
+  farmerId?: string;
+  retailerId?: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
+  fullName: string;
+  status: string;
+  registeredAt: string;
 }
 
 @Injectable()
@@ -48,15 +50,21 @@ export class AuthEventsConsumer implements OnModuleInit {
     role: string,
   ) {
     try {
+      const userId = event.farmerId || event.retailerId;
+      const nameParts = event.fullName.trim().split(/\s+/);
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+      const temporaryPassword = randomBytes(16).toString('hex');
+
       this.logger.log(
-        `Processing ${role} registration for email=${event.email}`,
+        `Processing ${role} registration for email=${event.email}, userId=${userId}`,
       );
 
       const keycloakUserId = await this.keycloakAdapter.createUser({
         email: event.email,
-        firstName: event.firstName,
-        lastName: event.lastName,
-        password: event.password,
+        firstName,
+        lastName,
+        password: temporaryPassword,
         role,
       });
 

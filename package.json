@@ -17,7 +17,11 @@
     "dev": "turbo run dev",
     "clean": "turbo run clean",
     "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down"
+    "docker:down": "docker compose down",
+    "setup": "bash scripts/setup.sh",
+    "start:all": "bash scripts/start-all.sh",
+    "health": "bash scripts/health-check.sh",
+    "db:create": "docker compose exec -T postgres psql -U ifarm -d ifarm -c 'CREATE DATABASE ifarm_orders;' 2>/dev/null; docker compose exec -T postgres psql -U ifarm -d ifarm -c 'CREATE DATABASE ifarm_payments;' 2>/dev/null; docker compose exec -T postgres psql -U ifarm -d ifarm -c 'CREATE DATABASE ifarm_commission;' 2>/dev/null; echo 'Databases created'"
   },
   "devDependencies": {
     "turbo": "^2.0.0"

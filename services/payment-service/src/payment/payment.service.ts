@@ -72,7 +72,7 @@ export class PaymentService {
     let commissionAmount = payload.commissionAmount;
     try {
       const commissionServiceUrl =
-        process.env.COMMISSION_SERVICE_URL || 'http://localhost:3005';
+        process.env.COMMISSION_SERVICE_URL || 'http://localhost:3008';
       const commissionResponse = await axios.get(
         `${commissionServiceUrl}/v1/commissions/calculate`,
         {
