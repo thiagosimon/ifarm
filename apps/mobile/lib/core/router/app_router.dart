@@ -5,6 +5,7 @@ import '../../features/splash/splash_screen.dart';
 import '../../features/onboarding/welcome_screen.dart';
 import '../../features/onboarding/login_screen.dart';
 import '../../features/onboarding/registration_screen.dart';
+import '../../features/onboarding/geolocation_screen.dart';
 import '../../features/kyc/kyc_hub_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/catalog/product_search_screen.dart';
@@ -32,6 +33,7 @@ class Routes {
   static const login = '/login';
   static const register = '/register';
   static const kyc = '/kyc';
+  static const geolocation = '/geolocation';
   static const home = '/home';
   static const search = '/search';
   static const productDetail = '/product/:id';
@@ -76,6 +78,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.welcome, builder: (_, __) => const WelcomeScreen()),
       GoRoute(path: Routes.login, builder: (_, __) => const LoginScreen()),
       GoRoute(path: Routes.register, builder: (_, __) => const RegistrationScreen()),
+      GoRoute(path: Routes.geolocation, builder: (_, __) => const GeolocationScreen()),
       GoRoute(path: Routes.kyc, builder: (_, __) => const KycHubScreen()),
 
       // Shell route for bottom nav

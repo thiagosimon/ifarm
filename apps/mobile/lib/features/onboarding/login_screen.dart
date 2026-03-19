@@ -6,6 +6,7 @@ import '../../core/theme/app_spacing.dart';
 import '../../core/router/app_router.dart';
 import '../../core/utils/validators.dart';
 import '../../providers/auth_provider.dart';
+import '../onboarding/geolocation_screen.dart';
 import 'package:ifarm_mobile/l10n/app_localizations.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -46,7 +47,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
       );
     } else if (authState.value != null) {
-      context.go(Routes.home);
+      final showGeo = await shouldShowGeolocationScreen();
+      if (!mounted) return;
+      context.go(showGeo ? Routes.geolocation : Routes.home);
     }
   }
 

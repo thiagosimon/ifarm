@@ -23,11 +23,11 @@ class NotificationPrefsModel {
   }
 
   Map<String, dynamic> toJson() => {
-    'isPushEnabled': isPushEnabled,
-    'isWhatsappEnabled': isWhatsappEnabled,
-    'isEmailEnabled': isEmailEnabled,
-    if (quietHours != null) 'quietHours': quietHours!.toJson(),
-  };
+        'isPushEnabled': isPushEnabled,
+        'isWhatsappEnabled': isWhatsappEnabled,
+        'isEmailEnabled': isEmailEnabled,
+        if (quietHours != null) 'quietHours': quietHours!.toJson(),
+      };
 
   NotificationPrefsModel copyWith({
     bool? isPushEnabled,
@@ -51,9 +51,9 @@ class QuietHours {
   const QuietHours({required this.start, required this.end});
 
   factory QuietHours.fromJson(Map<String, dynamic> json) => QuietHours(
-    start: json['start'] as String? ?? '22:00',
-    end: json['end'] as String? ?? '08:00',
-  );
+        start: json['start'] as String? ?? '22:00',
+        end: json['end'] as String? ?? '08:00',
+      );
 
   Map<String, dynamic> toJson() => {'start': start, 'end': end};
 }

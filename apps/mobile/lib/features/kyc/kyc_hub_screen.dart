@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/router/app_router.dart';
 import '../../core/constants/enums.dart';
+import '../onboarding/geolocation_screen.dart';
 import '../../data/models/farmer_model.dart';
 import '../../data/repositories/farmer_repository.dart';
 import '../../providers/farmer_provider.dart';
@@ -495,7 +496,12 @@ class _KycBodyState extends ConsumerState<_KycBody> {
             width: double.infinity,
             height: 48,
             child: FilledButton(
-              onPressed: () => context.go(Routes.home),
+              onPressed: () async {
+                final showGeo = await shouldShowGeolocationScreen();
+                if (context.mounted) {
+                  context.go(showGeo ? Routes.geolocation : Routes.home);
+                }
+              },
               style: FilledButton.styleFrom(
                 backgroundColor: const Color(0xFF005129),
                 shape: RoundedRectangleBorder(

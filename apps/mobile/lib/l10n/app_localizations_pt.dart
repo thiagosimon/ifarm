@@ -1670,4 +1670,32 @@ class AppLocalizationsPt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get geoTitle => 'Localização Inteligente';
+
+  @override
+  String get geoAllow => 'Permitir Localização';
+
+  @override
+  String get geoSkip => 'Agora não';
+
+  @override
+  String get geoPrivacy => 'PRIVACIDADE PROTEGIDA';
+
+  @override
+  String get geoDescPart1 => 'Para que a ';
+
+  @override
+  String get geoDescHighlight1 => 'iFarm';
+
+  @override
+  String get geoDescPart2 =>
+      ' encontre os melhores fornecedores próximos a você e calcule o frete com ';
+
+  @override
+  String get geoDescHighlight2 => 'precisão cirúrgica';
+
+  @override
+  String get geoDescPart3 => ', precisamos da sua localização.';
 }

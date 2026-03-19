@@ -679,5 +679,15 @@
     "placeholders": {
       "count": {"type": "int"}
     }
-  }
+  },
+
+  "geoTitle": "Smart Location",
+  "geoAllow": "Allow Location",
+  "geoSkip": "Not now",
+  "geoPrivacy": "PRIVACY PROTECTED",
+  "geoDescPart1": "So that ",
+  "geoDescHighlight1": "iFarm",
+  "geoDescPart2": " can find the best suppliers near you and calculate freight with ",
+  "geoDescHighlight2": "surgical precision",
+  "geoDescPart3": ", we need your location."
 }

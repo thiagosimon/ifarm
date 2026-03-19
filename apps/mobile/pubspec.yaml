@@ -46,6 +46,9 @@ dependencies:
   # Push Notifications
   onesignal_flutter: ^5.1.0
 
+  # Geolocation
+  geolocator: ^11.1.0
+
   # Misc
   flutter_svg: ^2.0.9
   package_info_plus: ^5.0.1

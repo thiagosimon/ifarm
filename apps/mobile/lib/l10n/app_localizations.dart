@@ -3205,6 +3205,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 item} other{{count} items}}'**
   String quoteBuilderItemCount(int count);
+
+  /// No description provided for @geoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Location'**
+  String get geoTitle;
+
+  /// No description provided for @geoAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow Location'**
+  String get geoAllow;
+
+  /// No description provided for @geoSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get geoSkip;
+
+  /// No description provided for @geoPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'PRIVACY PROTECTED'**
+  String get geoPrivacy;
+
+  /// No description provided for @geoDescPart1.
+  ///
+  /// In en, this message translates to:
+  /// **'So that '**
+  String get geoDescPart1;
+
+  /// No description provided for @geoDescHighlight1.
+  ///
+  /// In en, this message translates to:
+  /// **'iFarm'**
+  String get geoDescHighlight1;
+
+  /// No description provided for @geoDescPart2.
+  ///
+  /// In en, this message translates to:
+  /// **' can find the best suppliers near you and calculate freight with '**
+  String get geoDescPart2;
+
+  /// No description provided for @geoDescHighlight2.
+  ///
+  /// In en, this message translates to:
+  /// **'surgical precision'**
+  String get geoDescHighlight2;
+
+  /// No description provided for @geoDescPart3.
+  ///
+  /// In en, this message translates to:
+  /// **', we need your location.'**
+  String get geoDescPart3;
 }
 
 class _AppLocalizationsDelegate

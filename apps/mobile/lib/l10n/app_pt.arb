@@ -581,5 +581,15 @@
     "placeholders": {
       "count": {"type": "int"}
     }
-  }
+  },
+
+  "geoTitle": "Localização Inteligente",
+  "geoAllow": "Permitir Localização",
+  "geoSkip": "Agora não",
+  "geoPrivacy": "PRIVACIDADE PROTEGIDA",
+  "geoDescPart1": "Para que a ",
+  "geoDescHighlight1": "iFarm",
+  "geoDescPart2": " encontre os melhores fornecedores próximos a você e calcule o frete com ",
+  "geoDescHighlight2": "precisão cirúrgica",
+  "geoDescPart3": ", precisamos da sua localização."
 }

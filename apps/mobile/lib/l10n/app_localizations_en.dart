@@ -1664,4 +1664,32 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get geoTitle => 'Smart Location';
+
+  @override
+  String get geoAllow => 'Allow Location';
+
+  @override
+  String get geoSkip => 'Not now';
+
+  @override
+  String get geoPrivacy => 'PRIVACY PROTECTED';
+
+  @override
+  String get geoDescPart1 => 'So that ';
+
+  @override
+  String get geoDescHighlight1 => 'iFarm';
+
+  @override
+  String get geoDescPart2 =>
+      ' can find the best suppliers near you and calculate freight with ';
+
+  @override
+  String get geoDescHighlight2 => 'surgical precision';
+
+  @override
+  String get geoDescPart3 => ', we need your location.';
 }

@@ -5,6 +5,7 @@ import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/router/app_router.dart';
 import '../../providers/auth_provider.dart';
+import '../onboarding/geolocation_screen.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -67,15 +68,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     Future.delayed(const Duration(milliseconds: 2800), _tryNavigate);
   }
 
-  void _tryNavigate() {
+  Future<void> _tryNavigate() async {
     if (!mounted || _navigated) return;
     _navigated = true;
     final authState = ref.read(authNotifierProvider);
-    authState.when(
-      data: (user) => context.go(user != null ? Routes.home : Routes.welcome),
-      loading: () => context.go(Routes.welcome),
-      error: (_, __) => context.go(Routes.welcome),
-    );
+    if (authState.value != null) {
+      final showGeo = await shouldShowGeolocationScreen();
+      if (mounted) context.go(showGeo ? Routes.geolocation : Routes.home);
+    } else {
+      if (mounted) context.go(Routes.welcome);
+    }
   }
 
   @override

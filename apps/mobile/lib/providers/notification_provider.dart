@@ -7,7 +7,8 @@ class NotificationPrefsNotifier
     extends StateNotifier<AsyncValue<NotificationPrefsModel?>> {
   final NotificationRepository _repository;
 
-  NotificationPrefsNotifier(this._repository) : super(const AsyncValue.loading()) {
+  NotificationPrefsNotifier(this._repository)
+      : super(const AsyncValue.loading()) {
     load();
   }
 
@@ -31,8 +32,8 @@ class NotificationPrefsNotifier
   }
 }
 
-final notificationPrefsProvider = StateNotifierProvider<NotificationPrefsNotifier,
-    AsyncValue<NotificationPrefsModel?>>(
+final notificationPrefsProvider = StateNotifierProvider<
+    NotificationPrefsNotifier, AsyncValue<NotificationPrefsModel?>>(
   (ref) => NotificationPrefsNotifier(ref.read(notificationRepositoryProvider)),
 );
 
