@@ -9,6 +9,7 @@
     "apps/*"
   ],
   "scripts": {
+    "postinstall": "rm -rf apps/web-retailer/node_modules/react apps/web-retailer/node_modules/react-dom",
     "build": "turbo run build",
     "test": "turbo run test",
     "test:cov": "turbo run test:cov",
