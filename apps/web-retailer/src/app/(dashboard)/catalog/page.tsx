@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
@@ -205,7 +205,7 @@ export default function CatalogPage() {
     handleSubmit,
     reset,
     setValue,
-    control,
+    watch,
     formState: { errors },
   } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -561,19 +561,13 @@ export default function CatalogPage() {
               />
 
               <div className="grid grid-cols-2 gap-4">
-                <Controller
-                  name="category"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      label="Categoria"
-                      options={categoryOptions}
-                      placeholder="Selecione..."
-                      value={field.value}
-                      onChange={field.onChange}
-                      error={errors.category?.message}
-                    />
-                  )}
+                <Select
+                  label="Categoria"
+                  options={categoryOptions}
+                  placeholder="Selecione..."
+                  value={watch('category')}
+                  onChange={(value) => setValue('category', value, { shouldValidate: true })}
+                  error={errors.category?.message}
                 />
                 <Input
                   label="Marca"
@@ -584,19 +578,13 @@ export default function CatalogPage() {
               </div>
 
               <div className="grid grid-cols-3 gap-4">
-                <Controller
-                  name="unit"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      label="Unidade"
-                      options={unitOptions}
-                      placeholder="Selecione..."
-                      value={field.value}
-                      onChange={field.onChange}
-                      error={errors.unit?.message}
-                    />
-                  )}
+                <Select
+                  label="Unidade"
+                  options={unitOptions}
+                  placeholder="Selecione..."
+                  value={watch('unit')}
+                  onChange={(value) => setValue('unit', value, { shouldValidate: true })}
+                  error={errors.unit?.message}
                 />
                 <Input
                   type="number"
