@@ -14,14 +14,23 @@ import {
   ArrowDownRight,
 } from 'lucide-react';
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
+  BarChart as _BarChart,
+  Bar as _Bar,
+  XAxis as _XAxis,
+  YAxis as _YAxis,
+  Tooltip as _Tooltip,
+  ResponsiveContainer as _ResponsiveContainer,
+  Cell as _Cell,
 } from 'recharts';
+
+// Recharts v2 type workaround for React 18.3+ compatibility
+const BarChart = _BarChart as unknown as React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const Bar = _Bar as unknown as React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const XAxis = _XAxis as unknown as React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const YAxis = _YAxis as unknown as React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const Tooltip = _Tooltip as unknown as React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const ResponsiveContainer = _ResponsiveContainer as unknown as React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const Cell = _Cell as unknown as React.ComponentType<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -235,9 +244,11 @@ export default function DashboardPage() {
           <h3 className="text-sm font-bold uppercase tracking-widest text-on-surface-variant">
             {t('recentQuotations')}
           </h3>
-          <Button variant="outline" size="sm" className="border-outline-variant/30 text-on-surface-variant" asChild>
-            <a href="/quotations">{t('viewAll')}</a>
-          </Button>
+          <a href="/quotations">
+            <Button variant="outline" size="sm" className="border-outline-variant/30 text-on-surface-variant">
+              {t('viewAll')}
+            </Button>
+          </a>
         </div>
         <Table>
           <TableHeader>

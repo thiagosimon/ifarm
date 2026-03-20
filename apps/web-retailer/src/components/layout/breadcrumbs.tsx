@@ -25,7 +25,11 @@ const routeKeys: Record<string, string> = {
   settings: 'nav.settings',
 };
 
-export function Breadcrumbs() {
+interface BreadcrumbsProps {
+  items?: { label: string; href?: string }[];
+}
+
+export function Breadcrumbs(_props: BreadcrumbsProps = {}) {
   const pathname = usePathname();
   const t = useTranslations();
 

@@ -14,14 +14,6 @@ declare module 'next-auth' {
   }
 }
 
-declare module 'next-auth/jwt' {
-  interface JWT {
-    accessToken?: string;
-    refreshToken?: string;
-    expiresAt?: number;
-    role?: string;
-  }
-}
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -46,10 +38,10 @@ export const authConfig: NextAuthConfig = {
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken;
+      session.accessToken = token.accessToken as string | undefined;
       if (session.user) {
         session.user.id = token.sub as string;
-        session.user.role = token.role;
+        session.user.role = token.role as string | undefined;
       }
       return session;
     },

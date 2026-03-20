@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
@@ -205,6 +205,7 @@ export default function CatalogPage() {
     handleSubmit,
     reset,
     setValue,
+    control,
     formState: { errors },
   } = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -560,12 +561,19 @@ export default function CatalogPage() {
               />
 
               <div className="grid grid-cols-2 gap-4">
-                <Select
-                  label="Categoria"
-                  options={categoryOptions}
-                  placeholder="Selecione..."
-                  {...register('category')}
-                  error={errors.category?.message}
+                <Controller
+                  name="category"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      label="Categoria"
+                      options={categoryOptions}
+                      placeholder="Selecione..."
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={errors.category?.message}
+                    />
+                  )}
                 />
                 <Input
                   label="Marca"
@@ -576,12 +584,19 @@ export default function CatalogPage() {
               </div>
 
               <div className="grid grid-cols-3 gap-4">
-                <Select
-                  label="Unidade"
-                  options={unitOptions}
-                  placeholder="Selecione..."
-                  {...register('unit')}
-                  error={errors.unit?.message}
+                <Controller
+                  name="unit"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      label="Unidade"
+                      options={unitOptions}
+                      placeholder="Selecione..."
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={errors.unit?.message}
+                    />
+                  )}
                 />
                 <Input
                   type="number"
