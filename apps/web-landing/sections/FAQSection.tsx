@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ChevronDown } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n'
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
@@ -16,11 +17,10 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         aria-expanded={open}
       >
         <span className="pr-4">{question}</span>
-        <span
-          className={`material-symbols-outlined text-primary transition-transform duration-300 shrink-0 ${open ? 'rotate-180' : ''}`}
-        >
-          expand_more
-        </span>
+        <ChevronDown
+          size={20}
+          className={`text-primary transition-transform duration-300 shrink-0 ${open ? 'rotate-180' : ''}`}
+        />
       </button>
       {open && (
         <p className="mt-4 text-on-surface-variant leading-relaxed text-base">{answer}</p>

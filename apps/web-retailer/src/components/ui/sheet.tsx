@@ -45,7 +45,7 @@ const SheetContent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'fixed inset-y-0 z-50 flex w-full max-w-lg flex-col bg-white shadow-xl animate-slide-in-right',
+      'fixed inset-y-0 z-50 flex w-full max-w-lg flex-col bg-surface-container border-l border-outline-variant shadow-2xl animate-slide-in-right',
       side === 'right' ? 'right-0' : 'left-0',
       className
     )}

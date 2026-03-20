@@ -46,8 +46,8 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             onChange={(e) => onChange?.(e.target.value)}
             disabled={disabled}
             className={cn(
-              'flex h-10 w-full appearance-none rounded-md border border-border bg-white px-3 py-2 pr-10 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50',
-              error && 'border-destructive-500 focus-visible:ring-destructive-500',
+              'flex h-10 w-full appearance-none rounded-xl border border-outline-variant bg-surface-container-high px-3 py-2 pr-10 text-sm text-on-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+              error && 'border-error focus-visible:ring-error',
               className
             )}
             {...props}
@@ -66,7 +66,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
         </div>
         {error && (
-          <p className="mt-1 text-xs text-destructive-500">{error}</p>
+          <p className="mt-1 text-xs text-error">{error}</p>
         )}
       </div>
     );

@@ -46,11 +46,23 @@
     "notifications": "Notifications",
     "settings": "Settings",
     "support": "Premium Support",
-    "logout": "Logout"
+    "logout": "Logout",
+    "commercial": "Commercial",
+    "relationships": "Relationships",
+    "management": "Management",
+    "account": "Account"
+  },
+  "topbar": {
+    "search": "Search products, quotations, orders...",
+    "notifications": "Notifications",
+    "viewAllNotifications": "View all notifications",
+    "logout": "Sign Out"
   },
   "dashboard": {
     "title": "Dashboard",
-    "welcome": "Welcome back",
+    "executiveSummary": "Executive Summary",
+    "last30days": "Last 30 days",
+    "exportReport": "Export Report",
     "kpi": {
       "quotations": "Quotations",
       "conversion": "Conversion",
@@ -59,12 +71,23 @@
       "avgTicket": "Avg Ticket",
       "rating": "Rating"
     },
-    "charts": {
-      "salesOverTime": "Sales Over Time",
-      "topProducts": "Top Products",
-      "quotationsVsResponses": "Quotations vs Responses"
-    },
-    "recentQuotations": "Recent Quotations"
+    "salesByDay": "Sales by Day",
+    "currentWeek": "Current week",
+    "topProducts": "Top Products",
+    "unitsSold": "units sold",
+    "recentQuotations": "Recent Quotations",
+    "viewAll": "View all",
+    "respond": "Respond",
+    "table": {
+      "number": "Number",
+      "farmer": "Farmer",
+      "product": "Product",
+      "value": "Est. Value",
+      "urgency": "Urgency",
+      "status": "Status",
+      "date": "Date",
+      "action": "Action"
+    }
   },
   "quotations": {
     "title": "Input Quotations",
@@ -227,22 +250,20 @@
     "holdbackNote": "Holdback: 7 business days per policy"
   },
   "login": {
-    "title": "Sign In",
-    "subtitle": "Access your retailer account",
-    "emailOrCnpj": "Tax ID or Email",
-    "password": "Password",
-    "rememberMe": "Remember this device",
-    "forgotPassword": "Forgot password",
-    "signIn": "SIGN IN",
-    "signInKeycloak": "Sign in with Keycloak",
+    "brandSuffix": "Retailer",
+    "subtitle": "Agro B2B Management Portal",
+    "identifierLabel": "TAX ID OR EMAIL",
+    "identifierPlaceholder": "Your Tax ID or email",
+    "passwordLabel": "PASSWORD",
+    "forgotPassword": "Forgot?",
+    "rememberDevice": "Remember this device",
+    "submit": "SIGN IN TO PORTAL",
+    "noAccount": "Don't have an account?",
     "createAccount": "Create account",
-    "secureEnvironment": "Secure Environment",
-    "version": "B2B Portal v2.4",
-    "features": {
-      "quotations": "Receive quotations from producers across Brazil",
-      "management": "Manage orders, catalog, and finances in one place",
-      "analytics": "Track metrics and reports in real time"
-    }
+    "footerRights": "All rights reserved.",
+    "needHelp": "Need help?",
+    "contactSupport": "Contact support",
+    "secureEnvironment": "Secure Environment"
   },
   "profile": {
     "title": "Store Profile",

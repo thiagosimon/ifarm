@@ -1,5 +1,6 @@
 'use client'
 
+import { Wheat, Store, CheckCircle } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n'
 
 // Supplier image: B2B agro supplier — person reviewing products/orders in commercial context
@@ -22,7 +23,7 @@ export default function BenefitsSection() {
           {/* Para Produtores */}
           <div className="space-y-12">
             <div className="flex items-center gap-4 pb-6 border-b border-primary/20">
-              <span className="material-symbols-outlined text-primary text-4xl">agriculture</span>
+              <Wheat size={36} className="text-primary" />
               <h2 className="text-3xl font-bold text-white italic">{b.producersTitle}</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -35,27 +36,21 @@ export default function BenefitsSection() {
               </div>
               <ul className="space-y-6">
                 <li className="flex gap-4 p-5 rounded-2xl bg-surface-container border border-white/5">
-                  <span className="material-symbols-outlined text-primary font-bold shrink-0">
-                    check_circle
-                  </span>
+                  <CheckCircle size={22} className="text-primary shrink-0" />
                   <div>
                     <h4 className="font-bold text-white text-lg">{b.prod1Title}</h4>
                     <p className="text-on-surface-variant leading-relaxed">{b.prod1Desc}</p>
                   </div>
                 </li>
                 <li className="flex gap-4 p-5 rounded-2xl bg-surface-container border border-white/5">
-                  <span className="material-symbols-outlined text-primary font-bold shrink-0">
-                    check_circle
-                  </span>
+                  <CheckCircle size={22} className="text-primary shrink-0" />
                   <div>
                     <h4 className="font-bold text-white text-lg">{b.prod2Title}</h4>
                     <p className="text-on-surface-variant leading-relaxed">{b.prod2Desc}</p>
                   </div>
                 </li>
                 <li className="flex gap-4 p-5 rounded-2xl bg-surface-container border border-white/5">
-                  <span className="material-symbols-outlined text-primary font-bold shrink-0">
-                    check_circle
-                  </span>
+                  <CheckCircle size={22} className="text-primary shrink-0" />
                   <div>
                     <h4 className="font-bold text-white text-lg">{b.prod3Title}</h4>
                     <p className="text-on-surface-variant leading-relaxed">{b.prod3Desc}</p>
@@ -68,33 +63,27 @@ export default function BenefitsSection() {
           {/* Para Fornecedores */}
           <div className="space-y-12">
             <div className="flex items-center gap-4 pb-6 border-b border-secondary/20">
-              <span className="material-symbols-outlined text-secondary text-4xl">storefront</span>
+              <Store size={36} className="text-secondary" />
               <h2 className="text-3xl font-bold text-white italic">{b.suppliersTitle}</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <ul className="space-y-6 order-2 md:order-1">
                 <li className="flex gap-4 p-5 rounded-2xl bg-surface-container border border-white/5">
-                  <span className="material-symbols-outlined text-secondary font-bold shrink-0">
-                    check_circle
-                  </span>
+                  <CheckCircle size={22} className="text-secondary shrink-0" />
                   <div>
                     <h4 className="font-bold text-white text-lg">{b.sup1Title}</h4>
                     <p className="text-on-surface-variant leading-relaxed">{b.sup1Desc}</p>
                   </div>
                 </li>
                 <li className="flex gap-4 p-5 rounded-2xl bg-surface-container border border-white/5">
-                  <span className="material-symbols-outlined text-secondary font-bold shrink-0">
-                    check_circle
-                  </span>
+                  <CheckCircle size={22} className="text-secondary shrink-0" />
                   <div>
                     <h4 className="font-bold text-white text-lg">{b.sup2Title}</h4>
                     <p className="text-on-surface-variant leading-relaxed">{b.sup2Desc}</p>
                   </div>
                 </li>
                 <li className="flex gap-4 p-5 rounded-2xl bg-surface-container border border-white/5">
-                  <span className="material-symbols-outlined text-secondary font-bold shrink-0">
-                    check_circle
-                  </span>
+                  <CheckCircle size={22} className="text-secondary shrink-0" />
                   <div>
                     <h4 className="font-bold text-white text-lg">{b.sup3Title}</h4>
                     <p className="text-on-surface-variant leading-relaxed">{b.sup3Desc}</p>

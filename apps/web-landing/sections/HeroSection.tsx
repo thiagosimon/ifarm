@@ -1,5 +1,6 @@
 'use client'
 
+import { PlayCircle, TrendingUp, Wheat } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n'
 
 export default function HeroSection() {
@@ -33,7 +34,7 @@ export default function HeroSection() {
               {h.cta1}
             </button>
             <button className="px-8 py-4 bg-surface-container border border-outline/30 text-white font-bold rounded-xl hover:bg-surface-container-highest transition-all flex items-center gap-2">
-              <span className="material-symbols-outlined">play_circle</span> {h.cta2}
+              <PlayCircle size={18} /> {h.cta2}
             </button>
           </div>
         </div>
@@ -65,7 +66,7 @@ export default function HeroSection() {
               {/* Market volume floating card */}
               <div className="absolute bottom-10 left-10 glass-card p-6 rounded-2xl shadow-2xl max-w-[240px] border-primary/20 bg-surface-container/90">
                 <div className="flex items-center gap-2 text-primary mb-1">
-                  <span className="material-symbols-outlined text-lg">trending_up</span>
+                  <TrendingUp size={18} />
                   <span className="text-xs font-bold uppercase tracking-wider">
                     {h.marketVolumeLabel}
                   </span>
@@ -80,9 +81,7 @@ export default function HeroSection() {
               <div className="absolute top-20 right-10 glass-card p-4 rounded-2xl shadow-2xl border-white/10 bg-surface-container/90 backdrop-blur-xl">
                 <div className="flex gap-4">
                   <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-emerald-400 text-sm">
-                      agriculture
-                    </span>
+                    <Wheat size={16} className="text-emerald-400" />
                   </div>
                   <div>
                     <div className="text-[10px] text-on-surface-variant font-bold uppercase">

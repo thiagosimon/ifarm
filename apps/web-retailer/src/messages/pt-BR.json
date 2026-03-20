@@ -46,11 +46,23 @@
     "notifications": "Notificações",
     "settings": "Configurações",
     "support": "Suporte Premium",
+    "logout": "Sair",
+    "commercial": "Comercial",
+    "relationships": "Relacionamento",
+    "management": "Gestão",
+    "account": "Conta"
+  },
+  "topbar": {
+    "search": "Buscar produtos, cotações, pedidos...",
+    "notifications": "Notificações",
+    "viewAllNotifications": "Ver todas as notificações",
     "logout": "Sair"
   },
   "dashboard": {
     "title": "Dashboard",
-    "welcome": "Bem-vindo de volta",
+    "executiveSummary": "Resumo Executivo",
+    "last30days": "Últimos 30 dias",
+    "exportReport": "Exportar Relatório",
     "kpi": {
       "quotations": "Cotações",
       "conversion": "Conversão",
@@ -59,12 +71,23 @@
       "avgTicket": "Ticket Médio",
       "rating": "Avaliação"
     },
-    "charts": {
-      "salesOverTime": "Vendas ao Longo do Tempo",
-      "topProducts": "Top Produtos",
-      "quotationsVsResponses": "Cotações vs Respostas"
-    },
-    "recentQuotations": "Cotações Recentes"
+    "salesByDay": "Vendas por Dia",
+    "currentWeek": "Semana atual",
+    "topProducts": "Top Produtos",
+    "unitsSold": "unidades vendidas",
+    "recentQuotations": "Cotações Recentes",
+    "viewAll": "Ver todas",
+    "respond": "Responder",
+    "table": {
+      "number": "Número",
+      "farmer": "Produtor",
+      "product": "Produto",
+      "value": "Valor Est.",
+      "urgency": "Urgência",
+      "status": "Status",
+      "date": "Data",
+      "action": "Ação"
+    }
   },
   "quotations": {
     "title": "Cotações de Insumos",
@@ -227,22 +250,20 @@
     "holdbackNote": "Holdback: 7 dias úteis conforme política"
   },
   "login": {
-    "title": "Entrar no Portal",
-    "subtitle": "Acesse sua conta de lojista",
-    "emailOrCnpj": "CNPJ ou E-mail",
-    "password": "Senha",
-    "rememberMe": "Lembrar deste dispositivo",
-    "forgotPassword": "Esqueci minha senha",
-    "signIn": "ENTRAR NO PORTAL",
-    "signInKeycloak": "Entrar com Keycloak",
+    "brandSuffix": "Lojista",
+    "subtitle": "Portal de Gestão Agro B2B",
+    "identifierLabel": "CNPJ OU E-MAIL",
+    "identifierPlaceholder": "Seu CNPJ ou e-mail",
+    "passwordLabel": "SENHA",
+    "forgotPassword": "Esqueceu?",
+    "rememberDevice": "Lembrar deste dispositivo",
+    "submit": "ENTRAR NO PORTAL",
+    "noAccount": "Ainda não tem conta?",
     "createAccount": "Criar conta",
-    "secureEnvironment": "Ambiente Seguro",
-    "version": "Portal B2B v2.4",
-    "features": {
-      "quotations": "Receba cotações de produtores de todo o Brasil",
-      "management": "Gerencie pedidos, catálogo e financeiro em um só lugar",
-      "analytics": "Acompanhe métricas e relatórios em tempo real"
-    }
+    "footerRights": "Todos os direitos reservados.",
+    "needHelp": "Precisa de ajuda?",
+    "contactSupport": "Fale com o suporte",
+    "secureEnvironment": "Ambiente Seguro"
   },
   "profile": {
     "title": "Perfil da Loja",

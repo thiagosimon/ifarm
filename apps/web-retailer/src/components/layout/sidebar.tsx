@@ -1,124 +1,162 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
   LayoutDashboard,
   FileText,
-  Package,
   ShoppingCart,
+  Package,
   DollarSign,
+  User,
+  ShieldCheck,
+  Star,
+  Users,
+  UserPlus,
+  MessageSquare,
+  BarChart3,
+  Truck,
+  FileBarChart,
+  Bell,
   Settings,
-  ChevronLeft,
-  ChevronRight,
   Leaf,
+  type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const navigation = [
+interface NavItem {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+}
+
+interface NavGroup {
+  label: string;
+  items: NavItem[];
+}
+
+const navGroups: NavGroup[] = [
   {
-    name: 'Dashboard',
-    href: '/dashboard',
-    icon: LayoutDashboard,
+    label: '',
+    items: [
+      { name: 'nav.dashboard', href: '/dashboard', icon: LayoutDashboard },
+    ],
   },
   {
-    name: 'Cotacoes',
-    href: '/quotations',
-    icon: FileText,
+    label: 'nav.commercial',
+    items: [
+      { name: 'nav.quotations', href: '/quotations', icon: FileText },
+      { name: 'nav.orders', href: '/orders', icon: ShoppingCart },
+      { name: 'nav.catalog', href: '/catalog', icon: Package },
+    ],
   },
   {
-    name: 'Pedidos',
-    href: '/orders',
-    icon: ShoppingCart,
+    label: 'nav.financial',
+    items: [
+      { name: 'nav.financial', href: '/financial', icon: DollarSign },
+      { name: 'nav.invoices', href: '/invoices', icon: FileBarChart },
+    ],
   },
   {
-    name: 'Catalogo',
-    href: '/catalog',
-    icon: Package,
+    label: 'nav.relationships',
+    items: [
+      { name: 'nav.customers', href: '/customers', icon: UserPlus },
+      { name: 'nav.reviews', href: '/reviews', icon: Star },
+      { name: 'nav.messages', href: '/messages', icon: MessageSquare },
+    ],
   },
   {
-    name: 'Financeiro',
-    href: '/financial',
-    icon: DollarSign,
+    label: 'nav.management',
+    items: [
+      { name: 'nav.team', href: '/team', icon: Users },
+      { name: 'nav.reports', href: '/reports', icon: BarChart3 },
+      { name: 'nav.shipping', href: '/shipping', icon: Truck },
+    ],
   },
   {
-    name: 'Configuracoes',
-    href: '/settings',
-    icon: Settings,
+    label: 'nav.account',
+    items: [
+      { name: 'nav.profile', href: '/profile', icon: User },
+      { name: 'nav.kyc', href: '/kyc', icon: ShieldCheck },
+      { name: 'nav.notifications', href: '/notifications', icon: Bell },
+      { name: 'nav.settings', href: '/settings', icon: Settings },
+    ],
   },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const t = useTranslations();
 
   return (
-    <aside
-      className={cn(
-        'flex h-screen flex-col border-r border-border bg-white transition-all duration-300',
-        collapsed ? 'w-[70px]' : 'w-[260px]'
-      )}
-    >
-      {/* Logo */}
-      <div className="flex h-16 items-center justify-between border-b border-border px-4">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-500">
-            <Leaf className="h-5 w-5 text-white" />
+    <aside className="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant bg-surface-container-lowest shadow-xl flex flex-col z-50">
+      {/* Brand */}
+      <div className="p-6">
+        <Link href="/dashboard" className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
+            <Leaf className="h-5 w-5 text-on-primary" />
           </div>
-          {!collapsed && (
-            <span className="text-lg font-bold text-primary-500">iFarm</span>
-          )}
+          <div className="flex flex-col">
+            <h1 className="text-xl font-bold text-primary tracking-tight">iFarm B2B</h1>
+            <p className="text-[10px] text-on-surface-variant font-medium uppercase tracking-wider">
+              Portal do Lojista
+            </p>
+          </div>
         </Link>
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="flex h-6 w-6 items-center justify-center rounded-md hover:bg-muted"
-        >
-          {collapsed ? (
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
-          ) : (
-            <ChevronLeft className="h-4 w-4 text-muted-foreground" />
-          )}
-        </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-3">
-        {navigation.map((item) => {
-          const isActive =
-            pathname === item.href || pathname?.startsWith(item.href + '/');
+      <nav className="flex-1 overflow-y-auto px-2 py-4 space-y-1 scrollbar-thin">
+        {navGroups.map((group, groupIdx) => (
+          <div key={groupIdx}>
+            {group.label && (
+              <>
+                <div className="h-px bg-outline-variant/30 my-2 mx-4" />
+                <p className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/60">
+                  {t(group.label)}
+                </p>
+              </>
+            )}
+            {group.items.map((item) => {
+              const isActive =
+                pathname === item.href || pathname?.startsWith(item.href + '/');
 
-          return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                isActive
-                  ? 'bg-primary-50 text-primary-600'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-              )}
-              title={collapsed ? item.name : undefined}
-            >
-              <item.icon
-                className={cn(
-                  'h-5 w-5 flex-shrink-0',
-                  isActive ? 'text-primary-600' : 'text-muted-foreground'
-                )}
-              />
-              {!collapsed && <span>{item.name}</span>}
-            </Link>
-          );
-        })}
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    'flex items-center gap-3 px-4 py-3 text-sm transition-all duration-200',
+                    isActive
+                      ? 'bg-primary-container/20 text-primary border-r-4 border-primary font-semibold'
+                      : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest/30'
+                  )}
+                >
+                  <item.icon className={cn('h-5 w-5 flex-shrink-0', isActive && 'text-primary')} />
+                  <span>{t(item.name)}</span>
+                </Link>
+              );
+            })}
+          </div>
+        ))}
       </nav>
 
-      {/* Footer */}
-      <div className="border-t border-border p-3">
-        {!collapsed && (
-          <p className="text-center text-xs text-muted-foreground">
-            iFarm Retailer v1.0
-          </p>
-        )}
+      {/* User Card */}
+      <div className="p-4 border-t border-outline-variant/30">
+        <Link
+          href="/profile"
+          className="flex items-center gap-3 p-2 rounded-lg bg-surface-container/50 hover:bg-surface-container transition-colors"
+        >
+          <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-primary font-bold text-xs">
+            AC
+          </div>
+          <div className="overflow-hidden">
+            <p className="text-[11px] font-semibold text-on-surface truncate">AgroComercial Silva</p>
+            <p className="text-[9px] text-on-surface-variant truncate uppercase">Admin Dashboard</p>
+          </div>
+        </Link>
       </div>
     </aside>
   );

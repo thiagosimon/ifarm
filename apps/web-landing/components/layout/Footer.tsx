@@ -1,5 +1,6 @@
 'use client'
 
+import { Globe, Mail, ThumbsUp } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n'
 
 export default function Footer() {
@@ -13,15 +14,9 @@ export default function Footer() {
           <div className="text-2xl font-black text-white italic">iFarm</div>
           <p className="text-slate-500 max-w-xs leading-relaxed text-base">{f.tagline}</p>
           <div className="flex gap-6">
-            <span className="material-symbols-outlined text-slate-500 hover:text-emerald-400 cursor-pointer transition-colors">
-              public
-            </span>
-            <span className="material-symbols-outlined text-slate-500 hover:text-emerald-400 cursor-pointer transition-colors">
-              alternate_email
-            </span>
-            <span className="material-symbols-outlined text-slate-500 hover:text-emerald-400 cursor-pointer transition-colors">
-              thumb_up
-            </span>
+            <Globe size={20} className="text-slate-500 hover:text-emerald-400 cursor-pointer transition-colors" />
+            <Mail size={20} className="text-slate-500 hover:text-emerald-400 cursor-pointer transition-colors" />
+            <ThumbsUp size={20} className="text-slate-500 hover:text-emerald-400 cursor-pointer transition-colors" />
           </div>
         </div>
 

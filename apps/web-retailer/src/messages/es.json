@@ -46,11 +46,23 @@
     "notifications": "Notificaciones",
     "settings": "Configuración",
     "support": "Soporte Premium",
+    "logout": "Salir",
+    "commercial": "Comercial",
+    "relationships": "Relaciones",
+    "management": "Gestión",
+    "account": "Cuenta"
+  },
+  "topbar": {
+    "search": "Buscar productos, cotizaciones, pedidos...",
+    "notifications": "Notificaciones",
+    "viewAllNotifications": "Ver todas las notificaciones",
     "logout": "Salir"
   },
   "dashboard": {
     "title": "Panel",
-    "welcome": "Bienvenido de vuelta",
+    "executiveSummary": "Resumen Ejecutivo",
+    "last30days": "Últimos 30 días",
+    "exportReport": "Exportar Informe",
     "kpi": {
       "quotations": "Cotizaciones",
       "conversion": "Conversión",
@@ -59,12 +71,23 @@
       "avgTicket": "Ticket Promedio",
       "rating": "Calificación"
     },
-    "charts": {
-      "salesOverTime": "Ventas a lo Largo del Tiempo",
-      "topProducts": "Mejores Productos",
-      "quotationsVsResponses": "Cotizaciones vs Respuestas"
-    },
-    "recentQuotations": "Cotizaciones Recientes"
+    "salesByDay": "Ventas por Día",
+    "currentWeek": "Semana actual",
+    "topProducts": "Mejores Productos",
+    "unitsSold": "unidades vendidas",
+    "recentQuotations": "Cotizaciones Recientes",
+    "viewAll": "Ver todas",
+    "respond": "Responder",
+    "table": {
+      "number": "Número",
+      "farmer": "Productor",
+      "product": "Producto",
+      "value": "Valor Est.",
+      "urgency": "Urgencia",
+      "status": "Estado",
+      "date": "Fecha",
+      "action": "Acción"
+    }
   },
   "quotations": {
     "title": "Cotizaciones de Insumos",
@@ -227,22 +250,20 @@
     "holdbackNote": "Holdback: 7 días hábiles según política"
   },
   "login": {
-    "title": "Iniciar Sesión",
-    "subtitle": "Acceda a su cuenta de tienda",
-    "emailOrCnpj": "CUIT o E-mail",
-    "password": "Contraseña",
-    "rememberMe": "Recordar este dispositivo",
-    "forgotPassword": "Olvidé mi contraseña",
-    "signIn": "INICIAR SESIÓN",
-    "signInKeycloak": "Iniciar sesión con Keycloak",
+    "brandSuffix": "Tienda",
+    "subtitle": "Portal de Gestión Agro B2B",
+    "identifierLabel": "CUIT O E-MAIL",
+    "identifierPlaceholder": "Su CUIT o e-mail",
+    "passwordLabel": "CONTRASEÑA",
+    "forgotPassword": "¿Olvidó?",
+    "rememberDevice": "Recordar este dispositivo",
+    "submit": "INICIAR SESIÓN",
+    "noAccount": "¿No tiene cuenta?",
     "createAccount": "Crear cuenta",
-    "secureEnvironment": "Entorno Seguro",
-    "version": "Portal B2B v2.4",
-    "features": {
-      "quotations": "Reciba cotizaciones de productores de todo Brasil",
-      "management": "Gestione pedidos, catálogo y finanzas en un solo lugar",
-      "analytics": "Acompañe métricas e informes en tiempo real"
-    }
+    "footerRights": "Todos los derechos reservados.",
+    "needHelp": "¿Necesita ayuda?",
+    "contactSupport": "Contactar soporte",
+    "secureEnvironment": "Entorno Seguro"
   },
   "profile": {
     "title": "Perfil de Tienda",

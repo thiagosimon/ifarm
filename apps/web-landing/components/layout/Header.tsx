@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { ChevronDown, Check, Menu, X } from 'lucide-react'
 import { useLanguage, LANGUAGES, type Language } from '@/lib/i18n'
 
 function LanguageSwitcher() {
@@ -33,12 +34,10 @@ function LanguageSwitcher() {
       >
         <span className="text-base leading-none">{current.flag}</span>
         <span className="tracking-wide">{current.label}</span>
-        <span
-          className={`material-symbols-outlined text-sm text-white/60 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-          style={{ fontSize: '16px' }}
-        >
-          expand_more
-        </span>
+        <ChevronDown
+          size={14}
+          className={`text-white/60 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        />
       </button>
 
       {open && (
@@ -58,9 +57,7 @@ function LanguageSwitcher() {
               <span className="text-base">{l.flag}</span>
               <span>{l.label}</span>
               {l.code === lang && (
-                <span className="material-symbols-outlined ml-auto text-primary" style={{ fontSize: '16px' }}>
-                  check
-                </span>
+                <Check size={14} className="ml-auto text-primary" />
               )}
             </button>
           ))}
@@ -123,7 +120,7 @@ export default function Header() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            <span className="material-symbols-outlined">{mobileOpen ? 'close' : 'menu'}</span>
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </nav>

@@ -1,5 +1,6 @@
 'use client'
 
+import { ShoppingCart, Leaf, CreditCard, Wifi, ArrowRight, Package } from 'lucide-react'
 import { useLanguage } from '@/lib/i18n'
 
 export default function ModulesSection() {
@@ -18,9 +19,7 @@ export default function ModulesSection() {
           <div className="bg-gradient-to-br from-primary-container/40 to-emerald-950 rounded-3xl p-10 border border-white/5 relative overflow-hidden group flex flex-col justify-between">
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
-                <span className="material-symbols-outlined text-primary text-2xl">
-                  shopping_cart
-                </span>
+                <ShoppingCart size={22} className="text-primary" />
               </div>
               <h3 className="text-3xl font-bold text-white mb-4">{m.marketplaceTitle}</h3>
               <p className="text-on-surface-variant text-lg leading-relaxed">{m.marketplaceDesc}</p>
@@ -30,37 +29,33 @@ export default function ModulesSection() {
                 {m.marketplaceCta}
               </button>
             </div>
-            <span className="material-symbols-outlined absolute -bottom-10 -right-10 text-[240px] text-white/5 group-hover:scale-110 transition-transform">
-              inventory_2
-            </span>
+            <Package size={240} className="absolute -bottom-10 -right-10 text-white/5 group-hover:scale-110 transition-transform" />
           </div>
 
           {/* Módulo ESG — sem imagem */}
           <div className="bg-surface-container-high rounded-3xl p-10 border border-outline-variant relative overflow-hidden group flex flex-col justify-between">
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                <span className="material-symbols-outlined text-primary text-2xl">eco</span>
+                <Leaf size={22} className="text-primary" />
               </div>
               <h3 className="text-3xl font-bold text-white mb-4">{m.esgTitle}</h3>
               <p className="text-on-surface-variant text-lg leading-relaxed">{m.esgDesc}</p>
             </div>
             {/* decorative background icon */}
-            <span className="material-symbols-outlined absolute -bottom-10 -right-10 text-[240px] text-primary/5 group-hover:scale-110 transition-transform">
-              park
-            </span>
+            <Leaf size={240} className="absolute -bottom-10 -right-10 text-primary/5 group-hover:scale-110 transition-transform" />
           </div>
 
           {/* Crédito & Finanças */}
           <div className="bg-secondary-container/20 rounded-3xl p-10 border border-secondary/20 relative overflow-hidden group flex flex-col justify-between">
             <div className="relative z-10">
               <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center mb-6">
-                <span className="material-symbols-outlined text-secondary text-2xl">payments</span>
+                <CreditCard size={22} className="text-secondary" />
               </div>
               <h3 className="text-3xl font-bold text-white mb-4">{m.creditTitle}</h3>
               <p className="text-on-surface-variant text-lg leading-relaxed">{m.creditDesc}</p>
             </div>
             <div className="flex items-center gap-2 text-secondary font-bold group-hover:translate-x-2 transition-transform cursor-pointer">
-              {m.creditCta} <span className="material-symbols-outlined">arrow_forward</span>
+              {m.creditCta} <ArrowRight size={18} />
             </div>
             <div className="absolute inset-0 bg-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
@@ -70,7 +65,7 @@ export default function ModulesSection() {
             <div className="relative z-10 flex justify-between items-start">
               <div>
                 <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6">
-                  <span className="material-symbols-outlined text-white text-2xl">sensors</span>
+                  <Wifi size={22} className="text-white" />
                 </div>
                 <h3 className="text-3xl font-bold text-white italic mb-4">{m.iotTitle}</h3>
                 <p className="text-on-surface-variant text-lg leading-relaxed">{m.iotDesc}</p>

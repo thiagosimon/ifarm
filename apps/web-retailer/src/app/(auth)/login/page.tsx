@@ -2,12 +2,14 @@
 
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { Leaf } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { Leaf, User, Lock, Eye, EyeOff, ShieldCheck, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 export default function LoginPage() {
+  const t = useTranslations('login');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleKeycloakLogin() {
     setLoading(true);
@@ -15,154 +17,182 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen">
-      {/* Left side - Branding */}
-      <div className="hidden w-1/2 flex-col justify-between bg-primary-500 p-12 lg:flex">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/20">
-            <Leaf className="h-6 w-6 text-white" />
+    <div className="bg-background text-on-background min-h-screen flex items-center justify-center p-4 bg-agro-overlay relative">
+      <main className="w-full max-w-[440px] z-10">
+        {/* Brand Identity */}
+        <div className="flex flex-col items-center mb-10">
+          <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-primary/20">
+            <Leaf className="h-8 w-8 text-on-primary" />
           </div>
-          <span className="text-2xl font-bold text-white">iFarm</span>
-        </div>
-
-        <div>
-          <h1 className="text-4xl font-bold leading-tight text-white">
-            Painel do Lojista
+          <h1 className="text-3xl font-black tracking-tight text-white">
+            iFarm <span className="text-primary">{t('brandSuffix')}</span>
           </h1>
-          <p className="mt-4 text-lg text-white/80">
-            Gerencie suas cotacoes, pedidos e financeiro em um unico lugar.
-            Conecte-se com produtores de todo o Brasil.
+          <p className="text-on-surface-variant mt-2 text-sm font-medium">
+            {t('subtitle')}
           </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-              <span className="text-sm font-bold text-white">1</span>
-            </div>
-            <p className="text-sm text-white/80">
-              Receba cotacoes de produtores da sua regiao
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-              <span className="text-sm font-bold text-white">2</span>
-            </div>
-            <p className="text-sm text-white/80">
-              Envie propostas competitivas com precos e prazos
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20">
-              <span className="text-sm font-bold text-white">3</span>
-            </div>
-            <p className="text-sm text-white/80">
-              Acompanhe pedidos e receba pagamentos com seguranca
-            </p>
-          </div>
-        </div>
-
-        <p className="text-xs text-white/50">
-          &copy; 2026 iFarm. Todos os direitos reservados.
-        </p>
-      </div>
-
-      {/* Right side - Login form */}
-      <div className="flex w-full flex-col items-center justify-center px-8 lg:w-1/2">
-        <div className="w-full max-w-md">
-          <div className="mb-8 text-center lg:hidden">
-            <div className="mb-4 flex items-center justify-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500">
-                <Leaf className="h-6 w-6 text-white" />
-              </div>
-              <span className="text-2xl font-bold text-primary-500">
-                iFarm
-              </span>
-            </div>
-          </div>
-
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-foreground">
-              Bem-vindo de volta
-            </h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Acesse sua conta de lojista iFarm
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <Button
-              className="w-full"
-              size="lg"
-              onClick={handleKeycloakLogin}
-              loading={loading}
-            >
-              Entrar com iFarm ID
-            </Button>
-
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border" />
-              </div>
-              <div className="relative flex justify-center text-xs">
-                <span className="bg-background px-2 text-muted-foreground">
-                  ou entre com suas credenciais
-                </span>
+        {/* Login Card */}
+        <div className="glass-card p-8 rounded-xl shadow-2xl">
+          <form
+            className="space-y-6"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleKeycloakLogin();
+            }}
+          >
+            {/* Identifier field */}
+            <div>
+              <label
+                className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2 ml-1"
+                htmlFor="identifier"
+              >
+                {t('identifierLabel')}
+              </label>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-on-surface-variant group-focus-within:text-primary transition-colors" />
+                </div>
+                <input
+                  className="block w-full pl-11 pr-4 py-3.5 bg-surface-container-low border border-outline-variant text-on-surface rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-outline-variant"
+                  id="identifier"
+                  name="identifier"
+                  placeholder={t('identifierPlaceholder')}
+                  required
+                  type="text"
+                  autoComplete="email"
+                />
               </div>
             </div>
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleKeycloakLogin();
-              }}
-              className="space-y-4"
-            >
-              <Input
-                label="E-mail"
-                type="email"
-                placeholder="seu@email.com"
-                autoComplete="email"
-              />
-              <Input
-                label="Senha"
-                type="password"
-                placeholder="Sua senha"
-                autoComplete="current-password"
-              />
-
-              <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    className="rounded border-border text-primary-500 focus:ring-primary-500"
-                  />
-                  Lembrar-me
+            {/* Password field */}
+            <div>
+              <div className="flex justify-between items-center mb-2 ml-1">
+                <label
+                  className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant"
+                  htmlFor="password"
+                >
+                  {t('passwordLabel')}
                 </label>
                 <a
+                  className="text-xs font-semibold text-primary hover:brightness-125 transition-colors"
                   href="#"
-                  className="text-sm font-medium text-primary-500 hover:text-primary-600"
                 >
-                  Esqueceu a senha?
+                  {t('forgotPassword')}
                 </a>
               </div>
+              <div className="relative group">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <Lock className="h-5 w-5 text-on-surface-variant group-focus-within:text-primary transition-colors" />
+                </div>
+                <input
+                  className="block w-full pl-11 pr-12 py-3.5 bg-surface-container-low border border-outline-variant text-on-surface rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder:text-outline-variant"
+                  id="password"
+                  name="password"
+                  placeholder="••••••••"
+                  required
+                  type={showPassword ? 'text' : 'password'}
+                  autoComplete="current-password"
+                />
+                <button
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-on-surface-variant hover:text-on-surface"
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
 
-              <Button type="submit" className="w-full" size="lg" variant="outline">
-                Entrar
-              </Button>
-            </form>
-          </div>
+            {/* Remember me */}
+            <div className="flex items-center">
+              <input
+                className="h-4 w-4 rounded border-outline-variant bg-surface-container text-primary focus:ring-primary"
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+              />
+              <label
+                className="ml-2 block text-sm text-on-surface-variant"
+                htmlFor="remember-me"
+              >
+                {t('rememberDevice')}
+              </label>
+            </div>
 
-          <p className="mt-8 text-center text-xs text-muted-foreground">
-            Nao tem uma conta?{' '}
-            <a
-              href="#"
-              className="font-medium text-primary-500 hover:text-primary-600"
+            {/* Submit button */}
+            <Button
+              type="submit"
+              className="w-full py-4 text-sm font-bold uppercase tracking-wider shadow-lg shadow-primary/20"
+              size="lg"
+              loading={loading}
             >
-              Cadastre-se como lojista
+              {t('submit')}
+            </Button>
+          </form>
+
+          {/* Register link */}
+          <div className="mt-8 pt-8 border-t border-outline-variant/30 text-center">
+            <p className="text-sm text-on-surface-variant">
+              {t('noAccount')}{' '}
+              <a
+                className="font-bold text-secondary hover:brightness-125 transition-colors ml-1"
+                href="#"
+              >
+                {t('createAccount')}
+              </a>
+            </p>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <footer className="mt-12 text-center">
+          <p className="text-xs text-on-surface-variant/60 font-medium">
+            © {new Date().getFullYear()} iFarm. {t('footerRights')}
+            <br />
+            {t('needHelp')}{' '}
+            <a
+              className="text-on-surface-variant hover:text-white underline decoration-primary underline-offset-4 ml-1"
+              href="#"
+            >
+              {t('contactSupport')}
             </a>
           </p>
-        </div>
+          <div className="flex justify-center space-x-6 mt-6">
+            <div className="flex items-center text-[10px] text-on-surface-variant/40 uppercase tracking-tighter">
+              <ShieldCheck className="h-4 w-4 mr-1" />
+              {t('secureEnvironment')}
+            </div>
+            <div className="flex items-center text-[10px] text-on-surface-variant/40 uppercase tracking-tighter">
+              <Globe className="h-4 w-4 mr-1" />
+              Portal B2B v2.4
+            </div>
+          </div>
+        </footer>
+      </main>
+
+      {/* Decorative background glow */}
+      <div className="fixed top-0 right-0 -z-0 opacity-20 pointer-events-none">
+        <svg fill="none" height="600" viewBox="0 0 600 600" width="600">
+          <circle cx="450" cy="150" fill="url(#grad1)" r="300" />
+          <defs>
+            <radialGradient
+              cx="0"
+              cy="0"
+              gradientTransform="translate(450 150) rotate(90) scale(300)"
+              gradientUnits="userSpaceOnUse"
+              id="grad1"
+              r="1"
+            >
+              <stop stopColor="#89d89e" />
+              <stop offset="1" stopColor="#1A6B3C" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+        </svg>
       </div>
     </div>
   );

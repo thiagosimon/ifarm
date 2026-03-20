@@ -3,22 +3,22 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         default:
-          'bg-primary-500 text-white hover:bg-primary-600 shadow-sm',
+          'bg-primary text-on-primary hover:bg-primary/90 shadow-sm shadow-primary/20',
         destructive:
-          'bg-destructive-500 text-white hover:bg-destructive-600 shadow-sm',
+          'bg-error-container text-error hover:bg-error-container/80 shadow-sm',
         outline:
-          'border border-border bg-white hover:bg-muted hover:text-foreground',
+          'border border-outline-variant bg-surface-container hover:bg-surface-container-high text-on-surface',
         secondary:
-          'bg-secondary-500 text-white hover:bg-secondary-600 shadow-sm',
+          'bg-secondary text-on-secondary hover:bg-secondary/90 shadow-sm',
         ghost:
-          'hover:bg-muted hover:text-foreground',
+          'hover:bg-surface-container-high text-on-surface',
         link:
-          'text-primary-500 underline-offset-4 hover:underline',
+          'text-primary underline-offset-4 hover:underline',
       },
       size: {
         default: 'h-10 px-4 py-2',
