@@ -21,9 +21,9 @@ export default function CTASection() {
         <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">{c.title}</h2>
         <p className="text-xl text-on-surface-variant">{c.subtitle}</p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <button className="px-10 py-5 bg-primary text-on-primary font-bold rounded-2xl text-lg hover:scale-105 transition-all shadow-xl shadow-primary/10">
+          <a href="https://ifarm-saas.netlify.app" className="px-10 py-5 bg-primary text-on-primary font-bold rounded-2xl text-lg hover:scale-105 transition-all shadow-xl shadow-primary/10">
             {c.cta1}
-          </button>
+          </a>
           <button className="px-10 py-5 bg-white/10 backdrop-blur-md text-white border border-white/20 font-bold rounded-2xl text-lg hover:bg-white/20 transition-all">
             {c.cta2}
           </button>

@@ -3,17 +3,121 @@
 @tailwind utilities;
 
 @layer base {
+  /* ─── LIGHT THEME (default) ─── */
   :root {
     --radius: 0.5rem;
+
+    --color-primary: 30 158 72;
+    --color-primary-container: 200 237 208;
+    --color-on-primary: 255 255 255;
+    --color-on-primary-container: 0 57 27;
+    --color-inverse-primary: 137 216 158;
+
+    --color-secondary: 195 147 0;
+    --color-secondary-container: 255 222 166;
+    --color-on-secondary: 62 46 0;
+    --color-on-secondary-container: 62 46 0;
+
+    --color-tertiary: 186 52 71;
+    --color-tertiary-container: 255 218 222;
+    --color-on-tertiary: 255 255 255;
+
+    --color-error: 186 27 27;
+    --color-error-container: 255 218 214;
+    --color-on-error: 255 255 255;
+    --color-on-error-container: 65 0 2;
+
+    --color-background: 248 250 248;
+    --color-on-background: 25 28 26;
+
+    --color-surface: 248 250 248;
+    --color-on-surface: 25 28 26;
+    --color-on-surface-variant: 66 73 66;
+
+    --color-surface-container-lowest: 255 255 255;
+    --color-surface-container-low: 242 245 240;
+    --color-surface-container: 236 239 234;
+    --color-surface-container-high: 230 234 229;
+    --color-surface-container-highest: 224 228 223;
+
+    --color-outline: 114 121 114;
+    --color-outline-variant: 194 201 190;
+
+    --color-border: 194 201 190;
+    --color-foreground: 25 28 26;
+    --color-muted-foreground: 114 121 114;
+    --color-card: 236 239 234;
+    --color-card-foreground: 25 28 26;
+    --color-destructive: 186 27 27;
+
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(114, 121, 114, 0.15);
+    --glass-bg-strong: rgba(242, 245, 240, 0.85);
+    --glass-border-strong: rgba(114, 121, 114, 0.1);
+    --scrollbar-thumb: rgba(194, 201, 190, 1);
+    --scrollbar-thumb-hover: rgba(114, 121, 114, 1);
+  }
+
+  /* ─── DARK THEME ─── */
+  .dark {
+    --color-primary: 137 216 158;
+    --color-primary-container: 26 107 60;
+    --color-on-primary: 0 57 27;
+    --color-on-primary-container: 165 244 184;
+    --color-inverse-primary: 27 108 61;
+
+    --color-secondary: 246 190 57;
+    --color-secondary-container: 197 147 0;
+    --color-on-secondary: 62 46 0;
+    --color-on-secondary-container: 255 222 166;
+
+    --color-tertiary: 255 178 185;
+    --color-tertiary-container: 115 51 62;
+    --color-on-tertiary: 92 18 37;
+
+    --color-error: 255 180 171;
+    --color-error-container: 147 0 10;
+    --color-on-error: 105 0 5;
+    --color-on-error-container: 255 218 214;
+
+    --color-background: 16 20 21;
+    --color-on-background: 224 227 229;
+
+    --color-surface: 16 20 21;
+    --color-on-surface: 224 227 229;
+    --color-on-surface-variant: 191 201 190;
+
+    --color-surface-container-lowest: 11 15 16;
+    --color-surface-container-low: 25 28 30;
+    --color-surface-container: 29 32 34;
+    --color-surface-container-high: 39 42 44;
+    --color-surface-container-highest: 50 53 55;
+
+    --color-outline: 137 147 137;
+    --color-outline-variant: 64 73 64;
+
+    --color-border: 64 73 64;
+    --color-foreground: 224 227 229;
+    --color-muted-foreground: 137 147 137;
+    --color-card: 29 32 34;
+    --color-card-foreground: 224 227 229;
+    --color-destructive: 255 180 171;
+
+    --glass-bg: rgba(39, 42, 44, 0.7);
+    --glass-border: rgba(137, 147, 137, 0.2);
+    --glass-bg-strong: rgba(29, 32, 34, 0.8);
+    --glass-border-strong: rgba(137, 147, 137, 0.15);
+    --scrollbar-thumb: rgba(64, 73, 64, 1);
+    --scrollbar-thumb-hover: rgba(137, 147, 137, 1);
   }
 
   * {
-    border-color: #404940;
+    border-color: rgb(var(--color-border));
   }
 
   body {
-    background-color: #101415;
-    color: #e0e3e5;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -22,31 +126,31 @@
 
 @layer components {
   .glass-card {
-    background: rgba(39, 42, 44, 0.7);
+    background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(137, 147, 137, 0.2);
+    border: 1px solid var(--glass-border);
     border-radius: 0.75rem;
   }
 
   .glass-card-strong {
-    background: rgba(29, 32, 34, 0.8);
+    background: var(--glass-bg-strong);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(137, 147, 137, 0.15);
+    border: 1px solid var(--glass-border-strong);
     border-radius: 0.75rem;
   }
 
   .bg-agro-overlay {
     position: relative;
     background:
-      linear-gradient(135deg, rgba(16, 20, 21, 0.95) 0%, rgba(26, 107, 60, 0.15) 50%, rgba(16, 20, 21, 0.98) 100%),
+      linear-gradient(135deg, rgba(var(--color-background), 0.95) 0%, rgba(var(--color-primary-container), 0.15) 50%, rgba(var(--color-background), 0.98) 100%),
       url('/images/agro-bg.jpg') center/cover no-repeat;
   }
 
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: #404940 transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
   }
 
   .scrollbar-thin::-webkit-scrollbar {
@@ -59,12 +163,12 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: #404940;
+    background-color: var(--scrollbar-thumb);
     border-radius: 3px;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    background-color: #899389;
+    background-color: var(--scrollbar-thumb-hover);
   }
 }
 

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iFarm Admin - Financeiro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#272b2c",
+              "outline-variant": "#404940",
+              "on-surface": "#e0e3e4",
+              "tertiary-container": "#8ad89e",
+              "on-error-container": "#ffdad6",
+              "on-tertiary": "#00391b",
+              "on-surface-variant": "#bfc9be",
+              "surface-container-lowest": "#0b0f10",
+              "tertiary": "#a5f5b9",
+              "inverse-surface": "#e0e3e4",
+              "outline": "#899389",
+              "on-primary": "#00391b",
+              "background": "#101415",
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "surface-container-highest": "#313536",
+              "surface-tint": "#89d89e",
+              "surface-container-low": "#181c1d",
+              "on-tertiary-fixed": "#00210d",
+              "primary-fixed": "#a4f4b8",
+              "error": "#ffb4ab",
+              "secondary": "#f6be39",
+              "on-secondary": "#402d00",
+              "secondary-container": "#c59300",
+              "surface-container": "#1c2021",
+              "primary-container": "#89d89e",
+              "on-secondary-fixed": "#261a00",
+              "inverse-primary": "#1a6c3d",
+              "surface-bright": "#363a3b",
+              "inverse-on-surface": "#2d3132",
+              "on-tertiary-fixed-variant": "#005229",
+              "on-secondary-fixed-variant": "#5c4300",
+              "surface-variant": "#313536",
+              "surface": "#101415",
+              "on-secondary-container": "#433000",
+              "secondary-fixed": "#ffdea0",
+              "on-primary-container": "#056032",
+              "on-primary-fixed-variant": "#005229",
+              "surface-dim": "#101415",
+              "primary-fixed-dim": "#89d89e",
+              "primary": "#a4f5b8",
+              "on-primary-fixed": "#00210d",
+              "tertiary-fixed-dim": "#89d89e",
+              "on-background": "#e0e3e4",
+              "on-tertiary-container": "#066032",
+              "secondary-fixed-dim": "#f6be39",
+              "tertiary-fixed": "#a5f4b8"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(39, 42, 44, 0.7);
+        backdrop-filter: blur(12px);
+      }
+      .agro-shadow {
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #101415;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #313536;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-hidden flex h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col justify-between py-8 h-screen w-64 border-r-0 bg-[#181C1D] dark:bg-[#181C1D] shadow-2xl shadow-black/40 z-50">
+<div>
+<div class="px-6 mb-10">
+<div class="text-2xl font-extrabold tracking-tighter flex items-center gap-1 text-[#89D89E]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+                    iFarm
+                </div>
+<p class="text-[10px] font-['Inter'] font-light tracking-tight text-[#E0E3E4]/50 uppercase mt-1">Admin Panel</p>
+</div>
+<nav class="bg-[#1D2022] space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] font-light tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-['Inter'] font-light tracking-tight">Pedidos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] font-light tracking-tight">Usuários</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-['Inter'] font-light tracking-tight">KYC</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#89D89E] bg-[#89D89E]/10 border-l-4 border-[#89D89E] font-semibold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bar_chart</span>
+<span class="font-['Inter'] tracking-tight">Financeiro</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-['Inter'] font-light tracking-tight">Disputas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Inter'] font-light tracking-tight">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="px-4">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-error transition-colors duration-200 rounded-lg">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-['Inter'] font-light tracking-tight">Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 overflow-y-auto custom-scrollbar bg-background">
+<!-- Top Bar / Header -->
+<header class="sticky top-0 z-40 bg-background/80 backdrop-blur-md px-10 py-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-secondary mb-2 block">Gestão de Ativos</span>
+<h1 class="text-4xl font-bold tracking-tight text-on-surface">Financeiro</h1>
+</div>
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center bg-surface-container-low rounded-xl px-4 py-2 border border-outline-variant/10">
+<div class="flex flex-col pr-4 border-r border-outline-variant/20">
+<span class="text-[9px] font-bold uppercase text-on-surface-variant">De</span>
+<span class="text-sm font-semibold">01/10/2023</span>
+</div>
+<div class="flex flex-col pl-4">
+<span class="text-[9px] font-bold uppercase text-on-surface-variant">Até</span>
+<span class="text-sm font-semibold">31/10/2023</span>
+</div>
+<button class="ml-4 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-5 py-3 rounded-xl bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-semibold text-sm transition-all border border-outline-variant/10">
+<span class="material-symbols-outlined text-sm">refresh</span>
+</button>
+<button class="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold text-sm agro-shadow hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-sm">download</span>
+                        Exportar CSV
+                    </button>
+</div>
+</div>
+</header>
+<section class="px-10 pb-12 space-y-10">
+<!-- 4 Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- GMV Total -->
+<div class="glass-card p-6 rounded-xl border-l-2 border-primary-container/30 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-6xl">payments</span>
+</div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-2">GMV Total</p>
+<h3 class="text-2xl font-light text-on-surface">R$ <span class="font-bold">12.847.320</span></h3>
+<div class="mt-4 flex items-center gap-2 text-[11px] font-semibold text-primary">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12.5% vs mês anterior</span>
+</div>
+</div>
+<!-- Comissões -->
+<div class="glass-card p-6 rounded-xl border-l-2 border-secondary/30 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-6xl">account_balance_wallet</span>
+</div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-2">Comissões</p>
+<h3 class="text-2xl font-light text-on-surface">R$ <span class="font-bold text-secondary">641.366</span></h3>
+<div class="mt-4 flex items-center gap-2 text-[11px] font-semibold text-secondary">
+<span class="material-symbols-outlined text-sm">percent</span>
+<span>Margem de 4.9% média</span>
+</div>
+</div>
+<!-- Payouts Processados -->
+<div class="glass-card p-6 rounded-xl border-l-2 border-primary/30 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-6xl">check_circle</span>
+</div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-2">Payouts Processados</p>
+<h3 class="text-2xl font-light text-on-surface">R$ <span class="font-bold">11.203.954</span></h3>
+<div class="mt-4 flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span>Atualizado há 14m</span>
+</div>
+</div>
+<!-- Payouts Pendentes -->
+<div class="glass-card p-6 rounded-xl border-l-2 border-error/30 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-5 text-error">
+<span class="material-symbols-outlined text-6xl">pending_actions</span>
+</div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-2">Payouts Pendentes</p>
+<h3 class="text-2xl font-light text-on-surface">R$ <span class="font-bold text-error">287.420</span></h3>
+<div class="mt-4 flex items-center gap-2 text-[11px] font-semibold text-error">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span>12 transações em espera</span>
+</div>
+</div>
+</div>
+<!-- Charts Row -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- GMV Chart -->
+<div class="lg:col-span-8 glass-card p-8 rounded-xl border border-outline-variant/5">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="w-1 h-6 bg-primary rounded-full"></div>
+<h4 class="text-lg font-bold">GMV por Período</h4>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase">Diário</span>
+<span class="px-3 py-1 text-on-surface-variant text-[10px] font-bold rounded-full uppercase hover:bg-surface-container-highest cursor-pointer">Semanal</span>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-1 relative">
+<!-- Abstract Area Chart Representation -->
+<div class="absolute inset-0 flex items-end">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 200">
+<path d="M0,180 Q100,140 200,160 T400,100 T600,60 T800,40 L800,200 L0,200 Z" fill="url(#grad-green)" opacity="0.15"></path>
+<path d="M0,180 Q100,140 200,160 T400,100 T600,60 T800,40" fill="none" stroke="#a4f5b8" stroke-width="3"></path>
+<defs>
+<lineargradient id="grad-green" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#a4f5b8;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#101415;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- Axis Labels -->
+<div class="absolute bottom-0 left-0 w-full flex justify-between px-2 text-[9px] font-bold text-on-surface-variant uppercase transform translate-y-6">
+<span>01 Out</span><span>07 Out</span><span>14 Out</span><span>21 Out</span><span>28 Out</span><span>31 Out</span>
+</div>
+</div>
+</div>
+<!-- Commissions Bar Chart -->
+<div class="lg:col-span-4 glass-card p-8 rounded-xl border border-outline-variant/5">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-1 h-6 bg-secondary rounded-full"></div>
+<h4 class="text-lg font-bold">Comissões por Tier</h4>
+</div>
+<div class="space-y-6">
+<!-- Tier: Platina -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold uppercase">
+<span class="text-on-surface">Platina</span>
+<span class="text-secondary">R$ 242k</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<!-- Tier: Ouro -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold uppercase">
+<span class="text-on-surface">Ouro</span>
+<span class="text-secondary">R$ 180k</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary/80 rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<!-- Tier: Prata -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold uppercase">
+<span class="text-on-surface">Prata</span>
+<span class="text-secondary">R$ 115k</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary/60 rounded-full" style="width: 45%"></div>
+</div>
+</div>
+<!-- Tier: Bronze -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold uppercase">
+<span class="text-on-surface">Bronze</span>
+<span class="text-secondary">R$ 68k</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary/40 rounded-full" style="width: 30%"></div>
+</div>
+</div>
+<!-- Tier: Básico -->
+<div class="space-y-2">
+<div class="flex justify-between text-[11px] font-bold uppercase">
+<span class="text-on-surface">Básico</span>
+<span class="text-secondary">R$ 36k</span>
+</div>
+<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary/20 rounded-full" style="width: 15%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Payouts Table Section -->
+<div class="surface-container-high rounded-2xl overflow-hidden border border-outline-variant/10 agro-shadow">
+<div class="p-8 border-b border-outline-variant/10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="flex items-center gap-4">
+<h4 class="text-xl font-bold tracking-tight">Payouts</h4>
+<div class="h-4 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+<button class="px-4 py-1.5 bg-on-surface text-background rounded-full text-[11px] font-bold uppercase whitespace-nowrap">Todos</button>
+<button class="px-4 py-1.5 bg-surface-container-lowest hover:bg-surface-container-highest transition-colors rounded-full text-[11px] font-bold uppercase text-on-surface-variant whitespace-nowrap">Processado</button>
+<button class="px-4 py-1.5 bg-surface-container-lowest hover:bg-surface-container-highest transition-colors rounded-full text-[11px] font-bold uppercase text-on-surface-variant whitespace-nowrap">Pendente</button>
+<button class="px-4 py-1.5 bg-surface-container-lowest hover:bg-surface-container-highest transition-colors rounded-full text-[11px] font-bold uppercase text-on-surface-variant whitespace-nowrap">Agendado</button>
+<button class="px-4 py-1.5 bg-surface-container-lowest hover:bg-surface-container-highest transition-colors rounded-full text-[11px] font-bold uppercase text-on-surface-variant whitespace-nowrap">Falhou</button>
+</div>
+</div>
+<div class="relative flex-1 max-w-sm">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface-container-lowest border-none rounded-xl text-sm focus:ring-1 focus:ring-primary/40 placeholder:text-on-surface-variant/40" placeholder="Filtrar por ID ou Nome..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest/50 text-on-surface-variant">
+<th class="px-8 py-5 text-[10px] font-black uppercase tracking-widest">Destinatário</th>
+<th class="px-6 py-5 text-[10px] font-black uppercase tracking-widest">Tipo</th>
+<th class="px-6 py-5 text-[10px] font-black uppercase tracking-widest">Valor</th>
+<th class="px-6 py-5 text-[10px] font-black uppercase tracking-widest">Status</th>
+<th class="px-6 py-5 text-[10px] font-black uppercase tracking-widest">Data</th>
+<th class="px-6 py-5 text-[10px] font-black uppercase tracking-widest">ID Transação</th>
+<th class="px-8 py-5 text-right"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary font-bold">FA</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Fazenda Alvorada</p>
+<p class="text-[10px] text-on-surface-variant">PIX: 04.223.112/0001-44</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold rounded-md uppercase tracking-tighter">FARMER</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold tracking-tight">R$ 14.280,00</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-[11px] font-bold uppercase tracking-tight">Processado</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">28 Out, 14:22</span>
+</td>
+<td class="px-6 py-5">
+<span class="font-mono text-[10px] text-on-surface-variant">TRX-774210992</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-secondary font-bold">IF</div>
+<div>
+<p class="text-sm font-bold text-on-surface">iFarm Marketplace</p>
+<p class="text-[10px] text-on-surface-variant">Interno: Fees &amp; Trans.</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-extrabold rounded-md uppercase tracking-tighter">PLATFORM</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold tracking-tight">R$ 842,50</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-[11px] font-bold uppercase tracking-tight">Processado</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">28 Out, 09:15</span>
+</td>
+<td class="px-6 py-5">
+<span class="font-mono text-[10px] text-on-surface-variant">TRX-774185203</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant font-bold">JC</div>
+<div>
+<p class="text-sm font-bold text-on-surface">João Camargo Grãos</p>
+<p class="text-[10px] text-on-surface-variant">TED: Ag. 0442 CC 1022-1</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-primary/10 text-primary text-[10px] font-extrabold rounded-md uppercase tracking-tighter">FARMER</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold tracking-tight">R$ 4.100,00</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="text-[11px] font-bold uppercase tracking-tight">Pendente</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">27 Out, 18:00</span>
+</td>
+<td class="px-6 py-5">
+<span class="font-mono text-[10px] text-on-surface-variant">TRX-774110444</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-error font-bold">SC</div>
+<div>
+<p class="text-sm font-bold text-on-surface">Solo Cargo Logística</p>
+<p class="text-[10px] text-on-surface-variant">PIX: log@solo.com.br</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-outline-variant/10 text-on-surface-variant text-[10px] font-extrabold rounded-md uppercase tracking-tighter">PARTNER</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold tracking-tight">R$ 2.450,00</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-1.5 text-error">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span class="text-[11px] font-bold uppercase tracking-tight">Falhou</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-xs text-on-surface-variant">27 Out, 11:30</span>
+</td>
+<td class="px-6 py-5">
+<span class="font-mono text-[10px] text-on-surface-variant">TRX-773998121</span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-surface-container-lowest/30 flex items-center justify-between text-[11px] font-bold uppercase text-on-surface-variant tracking-wider">
+<span>Exibindo 4 de 128 transações</span>
+<div class="flex gap-4">
+<button class="hover:text-primary transition-colors disabled:opacity-30">Anterior</button>
+<button class="hover:text-primary transition-colors">Próximo</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Background Decoration -->
+<div class="fixed top-0 right-0 -z-10 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="fixed bottom-0 left-0 -z-10 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
+</body></html>

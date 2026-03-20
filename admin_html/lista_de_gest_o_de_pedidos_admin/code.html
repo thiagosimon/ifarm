@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iFarm Admin - Gestão de Pedidos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#5c4300",
+              "inverse-primary": "#1a6c3d",
+              "on-background": "#e0e3e4",
+              "surface-container-high": "#272b2c",
+              "surface": "#101415",
+              "on-tertiary-container": "#066032",
+              "on-secondary": "#402d00",
+              "on-surface-variant": "#bfc9be",
+              "on-primary": "#00391b",
+              "tertiary-fixed-dim": "#89d89e",
+              "on-secondary-container": "#433000",
+              "surface-container-highest": "#313536",
+              "secondary-container": "#c59300",
+              "on-error-container": "#ffdad6",
+              "on-tertiary-fixed": "#00210d",
+              "surface-container": "#1c2021",
+              "secondary": "#f6be39",
+              "inverse-surface": "#e0e3e4",
+              "surface-bright": "#363a3b",
+              "secondary-fixed-dim": "#f6be39",
+              "outline-variant": "#404940",
+              "on-primary-fixed-variant": "#005229",
+              "background": "#101415",
+              "surface-container-lowest": "#0b0f10",
+              "on-tertiary": "#00391b",
+              "secondary-fixed": "#ffdea0",
+              "primary": "#a4f5b8",
+              "surface-container-low": "#181c1d",
+              "primary-container": "#89d89e",
+              "primary-fixed-dim": "#89d89e",
+              "primary-fixed": "#a4f4b8",
+              "surface-dim": "#101415",
+              "outline": "#899389",
+              "on-error": "#690005",
+              "tertiary-container": "#8ad89e",
+              "surface-tint": "#89d89e",
+              "on-primary-container": "#056032",
+              "inverse-on-surface": "#2d3132",
+              "error-container": "#93000a",
+              "tertiary-fixed": "#a5f4b8",
+              "on-surface": "#e0e3e4",
+              "tertiary": "#a5f5b9",
+              "error": "#ffb4ab",
+              "on-secondary-fixed": "#261a00",
+              "on-primary-fixed": "#00210d",
+              "surface-variant": "#313536",
+              "on-tertiary-fixed-variant": "#005229"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(39, 42, 44, 0.7); backdrop-filter: blur(12px); }
+        .agro-shadow { box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05); }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col justify-between py-8 h-screen w-64 border-r-0 bg-[#181C1D] shadow-2xl shadow-black/40 z-50">
+<div>
+<div class="px-6 mb-10">
+<div class="text-2xl font-extrabold tracking-tighter flex items-center gap-1 text-[#89D89E]">
+<span class="material-symbols-outlined" data-icon="potted_plant">potted_plant</span>
+                    iFarm
+                </div>
+<div class="text-xs font-light tracking-tight text-[#E0E3E4]/60">Admin Panel</div>
+</div>
+<nav class="bg-[#1D2022] space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] font-light tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#89D89E] bg-[#89D89E]/10 border-l-4 border-[#89D89E] font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-['Inter'] tracking-tight">Pedidos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-['Inter'] font-light tracking-tight">Usuários</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-['Inter'] font-light tracking-tight">KYC</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="font-['Inter'] font-light tracking-tight">Financeiro</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-['Inter'] font-light tracking-tight">Disputas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] font-light tracking-tight">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="px-4">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-error transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['Inter'] font-light tracking-tight">Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 flex-1 p-8 min-h-screen bg-background">
+<!-- Header -->
+<header class="mb-10 flex justify-between items-end">
+<div>
+<span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary/70 mb-2 block">Operações de Mercado</span>
+<h1 class="text-4xl font-bold tracking-tight text-on-surface">Gestão de Pedidos</h1>
+<p class="text-on-surface-variant font-light mt-1">Monitore e gerencie o fluxo logístico e financeiro da plataforma.</p>
+</div>
+<div class="flex gap-4">
+<button class="bg-primary hover:opacity-90 text-on-primary px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all agro-shadow">
+<span class="material-symbols-outlined text-xl" data-icon="download">download</span>
+                    Exportar Relatório
+                </button>
+</div>
+</header>
+<!-- Filter Bar -->
+<section class="glass-card rounded-xl p-6 mb-8 agro-shadow border border-outline-variant/10">
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-6 items-end">
+<div class="space-y-2">
+<label class="text-[10px] font-extrabold uppercase tracking-wider text-on-surface-variant">Busca Geral</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg" data-icon="search">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg pl-10 pr-4 py-2.5 text-sm focus:ring-1 focus:ring-primary" placeholder="Pedido, produtor..." type="text"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-extrabold uppercase tracking-wider text-on-surface-variant">Status</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2.5 text-sm focus:ring-1 focus:ring-primary appearance-none">
+<option>Todos</option>
+<option>Aguardando Pagamento</option>
+<option>Pago</option>
+<option>Em Preparo</option>
+<option>Enviado</option>
+<option>Entregue</option>
+<option>Concluído</option>
+<option>Cancelado</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-extrabold uppercase tracking-wider text-on-surface-variant">Período De</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2.5 text-sm focus:ring-1 focus:ring-primary" type="date"/>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-extrabold uppercase tracking-wider text-on-surface-variant">Período Até</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg px-4 py-2.5 text-sm focus:ring-1 focus:ring-primary" type="date"/>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-highest hover:bg-surface-bright text-on-surface p-2.5 rounded-lg transition-colors flex-1 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="filter_list">filter_list</span>
+<span class="text-sm font-semibold">Filtrar</span>
+</button>
+<button class="bg-surface-container-highest hover:bg-surface-bright text-on-surface p-2.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Data Table Container -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden agro-shadow border border-outline-variant/5">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-highest/50">
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10">ID Pedido</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10">Produtor (Farmer)</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10">Comprador (Retailer)</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10">Status</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10 text-right">Valor (R$)</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10">Data</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10 text-center">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20934</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">JS</div>
+<div>
+<div class="text-sm font-semibold">João Silva</div>
+<div class="text-[10px] text-on-surface-variant">Fazenda Sol Nascente</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Agropecuária São Bento</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-on-primary-fixed-variant text-primary-fixed">Concluído</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">12.450,00</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">12 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20935</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">MO</div>
+<div>
+<div class="text-sm font-semibold">Maria Oliveira</div>
+<div class="text-[10px] text-on-surface-variant">Sítio das Palmeiras</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Mercado Central Frutti</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-on-secondary-fixed-variant text-secondary-fixed">Pendente</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">5.120,50</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">13 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20936</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">RC</div>
+<div>
+<div class="text-sm font-semibold">Ricardo Costa</div>
+<div class="text-[10px] text-on-surface-variant">Fazenda Rio Doce</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Distribuidora Minas</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-error-container text-error">Cancelado</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">8.900,00</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">14 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20937</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">AS</div>
+<div>
+<div class="text-sm font-semibold">Ana Santos</div>
+<div class="text-[10px] text-on-surface-variant">Hortifruti Esperança</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Supermercado BH</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-primary-container/20 text-primary">Enviado</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">3.440,00</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">14 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20938</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">FM</div>
+<div>
+<div class="text-sm font-semibold">Fernando Mota</div>
+<div class="text-[10px] text-on-surface-variant">Estância Bela Vista</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Rede Mix Alimentos</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-on-primary-fixed-variant text-primary-fixed">Pago</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">21.800,00</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">15 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20939</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">LP</div>
+<div>
+<div class="text-sm font-semibold">Lucas Pereira</div>
+<div class="text-[10px] text-on-surface-variant">Granja Sul</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Ceasa Curitiba</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-on-secondary-fixed-variant text-secondary-fixed">Em Preparo</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">1.200,00</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">15 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20940</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">BR</div>
+<div>
+<div class="text-sm font-semibold">Beatriz Rocha</div>
+<div class="text-[10px] text-on-surface-variant">Pomar da Serra</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Empório Natural</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-error-container text-error">Disputa</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">750,00</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">16 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-primary font-bold">#IF-20941</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary text-xs font-bold">GF</div>
+<div>
+<div class="text-sm font-semibold">Gustavo Farias</div>
+<div class="text-[10px] text-on-surface-variant">Cerrado Forte</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Sacolão do Povo</td>
+<td class="px-6 py-4">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase bg-primary-container/20 text-primary">Entregue</span>
+</td>
+<td class="px-6 py-4 text-right font-semibold text-secondary">4.290,00</td>
+<td class="px-6 py-4 text-xs text-on-surface-variant">16 Mai, 2024</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<footer class="px-6 py-4 bg-surface-container-lowest flex items-center justify-between border-t border-outline-variant/10">
+<div class="text-xs text-on-surface-variant font-medium">Exibindo <span class="text-on-surface">1-8</span> de <span class="text-on-surface">124</span> pedidos</div>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors text-on-surface-variant text-xs">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors text-on-surface-variant text-xs">3</button>
+<span class="text-on-surface-variant px-1">...</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors text-on-surface-variant text-xs">16</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container-highest transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-lg" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</footer>
+</div>
+<!-- Floating Quick View Summary (Editorial Touch) -->
+<section class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glass-card p-6 rounded-xl agro-shadow border-l-4 border-primary">
+<div class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-1">Volume Diário</div>
+<div class="text-3xl font-light text-on-surface">R$ 142.800 <span class="text-primary text-sm font-bold ml-2">+12%</span></div>
+<div class="mt-4 h-1 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl agro-shadow border-l-4 border-secondary">
+<div class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-1">Taxa de Conversão</div>
+<div class="text-3xl font-light text-on-surface">94.2% <span class="text-secondary text-sm font-bold ml-2">Meta: 95%</span></div>
+<div class="mt-4 h-1 w-full bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[94%]"></div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-xl agro-shadow border-l-4 border-tertiary">
+<div class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-1">Tickets em Aberto</div>
+<div class="text-3xl font-light text-on-surface">14 <span class="text-tertiary text-sm font-bold ml-2">Crítico</span></div>
+<div class="mt-4 flex gap-1">
+<div class="h-1 flex-1 bg-error rounded-full"></div>
+<div class="h-1 flex-1 bg-error rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container-lowest rounded-full"></div>
+<div class="h-1 flex-1 bg-surface-container-lowest rounded-full"></div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

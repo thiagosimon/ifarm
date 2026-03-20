@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestão de Retailers | AgroMarket</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-fixed-variant": "#005229",
+              "on-primary-fixed": "#00210d",
+              "surface-variant": "#313536",
+              "on-secondary-fixed": "#261a00",
+              "tertiary-fixed": "#a5f4b8",
+              "on-surface": "#e0e3e4",
+              "tertiary": "#a5f5b9",
+              "error": "#ffb4ab",
+              "error-container": "#93000a",
+              "outline": "#899389",
+              "on-error": "#690005",
+              "tertiary-container": "#8ad89e",
+              "surface-tint": "#89d89e",
+              "on-primary-container": "#056032",
+              "inverse-on-surface": "#2d3132",
+              "surface-dim": "#101415",
+              "primary-fixed": "#a4f4b8",
+              "primary-fixed-dim": "#89d89e",
+              "surface-container-low": "#181c1d",
+              "primary-container": "#89d89e",
+              "on-tertiary": "#00391b",
+              "secondary-fixed": "#ffdea0",
+              "primary": "#a4f5b8",
+              "background": "#101415",
+              "surface-container-lowest": "#0b0f10",
+              "secondary-fixed-dim": "#f6be39",
+              "outline-variant": "#404940",
+              "on-primary-fixed-variant": "#005229",
+              "secondary": "#f6be39",
+              "inverse-surface": "#e0e3e4",
+              "surface-bright": "#363a3b",
+              "surface-container": "#1c2021",
+              "surface-container-highest": "#313536",
+              "secondary-container": "#c59300",
+              "on-error-container": "#ffdad6",
+              "on-tertiary-fixed": "#00210d",
+              "tertiary-fixed-dim": "#89d89e",
+              "on-secondary-container": "#433000",
+              "on-primary": "#00391b",
+              "on-surface-variant": "#bfc9be",
+              "on-secondary": "#402d00",
+              "on-tertiary-container": "#066032",
+              "on-background": "#e0e3e4",
+              "surface-container-high": "#272b2c",
+              "surface": "#101415",
+              "inverse-primary": "#1a6c3d",
+              "on-secondary-fixed-variant": "#5c4300"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(39, 42, 44, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .agro-shadow {
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #101415; }
+        ::-webkit-scrollbar-thumb { background: #313536; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-[#181C1D] shadow-2xl flex flex-col py-8 z-50 font-['Inter'] font-light tracking-tight">
+<div class="px-6 mb-10">
+<h1 class="text-2xl font-bold text-[#E0E3E4] tracking-tighter">AgroMarket</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-[#899389] mt-1">Gestão de Varejo</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#899389] hover:text-[#E0E3E4] transition-all duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Painel</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#A4F5B8] bg-[#272B2C] rounded-r-lg border-l-4 border-[#F6BE39]" href="#">
+<span class="material-symbols-outlined" data-icon="storefront">storefront</span>
+<span>Lojistas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#899389] hover:text-[#E0E3E4] transition-all duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Transações</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#899389] hover:text-[#E0E3E4] transition-all duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Estoque</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#899389] hover:text-[#E0E3E4] transition-all duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Configurações</span>
+</a>
+</nav>
+<div class="mt-auto px-4 space-y-4">
+<button class="w-full py-3 px-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold text-sm shadow-lg active:opacity-80 transition-all">
+                Novo Lojista
+            </button>
+<div class="pt-4 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-4 py-2 text-[#899389] hover:text-[#E0E3E4] text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span>Suporte</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-[#899389] hover:text-[#E0E3E4] text-sm" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Sair</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar (Authority: JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-[#1D2022]/70 backdrop-blur-xl flex justify-between items-center h-20 px-10 transition-all duration-200 ease-out border-b border-[#404940]/15">
+<div class="flex items-center bg-surface-container-lowest px-4 py-2 rounded-full w-96">
+<span class="material-symbols-outlined text-outline mr-2" data-icon="search">search</span>
+<input class="bg-transparent border-none text-sm focus:ring-0 text-on-surface w-full" placeholder="Nome, email ou CNPJ" type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 border-r border-outline-variant/20 pr-6">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-['Inter'] font-semibold uppercase tracking-widest text-[10px] text-primary">Marketplace</p>
+<p class="text-xs text-on-surface">Admin Global</p>
+</div>
+<img alt="Avatar do Administrador" class="w-10 h-10 rounded-full border-2 border-primary/20" data-alt="Admin professional profile portrait photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnVMICSB2pwN83QYBG6WBmblxKwyqFY1wFs8VuaYIN1KNGmyATNDLkTAe8d24gxPm0pN5WdkebZ7d_fa1RkUBqhv_Gz8VLxbIQKYD_czI-vebAmRs95CCzkgDQvAwP6kC9XCG1ypJeczIR5-GvzpWFgddh3bYKzdw9Xb4zqAmuk4qPspCdo81j8ET6IOIzZmFmZNeqHgERLcJbublPGQGHHNo3SYtNnjWeTdDh2GcupAl1MTxUmZ8aOg96ZLdpe2tyNxtdXZIv8y4h"/>
+</div>
+</div>
+</header>
+<div class="pt-32 px-10 pb-20">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<span class="text-[10px] font-extrabold uppercase tracking-[0.3em] text-secondary mb-2 block">Painel de Operações</span>
+<h2 class="text-4xl font-bold tracking-tight text-on-surface">Gestão de Retailers</h2>
+<p class="text-outline mt-2 max-w-xl">Controle e verificação de lojistas e distribuidores ativos na plataforma AgroMarket.</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-lg font-bold shadow-lg hover:scale-[1.02] transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    Novo Retailer
+                </button>
+</div>
+<!-- KPIs Section (Bento Grid Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<div class="glass-panel p-6 rounded-xl agro-shadow border-l-2 border-primary">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-extrabold uppercase tracking-widest text-outline">Total de Retailers</span>
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-light font-headline">1.284</span>
+<span class="text-[10px] font-bold text-primary">+12%</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl agro-shadow border-l-2 border-secondary">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-extrabold uppercase tracking-widest text-outline">KYC Pendente</span>
+<span class="material-symbols-outlined text-secondary" data-icon="pending_actions">pending_actions</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-light font-headline">42</span>
+<span class="text-[10px] font-bold text-secondary-fixed-dim">Urgente</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl agro-shadow border-l-2 border-tertiary">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-extrabold uppercase tracking-widest text-outline">Vendas Totais (GMV)</span>
+<span class="material-symbols-outlined text-tertiary" data-icon="payments">payments</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-light font-headline">R$ 4.2M</span>
+<span class="text-[10px] font-bold text-primary">Meta 92%</span>
+</div>
+</div>
+</div>
+<!-- Filters Area -->
+<div class="flex flex-wrap items-center gap-4 mb-8">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container border border-outline-variant/10 text-sm">
+<span class="text-outline text-xs">Status:</span>
+<select class="bg-transparent border-none p-0 text-sm font-semibold focus:ring-0 text-on-surface">
+<option>Todos</option>
+<option>Ativo</option>
+<option>Suspenso</option>
+<option>Pendente</option>
+</select>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container border border-outline-variant/10 text-sm">
+<span class="text-outline text-xs">KYC:</span>
+<select class="bg-transparent border-none p-0 text-sm font-semibold focus:ring-0 text-on-surface">
+<option>Todos</option>
+<option>Verificado</option>
+<option>Pendente</option>
+<option>Rejeitado</option>
+</select>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container border border-outline-variant/10 text-sm text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="tune">tune</span>
+                    Filtros Avançados
+                </button>
+<div class="ml-auto text-xs text-outline">
+                    Mostrando <span class="text-on-surface font-bold">1-10</span> de <span class="text-on-surface font-bold">1.284</span>
+</div>
+</div>
+<!-- Table Section -->
+<div class="overflow-hidden rounded-xl border border-outline-variant/10 agro-shadow">
+<table class="w-full text-left border-collapse bg-surface-container-low">
+<thead>
+<tr class="bg-surface-container-high/50 text-[10px] font-extrabold uppercase tracking-[0.2em] text-outline">
+<th class="px-6 py-5">Lojista</th>
+<th class="px-6 py-5">CNPJ</th>
+<th class="px-6 py-5">Região</th>
+<th class="px-6 py-5">Status Conta</th>
+<th class="px-6 py-5">Status KYC</th>
+<th class="px-6 py-5">Última Venda</th>
+<th class="px-6 py-5 text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">AG</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">AgroGrãos Sul</p>
+<p class="text-[10px] text-outline">Cooperativa Regional Sul Ltda</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-outline font-mono">12.345.678/0001-90</td>
+<td class="px-6 py-6 text-sm text-on-surface">Curitiba / PR</td>
+<td class="px-6 py-6">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-on-primary-fixed-variant/20 text-primary border border-primary/20">Ativo</span>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-[10px] font-bold uppercase">Verificado</span>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-on-surface font-mono">15 Out 2023</td>
+<td class="px-6 py-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-2 hover:text-secondary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-2 hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary font-bold">DF</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Distribuidora FertiMais</p>
+<p class="text-[10px] text-outline">FertiMais Comércio de Insumos S.A</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-outline font-mono">98.765.432/0001-21</td>
+<td class="px-6 py-6 text-sm text-on-surface">Goiânia / GO</td>
+<td class="px-6 py-6">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-on-secondary-fixed-variant/20 text-secondary border border-secondary/20">Pendente</span>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-[10px] font-bold uppercase">Pendente</span>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-outline font-mono">-</td>
+<td class="px-6 py-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-2 hover:text-secondary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-2 hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center text-error font-bold">TR</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Terra Viva Retail</p>
+<p class="text-[10px] text-outline">Terra Viva Implementos Agrícolas</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-outline font-mono">45.678.123/0002-55</td>
+<td class="px-6 py-6 text-sm text-on-surface">Uberlândia / MG</td>
+<td class="px-6 py-6">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-error-container/20 text-error border border-error/20">Suspenso</span>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm" data-icon="cancel">cancel</span>
+<span class="text-[10px] font-bold uppercase">Rejeitado</span>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-on-surface font-mono">02 Set 2023</td>
+<td class="px-6 py-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-2 hover:text-secondary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-2 hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-highest/30 transition-colors group">
+<td class="px-6 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold">BC</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">BioCampo Insumos</p>
+<p class="text-[10px] text-outline">BioCampo Soluções Biológicas ME</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-outline font-mono">11.222.333/0001-00</td>
+<td class="px-6 py-6 text-sm text-on-surface">Sorriso / MT</td>
+<td class="px-6 py-6">
+<span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase bg-on-primary-fixed-variant/20 text-primary border border-primary/20">Ativo</span>
+</td>
+<td class="px-6 py-6">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-[10px] font-bold uppercase">Verificado</span>
+</div>
+</td>
+<td class="px-6 py-6 text-sm text-on-surface font-mono">22 Out 2023</td>
+<td class="px-6 py-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-40 group-hover:opacity-100 transition-opacity">
+<button class="p-2 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="visibility">visibility</span></button>
+<button class="p-2 hover:text-secondary transition-colors"><span class="material-symbols-outlined text-lg" data-icon="edit">edit</span></button>
+<button class="p-2 hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="bg-surface-container-high/30 px-6 py-4 flex justify-between items-center border-t border-outline-variant/5">
+<button class="px-4 py-2 text-xs font-bold uppercase tracking-widest text-outline hover:text-on-surface transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+                        Anterior
+                    </button>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-highest text-xs text-outline transition-colors">2</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-highest text-xs text-outline transition-colors">3</button>
+</div>
+<button class="px-4 py-2 text-xs font-bold uppercase tracking-widest text-outline hover:text-on-surface transition-colors flex items-center gap-2">
+                        Próximo
+                        <span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Authority: Shared Components Logic) -->
+<!-- Suppressed on List/Details as per instruction "suppress the FAB on Settings, Profile, Details" -->
+</body></html>

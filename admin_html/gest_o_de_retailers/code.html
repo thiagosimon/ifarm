@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iFarm Admin - Gestão de Retailers</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(39, 42, 44, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .agro-shadow {
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+        }
+        /* Custom scrollbar for editorial feel */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #101415; }
+        ::-webkit-scrollbar-thumb { background: #272B2C; border-radius: 3px; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "surface-container-high": "#272b2c",
+                "outline-variant": "#404940",
+                "on-surface": "#e0e3e4",
+                "tertiary-container": "#8ad89e",
+                "on-error-container": "#ffdad6",
+                "on-tertiary": "#00391b",
+                "on-surface-variant": "#bfc9be",
+                "surface-container-lowest": "#0b0f10",
+                "tertiary": "#a5f5b9",
+                "inverse-surface": "#e0e3e4",
+                "outline": "#899389",
+                "on-primary": "#00391b",
+                "background": "#101415",
+                "error-container": "#93000a",
+                "on-error": "#690005",
+                "surface-container-highest": "#313536",
+                "surface-tint": "#89d89e",
+                "surface-container-low": "#181c1d",
+                "on-tertiary-fixed": "#00210d",
+                "primary-fixed": "#a4f4b8",
+                "error": "#ffb4ab",
+                "secondary": "#f6be39",
+                "on-secondary": "#402d00",
+                "secondary-container": "#c59300",
+                "surface-container": "#1c2021",
+                "primary-container": "#89d89e",
+                "on-secondary-fixed": "#261a00",
+                "inverse-primary": "#1a6c3d",
+                "surface-bright": "#363a3b",
+                "inverse-on-surface": "#2d3132",
+                "on-tertiary-fixed-variant": "#005229",
+                "on-secondary-fixed-variant": "#5c4300",
+                "surface-variant": "#313536",
+                "surface": "#101415",
+                "on-secondary-container": "#433000",
+                "secondary-fixed": "#ffdea0",
+                "on-primary-container": "#056032",
+                "on-primary-fixed-variant": "#005229",
+                "surface-dim": "#101415",
+                "primary-fixed-dim": "#89d89e",
+                "primary": "#a4f5b8",
+                "on-primary-fixed": "#00210d",
+                "tertiary-fixed-dim": "#89d89e",
+                "on-background": "#e0e3e4",
+                "on-tertiary-container": "#066032",
+                "secondary-fixed-dim": "#f6be39",
+                "tertiary-fixed": "#a5f4b8"
+              },
+              fontFamily: {
+                "headline": ["Inter"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col justify-between py-8 bg-[#181C1D] w-64 shadow-2xl shadow-black/40 z-50">
+<div>
+<div class="px-6 mb-10">
+<div class="text-2xl font-extrabold tracking-tighter flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+                    iFarm
+                </div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-outline mt-1 opacity-60">Admin Panel</p>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Inter'] font-light tracking-tight text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-['Inter'] font-light tracking-tight text-sm">Pedidos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#89D89E] bg-[#89D89E]/10 border-l-4 border-[#89D89E] font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-['Inter'] tracking-tight text-sm">Usuários</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-['Inter'] font-light tracking-tight text-sm">KYC</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="font-['Inter'] font-light tracking-tight text-sm">Financeiro</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-['Inter'] font-light tracking-tight text-sm">Disputas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200 hover:bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Inter'] font-light tracking-tight text-sm">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="px-4">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-error transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-['Inter'] font-light tracking-tight text-sm">Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 p-10 bg-background">
+<!-- Editorial Header -->
+<header class="mb-12 flex justify-between items-end">
+<div>
+<span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-secondary mb-2 block">Gestão de Marketplace</span>
+<h1 class="text-5xl font-light text-on-surface tracking-tight">Retailers <span class="font-bold text-primary">iFarm</span></h1>
+</div>
+<div class="flex gap-4">
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold px-6 py-3 rounded-lg flex items-center gap-2 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+                    Novo Lojista
+                </button>
+</div>
+</header>
+<!-- Filter Bar: Atmospheric Layering -->
+<section class="bg-surface-container-low p-6 rounded-xl mb-8 flex flex-wrap gap-6 items-end agro-shadow">
+<div class="flex-1 min-w-[300px]">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-outline mb-2 block">Busca Rápida</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary text-on-surface rounded-lg pl-12 py-3 text-sm placeholder:text-outline/50" placeholder="Nome, email ou CNPJ..." type="text"/>
+</div>
+</div>
+<div class="w-48">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-outline mb-2 block">Status</label>
+<select class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary text-on-surface rounded-lg py-3 text-sm">
+<option>Todos</option>
+<option>Ativo</option>
+<option>Suspenso</option>
+<option>Pendente</option>
+</select>
+</div>
+<div class="w-56">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-outline mb-2 block">Status KYC</label>
+<select class="w-full bg-surface-container-lowest border-none focus:ring-1 focus:ring-primary text-on-surface rounded-lg py-3 text-sm">
+<option>Todos</option>
+<option>Não Iniciado</option>
+<option>Docs Enviados</option>
+<option>Aprovado</option>
+<option>Rejeitado</option>
+</select>
+</div>
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-6 py-3 rounded-lg text-sm font-semibold transition-colors">
+                Filtrar Resultados
+            </button>
+</section>
+<!-- Data Table: Editorial Style -->
+<section class="bg-surface-container-low rounded-xl overflow-hidden agro-shadow">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Retailer / Razão Social</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Contato &amp; CNPJ</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Região</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">Status</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline">KYC</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-primary font-bold">AG</div>
+<div>
+<p class="font-semibold text-on-surface">AgroGerais Solutions</p>
+<p class="text-xs text-outline font-light italic">Soluções Agrícolas Gerais Ltda.</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface">contato@agrogerais.com.br</p>
+<p class="text-[11px] text-outline font-mono">12.345.678/0001-90</p>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface">Uberlândia, MG</p>
+<p class="text-[11px] text-outline">Sudeste</p>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-on-primary-fixed-variant text-primary-fixed uppercase tracking-tight">Ativo</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-xs font-semibold text-on-surface">Aprovado</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary font-bold">FS</div>
+<div>
+<p class="font-semibold text-on-surface">Fertilizantes Safra</p>
+<p class="text-xs text-outline font-light italic">Safra Comercial de Insumos Eireli</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface">vendas@safras.com.br</p>
+<p class="text-[11px] text-outline font-mono">98.765.432/0001-21</p>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface">Sorriso, MT</p>
+<p class="text-[11px] text-outline">Centro-Oeste</p>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-on-secondary-fixed-variant text-secondary-fixed uppercase tracking-tight">Pendente</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">hourglass_empty</span>
+<span class="text-xs font-semibold text-on-surface">Docs Enviados</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-error font-bold">TR</div>
+<div>
+<p class="font-semibold text-on-surface">Terra Viva Retail</p>
+<p class="text-xs text-outline font-light italic">Terra Viva Agropecuária S.A.</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface">admin@terraviva.com</p>
+<p class="text-[11px] text-outline font-mono">55.111.222/0001-33</p>
+</td>
+<td class="px-6 py-5">
+<p class="text-sm text-on-surface">Pelotas, RS</p>
+<p class="text-[11px] text-outline">Sul</p>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-error-container text-error uppercase tracking-tight">Suspenso</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-sm">cancel</span>
+<span class="text-xs font-semibold text-on-surface">Rejeitado</span>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination Overlay -->
+<div class="px-6 py-4 flex justify-between items-center bg-surface-container-lowest border-t border-outline-variant/10">
+<p class="text-xs text-outline">Exibindo <span class="text-on-surface font-bold">1-10</span> de 458 retailers</p>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded text-outline"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-2 bg-primary text-on-primary font-bold rounded min-w-[32px] text-xs">1</button>
+<button class="p-2 hover:bg-surface-container-high rounded text-outline min-w-[32px] text-xs">2</button>
+<button class="p-2 hover:bg-surface-container-high rounded text-outline min-w-[32px] text-xs">3</button>
+<button class="p-2 hover:bg-surface-container-high rounded text-outline"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</section>
+<!-- Detail Modal: Two Column Layout Overlay -->
+<div class="fixed inset-0 bg-background/80 backdrop-blur-sm z-[100] flex items-center justify-center p-6">
+<div class="bg-surface-container-low w-full max-w-5xl rounded-2xl agro-shadow overflow-hidden flex flex-col max-h-[921px]">
+<!-- Modal Header -->
+<div class="p-8 bg-surface-container-high flex justify-between items-start border-b border-outline-variant/10">
+<div class="flex gap-6 items-center">
+<div class="w-20 h-20 rounded-2xl bg-primary-container/20 flex items-center justify-center text-primary text-4xl font-black">AG</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h2 class="text-3xl font-bold text-on-surface tracking-tight">AgroGerais Solutions</h2>
+<span class="px-3 py-1 rounded-full text-[10px] font-extrabold bg-on-primary-fixed-variant text-primary-fixed uppercase tracking-tight">Ativo</span>
+</div>
+<p class="text-outline italic">Soluções Agrícolas Gerais Ltda. • CNPJ: 12.345.678/0001-90</p>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors p-2 bg-surface-container-lowest rounded-full">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="flex-1 overflow-y-auto p-8 grid grid-cols-12 gap-10">
+<!-- Left: Profile Info -->
+<div class="col-span-12 lg:col-span-7 space-y-8">
+<div>
+<h3 class="text-xs font-extrabold uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
+<span class="w-1.5 h-4 bg-primary rounded-full"></span>
+                                Informações de Contato
+                            </h3>
+<div class="grid grid-cols-2 gap-6 bg-surface-container-lowest p-6 rounded-xl">
+<div>
+<p class="text-[10px] font-extrabold text-outline uppercase mb-1">E-mail Principal</p>
+<p class="text-on-surface font-semibold">contato@agrogerais.com.br</p>
+</div>
+<div>
+<p class="text-[10px] font-extrabold text-outline uppercase mb-1">Telefone / WhatsApp</p>
+<p class="text-on-surface font-semibold">+55 (34) 99876-5432</p>
+</div>
+<div class="col-span-2">
+<p class="text-[10px] font-extrabold text-outline uppercase mb-1">Endereço Fiscal</p>
+<p class="text-on-surface font-semibold">Av. Rondon Pacheco, 2100 - Sala 402, Uberlândia - MG, 38400-000</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-extrabold uppercase tracking-widest text-secondary mb-4 flex items-center gap-2">
+<span class="w-1.5 h-4 bg-secondary rounded-full"></span>
+                                Desempenho no Marketplace
+                            </h3>
+<div class="grid grid-cols-3 gap-4">
+<div class="bg-surface-container-highest p-5 rounded-xl border-l-2 border-secondary">
+<p class="text-[10px] font-extrabold text-outline uppercase mb-1">Vendas Totais</p>
+<p class="text-2xl font-light text-secondary">R$ 1.2M</p>
+</div>
+<div class="bg-surface-container-highest p-5 rounded-xl border-l-2 border-primary">
+<p class="text-[10px] font-extrabold text-outline uppercase mb-1">Rating</p>
+<p class="text-2xl font-light text-primary">4.9<span class="text-xs font-bold">/5</span></p>
+</div>
+<div class="bg-surface-container-highest p-5 rounded-xl border-l-2 border-outline">
+<p class="text-[10px] font-extrabold text-outline uppercase mb-1">Pedidos</p>
+<p class="text-2xl font-light text-on-surface">142</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: KYC Section -->
+<div class="col-span-12 lg:col-span-5 space-y-6">
+<div class="bg-surface-container-highest/50 border border-outline-variant/20 p-6 rounded-2xl">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-xs font-extrabold uppercase tracking-widest text-on-surface">Documentação KYC</h3>
+<span class="flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/10 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-xs">verified</span>
+                                    VERIFICADO
+                                </span>
+</div>
+<div class="space-y-3">
+<!-- Doc 1 -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg group hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">description</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Contrato Social</p>
+<p class="text-[10px] text-outline">Enviado em 12/05/2023</p>
+</div>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+<!-- Doc 2 -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg group hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">badge</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Cartão CNPJ</p>
+<p class="text-[10px] text-outline">Enviado em 12/05/2023</p>
+</div>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+<!-- Doc 3 -->
+<div class="flex items-center justify-between p-3 bg-surface-container-lowest rounded-lg group hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">account_balance</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Comprovante Bancário</p>
+<p class="text-[10px] text-outline">Enviado em 15/05/2023</p>
+</div>
+</div>
+<button class="text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">download</span>
+</button>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/20">
+<p class="text-[10px] font-extrabold text-outline uppercase mb-3">Última Auditoria</p>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-outline-variant/30">
+<img alt="Auditor Avatar" class="w-full h-full object-cover" data-alt="Avatar of the system auditor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsHHh5pwpi7rbd35wV5UU0wejECo5h4HCoPFKSVawD8jdgvC6OoOd1vNpBKTsnwNRjSh1mTntQPipjEMavk5pE2jBUEfhZwmnmpUPlF-HGJu00mHNwoPcRYdKcT_jeRrAK_2F6lDvWFJGU2cokYbCAP2gvbefQtY3twn5tcj10OZOgE9ITQiWAi5DXaRYW-sf-0dKqVB8_4MH5vBh7TfM70Nhw-OqTyBoZRT1_YwgL4D-zQSQ0Y9ggVw-C5ooXoyLsKO35iuj9tMU0"/>
+</div>
+<div>
+<p class="text-xs font-semibold text-on-surface">Ricardo Silveira</p>
+<p class="text-[10px] text-outline">Aprovado em 20/05/2023 às 14:30</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="p-6 bg-surface-container-lowest flex justify-between gap-4">
+<button class="text-error font-bold text-sm px-6 py-2 hover:bg-error/10 rounded-lg transition-colors">
+                        Suspender Acesso
+                    </button>
+<div class="flex gap-4">
+<button class="text-on-surface font-bold text-sm px-6 py-2 border border-outline/20 rounded-lg hover:bg-surface-container-high transition-colors">
+                            Editar Dados
+                        </button>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold px-8 py-2 rounded-lg active:scale-95 transition-all">
+                            Validar KYC
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

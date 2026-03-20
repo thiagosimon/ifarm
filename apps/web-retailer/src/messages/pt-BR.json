@@ -103,7 +103,9 @@
       "state": "Estado",
       "valueRange": "Faixa de Valor",
       "allCategories": "Todas as Categorias",
-      "allStates": "Todos os Estados"
+      "allStates": "Todos os Estados",
+      "searchPlaceholder": "Buscar por nº ou produtor...",
+      "clear": "Limpar Filtros"
     },
     "categories": {
       "fertilizers": "Fertilizantes",
@@ -118,7 +120,9 @@
       "quantity": "Qtd",
       "expiration": "Expiração",
       "estimatedValue": "Valor Est.",
-      "action": "Ação"
+      "action": "Ação",
+      "category": "Categoria",
+      "urgency": "Urgência"
     },
     "status": {
       "open": "Aberta",
@@ -126,11 +130,32 @@
       "accepted": "Aceita",
       "rejected": "Rejeitada",
       "expired": "Expirada",
-      "inAnalysis": "Em Análise"
+      "inAnalysis": "Em Análise",
+      "responded": "Respondida"
     },
+    "newInternalQuotation": "Nova Cotação Interna",
     "sendProposal": "Enviar Proposta",
     "viewDetail": "Ver Detalhes",
-    "timeRemaining": "restantes"
+    "timeRemaining": "restantes",
+    "noResults": "Nenhuma cotação encontrada",
+    "noResultsHint": "Tente ajustar os filtros de busca",
+    "resultsFound": "resultados encontrados",
+    "showing": "Mostrando",
+    "of": "de",
+    "resultsLabel": "resultados",
+    "urgency": {
+      "urgent": "Urgente",
+      "normal": "Normal",
+      "low": "Baixa"
+    },
+    "kpi": {
+      "conversionRate": "Taxa de Conversão",
+      "pendingProposals": "Propostas Pendentes",
+      "monthlySales": "Vendas do Mês",
+      "awaitingResponse": "Aguardando resposta",
+      "insights": "AgroBiz Insights",
+      "insightsDescription": "Fertilizantes NPK estão com margem 12% acima da média regional"
+    }
   },
   "proposal": {
     "title": "Nova Proposta",
@@ -138,6 +163,7 @@
     "item": {
       "unitPrice": "Preço Unitário",
       "brand": "Marca/Fabricante",
+      "brandPlaceholder": "Ex: Mosaic, Yara...",
       "deliveryDays": "Prazo Entrega (dias)",
       "subtotal": "Subtotal"
     },
@@ -154,7 +180,11 @@
     "notes": "Observações",
     "submit": "Enviar Proposta",
     "summary": "Resumo da Proposta",
-    "totalValue": "Valor Total"
+    "totalValue": "Valor Total",
+    "itemPricing": "Precificação por Item",
+    "freightCost": "Valor do Frete",
+    "notesPlaceholder": "Condições especiais, observações...",
+    "subtotalLabel": "Subtotal dos Itens"
   },
   "orders": {
     "title": "Pedidos",
@@ -186,20 +216,17 @@
       "dispatch": "Despachar Pedido",
       "printDanfe": "Imprimir Danfe",
       "markShipped": "Marcar como Enviado"
-    }
+    },
+    "search": "Buscar por número, produtor ou cidade...",
+    "noOrders": "Nenhum pedido",
+    "trackingHint": "Informe o código de rastreio da transportadora para que o produtor possa acompanhar a entrega.",
+    "confirmShipment": "Confirmar Envio"
   },
   "catalog": {
     "title": "Meu Catálogo",
     "subtitle": "Gerencie {count} produtos ativos na sua vitrine B2B",
     "addProduct": "Adicionar Produto",
     "addFromGeneral": "Adicionar do Catálogo Geral",
-    "filters": {
-      "all": "Todos",
-      "fertilizers": "Fertilizantes",
-      "pesticides": "Defensivos",
-      "seeds": "Sementes",
-      "machinery": "Maquinário"
-    },
     "product": {
       "name": "Nome do Produto",
       "description": "Descrição",
@@ -216,13 +243,62 @@
       "inactive": "Inativo",
       "outOfStock": "Esgotado"
     },
-    "regions": {
-      "title": "Regiões de Atendimento",
-      "subtitle": "Selecione os estados onde você atende"
-    },
     "image": {
       "upload": "Upload de Imagem",
       "recommended": "Recomendado: 800×600px"
+    },
+    "search": "Buscar por nome, SKU ou marca...",
+    "noProducts": "Nenhum produto encontrado",
+    "noNcm": "Sem NCM",
+    "ncmAlert": "{count} produto(s) sem NCM cadastrado",
+    "editProduct": "Editar Produto",
+    "newProduct": "Novo Produto",
+    "editProductDesc": "Atualize as informações do produto",
+    "newProductDesc": "Preencha os dados para cadastrar um novo produto",
+    "saveChanges": "Salvar Alterações",
+    "registerProduct": "Cadastrar Produto",
+    "tariffDescription": "Código NCM de 8 dígitos conforme tabela TIPI",
+    "validation": {
+      "nameMin": "Nome deve ter pelo menos 3 caracteres",
+      "descriptionMin": "Descrição deve ter pelo menos 10 caracteres",
+      "categoryRequired": "Categoria obrigatória",
+      "brandRequired": "Marca obrigatória",
+      "unitRequired": "Unidade obrigatória",
+      "priceRequired": "Preço obrigatório",
+      "pricePositive": "Preço deve ser maior que zero",
+      "tariffFormat": "NCM deve ter exatamente 8 dígitos numéricos",
+      "skuRequired": "SKU obrigatório",
+      "stockNonNegative": "Estoque não pode ser negativo"
+    },
+    "placeholders": {
+      "name": "Ex: Fertilizante NPK 10-10-10",
+      "sku": "Ex: FERT-NPK-1010",
+      "description": "Descreva o produto em detalhes...",
+      "brand": "Ex: AgroNutri",
+      "selectCategory": "Selecione a categoria",
+      "selectUnit": "Selecione a unidade"
+    },
+    "units": {
+      "ton": "Tonelada",
+      "sack": "Saca (60kg)",
+      "unit": "Unidade"
+    },
+    "regions": {
+      "title": "Regiões de Atendimento",
+      "subtitle": "Selecione os estados onde você atende",
+      "configure": "Configurar Regiões",
+      "selectFor": "Selecione os estados onde o produto {name} está disponível",
+      "selected": "{count} estado(s) selecionado(s)",
+      "save": "Salvar Regiões"
+    },
+    "filters": {
+      "all": "Todos",
+      "fertilizers": "Fertilizantes",
+      "pesticides": "Defensivos",
+      "seeds": "Sementes",
+      "machinery": "Maquinário",
+      "limestone": "Calcário",
+      "organic": "Orgânicos"
     },
     "sortBy": "Ordenar por",
     "highestMargin": "Maior Margem"
@@ -247,7 +323,47 @@
       "held": "Retido"
     },
     "exportCsv": "Exportar CSV",
-    "holdbackNote": "Holdback: 7 dias úteis conforme política"
+    "holdbackNote": "Holdback: 7 dias úteis conforme política",
+    "payoutHistory": "Histórico de Repasses",
+    "payoutDetail": "Detalhamento de Repasses",
+    "holdbackInfo": {
+      "inHoldback": "em holdback",
+      "releaseNote": "Liberação em 7 dias úteis após confirmação de entrega, excluindo feriados nacionais."
+    },
+    "paidOn": "Pago em {date}",
+    "expectedFor": "Previsto para {date}",
+    "table": {
+      "reference": "Referência",
+      "order": "Pedido",
+      "farmer": "Produtor",
+      "grossAmount": "Bruto",
+      "fee": "Taxa",
+      "netAmount": "Líquido",
+      "scheduledDate": "Data Prevista"
+    },
+    "weekdays": {
+      "sun": "Dom",
+      "mon": "Seg",
+      "tue": "Ter",
+      "wed": "Qua",
+      "thu": "Qui",
+      "fri": "Sex",
+      "sat": "Sáb"
+    },
+    "months": {
+      "jan": "Janeiro",
+      "feb": "Fevereiro",
+      "mar": "Março",
+      "apr": "Abril",
+      "may": "Maio",
+      "jun": "Junho",
+      "jul": "Julho",
+      "aug": "Agosto",
+      "sep": "Setembro",
+      "oct": "Outubro",
+      "nov": "Novembro",
+      "dec": "Dezembro"
+    }
   },
   "login": {
     "brandSuffix": "Lojista",
@@ -291,6 +407,7 @@
       "street": "Logradouro",
       "number": "Número",
       "complement": "Complemento",
+      "complementPlaceholder": "Ex: Sala 202",
       "neighborhood": "Bairro",
       "city": "Cidade",
       "state": "Estado",
@@ -306,7 +423,26 @@
       "title": "Configurações Comerciais",
       "deliveryTime": "Prazo de Entrega Padrão",
       "minOrder": "Pedido Mínimo",
-      "paymentTerms": "Condições de Pagamento"
+      "paymentTerms": "Condições de Pagamento",
+      "serviceArea": "Área de Atendimento (km)",
+      "businessHours": "Horário de Funcionamento",
+      "paymentMethods": "Métodos de Pagamento",
+      "methods": {
+        "card": "Cartão",
+        "pix": "Pix",
+        "boleto": "Boleto"
+      }
+    },
+    "bank": {
+      "title": "Dados Bancários",
+      "bankName": "Banco",
+      "branch": "Agência",
+      "account": "Conta",
+      "holder": "Titular da Conta"
+    },
+    "actions": {
+      "discard": "Descartar Alterações",
+      "save": "Salvar Alterações"
     }
   },
   "signup": {
@@ -356,15 +492,50 @@
   },
   "reviews": {
     "title": "Avaliações e Reputação",
+    "subtitle": "Acompanhe a percepção dos seus clientes",
+    "exportReport": "Exportar Relatório",
     "overallRating": "Avaliação Geral",
+    "overallScore": "Nota Geral",
     "totalReviews": "{count} avaliações",
+    "basedOn": "com base em {count} avaliações",
+    "star": "estrela",
+    "stars": "estrelas",
     "distribution": "Distribuição de Notas",
     "kpi": {
       "nps": "NPS",
+      "npsDescription": "Net Promoter Score",
       "repurchaseRate": "Taxa de Recompra",
-      "responseTime": "Tempo de Resposta"
+      "repurchaseDescription": "Clientes que compraram novamente",
+      "responseTime": "Tempo de Resposta",
+      "responseDescription": "Tempo médio para responder"
     },
-    "evolution": "Evolução das Avaliações"
+    "evolution": "Evolução das Avaliações",
+    "months": {
+      "jan": "Jan",
+      "feb": "Fev",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "Mai",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Ago",
+      "sep": "Set",
+      "oct": "Out",
+      "nov": "Nov",
+      "dec": "Dez"
+    },
+    "recentReviews": "Avaliações Recentes",
+    "filters": {
+      "all": "Todas",
+      "pending": "Pendentes",
+      "replied": "Respondidas"
+    },
+    "daysAgo": "há {count} dias",
+    "order": "Pedido #{id}",
+    "respondedIn": "Respondido em {time}",
+    "reply": "Responder",
+    "dismiss": "Dispensar",
+    "noReviews": "Nenhuma avaliação encontrada"
   },
   "kyc": {
     "title": "Verificação KYC",
@@ -392,24 +563,127 @@
       "viewer": "Visualizador"
     }
   },
+  "messages": {
+    "title": "Mensagens",
+    "subtitle": "Comunicação com produtores e cooperativas",
+    "search": "Buscar conversa...",
+    "noConversations": "Nenhuma conversa encontrada",
+    "typeMessage": "Digite sua mensagem...",
+    "send": "Enviar",
+    "online": "Online",
+    "offline": "Offline",
+    "lastSeen": "Visto por último {time}",
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "unread": "{count} não lidas",
+    "attachFile": "Anexar arquivo"
+  },
   "customers": {
     "title": "Clientes",
-    "subtitle": "CRM de produtores e cooperativas"
+    "subtitle": "CRM de produtores e cooperativas",
+    "search": "Buscar cliente...",
+    "addCustomer": "Adicionar Cliente",
+    "totalCustomers": "Total de Clientes",
+    "activeCustomers": "Clientes Ativos",
+    "newThisMonth": "Novos este Mês",
+    "avgTicket": "Ticket Médio",
+    "fields": {
+      "name": "Nome",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "city": "Cidade",
+      "lastOrder": "Último Pedido",
+      "totalSpent": "Total Gasto",
+      "orders": "Pedidos"
+    },
+    "status": {
+      "active": "Ativo",
+      "inactive": "Inativo"
+    },
+    "noCustomers": "Nenhum cliente encontrado"
   },
   "reports": {
     "title": "Relatórios",
-    "subtitle": "Dados analíticos e exportações"
+    "subtitle": "Dados analíticos e exportações",
+    "types": {
+      "sales": "Vendas",
+      "products": "Produtos",
+      "customers": "Clientes",
+      "financial": "Financeiro"
+    },
+    "period": {
+      "week": "Semana",
+      "month": "Mês",
+      "quarter": "Trimestre",
+      "year": "Ano"
+    },
+    "generate": "Gerar Relatório",
+    "download": "Baixar",
+    "generatedAt": "Gerado em {date}",
+    "noReports": "Nenhum relatório gerado"
   },
   "shipping": {
     "title": "Logística",
-    "subtitle": "Gestão de frete e entregas"
+    "subtitle": "Gestão de frete e entregas",
+    "tabs": {
+      "pending": "Pendentes",
+      "inTransit": "Em Trânsito",
+      "delivered": "Entregues"
+    },
+    "carrier": "Transportadora",
+    "trackingCode": "Código de Rastreio",
+    "estimatedDelivery": "Previsão de Entrega",
+    "weight": "Peso",
+    "origin": "Origem",
+    "destination": "Destino",
+    "noShipments": "Nenhuma entrega encontrada"
   },
   "invoices": {
     "title": "Notas Fiscais",
-    "subtitle": "Emissão e gestão de NF-e"
+    "subtitle": "Emissão e gestão de NF-e",
+    "emit": "Emitir NF-e",
+    "invoiceNumber": "Número da NF",
+    "issueDate": "Data de Emissão",
+    "totalValue": "Valor Total",
+    "status": {
+      "pending": "Pendente",
+      "issued": "Emitida",
+      "cancelled": "Cancelada"
+    },
+    "xmlDownload": "Baixar XML",
+    "pdfDownload": "Baixar PDF",
+    "noInvoices": "Nenhuma nota fiscal encontrada"
   },
   "settings": {
     "title": "Configurações",
-    "subtitle": "Preferências do sistema"
+    "subtitle": "Preferências do sistema",
+    "sections": {
+      "general": "Geral",
+      "notifications": "Notificações",
+      "security": "Segurança",
+      "integrations": "Integrações"
+    },
+    "general": {
+      "language": "Idioma",
+      "timezone": "Fuso Horário",
+      "dateFormat": "Formato de Data",
+      "currency": "Moeda"
+    },
+    "notificationSettings": {
+      "email": "Notificações por E-mail",
+      "push": "Notificações Push",
+      "sms": "Notificações SMS",
+      "quotations": "Novas Cotações",
+      "orders": "Atualizações de Pedidos",
+      "financial": "Alertas Financeiros"
+    },
+    "security": {
+      "changePassword": "Alterar Senha",
+      "twoFactor": "Autenticação em Dois Fatores",
+      "sessions": "Sessões Ativas",
+      "enabled": "Habilitado",
+      "disabled": "Desabilitado"
+    },
+    "saved": "Configurações salvas com sucesso"
   }
 }

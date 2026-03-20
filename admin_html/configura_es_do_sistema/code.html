@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configurações | iFarm Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#272b2c",
+              "outline-variant": "#404940",
+              "on-surface": "#e0e3e4",
+              "tertiary-container": "#8ad89e",
+              "on-error-container": "#ffdad6",
+              "on-tertiary": "#00391b",
+              "on-surface-variant": "#bfc9be",
+              "surface-container-lowest": "#0b0f10",
+              "tertiary": "#a5f5b9",
+              "inverse-surface": "#e0e3e4",
+              "outline": "#899389",
+              "on-primary": "#00391b",
+              "background": "#101415",
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "surface-container-highest": "#313536",
+              "surface-tint": "#89d89e",
+              "surface-container-low": "#181c1d",
+              "on-tertiary-fixed": "#00210d",
+              "primary-fixed": "#a4f4b8",
+              "error": "#ffb4ab",
+              "secondary": "#f6be39",
+              "on-secondary": "#402d00",
+              "secondary-container": "#c59300",
+              "surface-container": "#1c2021",
+              "primary-container": "#89d89e",
+              "on-secondary-fixed": "#261a00",
+              "inverse-primary": "#1a6c3d",
+              "surface-bright": "#363a3b",
+              "inverse-on-surface": "#2d3132",
+              "on-tertiary-fixed-variant": "#005229",
+              "on-secondary-fixed-variant": "#5c4300",
+              "surface-variant": "#313536",
+              "surface": "#101415",
+              "on-secondary-container": "#433000",
+              "secondary-fixed": "#ffdea0",
+              "on-primary-container": "#056032",
+              "on-primary-fixed-variant": "#005229",
+              "surface-dim": "#101415",
+              "primary-fixed-dim": "#89d89e",
+              "primary": "#a4f5b8",
+              "on-primary-fixed": "#00210d",
+              "tertiary-fixed-dim": "#89d89e",
+              "on-background": "#e0e3e4",
+              "on-tertiary-container": "#066032",
+              "secondary-fixed-dim": "#f6be39",
+              "tertiary-fixed": "#a5f4b8"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(39, 42, 44, 0.7);
+        backdrop-filter: blur(12px);
+      }
+      .agro-shadow {
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #101415;
+        color: #e0e3e4;
+      }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col justify-between py-8 bg-[#181C1D] dark:bg-[#181C1D] h-screen w-64 border-r-0 shadow-2xl shadow-black/40 z-50">
+<div class="flex flex-col gap-8">
+<div class="px-6">
+<div class="text-2xl font-extrabold tracking-tighter flex items-center gap-1 text-[#89D89E]">
+                    iFarm
+                </div>
+<div class="text-[10px] font-['Inter'] font-light tracking-tight text-[#E0E3E4]/40 uppercase">
+                    Admin Panel
+                </div>
+</div>
+<nav class="bg-[#1D2022] space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Inter'] font-light tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-['Inter'] font-light tracking-tight">Pedidos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Inter'] font-light tracking-tight">Usuários</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-['Inter'] font-light tracking-tight">KYC</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-['Inter'] font-light tracking-tight">Financeiro</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-['Inter'] font-light tracking-tight">Disputas</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#89D89E] bg-[#89D89E]/10 border-l-4 border-[#89D89E] font-semibold" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Inter'] font-light tracking-tight">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="px-4">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-[#E0E3E4]/60 hover:text-error transition-colors duration-200 group">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-['Inter'] font-light tracking-tight">Sair</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen p-8 lg:p-12 max-w-6xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="flex items-center gap-3 mb-2">
+<span class="h-[2px] w-8 bg-secondary"></span>
+<span class="text-[11px] font-extrabold uppercase tracking-widest text-secondary">Preferências do Sistema</span>
+</div>
+<h1 class="text-4xl lg:text-5xl font-bold tracking-tight text-on-surface mb-4">Configurações</h1>
+<p class="text-on-surface-variant font-light max-w-2xl leading-relaxed">
+                Gerencie os parâmetros operacionais da plataforma iFarm, desde as taxas de comissionamento até a infraestrutura regional.
+            </p>
+</header>
+<!-- Configuration Stack -->
+<div class="flex flex-col gap-10">
+<!-- 1. Tiers de Comissão -->
+<section class="glass-card agro-shadow rounded-xl overflow-hidden">
+<div class="p-6 border-l-[3px] border-secondary flex items-center justify-between bg-surface-container-high/50">
+<h2 class="text-xl font-semibold text-on-surface">Tiers de Comissão</h2>
+<span class="text-[10px] font-extrabold uppercase tracking-wider text-on-surface-variant opacity-60">Global Marketplace</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest/50 border-b border-outline-variant/10">
+<th class="px-6 py-4 text-[11px] font-extrabold uppercase tracking-tighter text-on-surface-variant">Tier</th>
+<th class="px-6 py-4 text-[11px] font-extrabold uppercase tracking-tighter text-on-surface-variant">Taxa %</th>
+<th class="px-6 py-4 text-[11px] font-extrabold uppercase tracking-tighter text-on-surface-variant">GMV Mínimo</th>
+<th class="px-6 py-4 text-[11px] font-extrabold uppercase tracking-tighter text-on-surface-variant">GMV Máximo</th>
+<th class="px-6 py-4 text-right text-[11px] font-extrabold uppercase tracking-tighter text-on-surface-variant">Ação</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-highest/30 transition-colors">
+<td class="px-6 py-5 font-semibold text-primary">Semente</td>
+<td class="px-6 py-5">12.5%</td>
+<td class="px-6 py-5 text-on-surface-variant">R$ 0,00</td>
+<td class="px-6 py-5 text-on-surface-variant">R$ 50.000,00</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/30 transition-colors">
+<td class="px-6 py-5 font-semibold text-primary">Crescimento</td>
+<td class="px-6 py-5">10.0%</td>
+<td class="px-6 py-5 text-on-surface-variant">R$ 50.000,01</td>
+<td class="px-6 py-5 text-on-surface-variant">R$ 250.000,00</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/30 transition-colors">
+<td class="px-6 py-5 font-semibold text-primary">Colheita</td>
+<td class="px-6 py-5">8.5%</td>
+<td class="px-6 py-5 text-on-surface-variant">R$ 250.000,01</td>
+<td class="px-6 py-5 text-on-surface-variant">R$ 1.000.000,00</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-highest/30 transition-colors">
+<td class="px-6 py-5 font-semibold text-primary">Latifúndio</td>
+<td class="px-6 py-5">6.0%</td>
+<td class="px-6 py-5 text-on-surface-variant">R$ 1.000.000,01</td>
+<td class="px-6 py-5 text-on-surface-variant">Ilimitado</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 2. Regiões Habilitadas -->
+<section class="glass-card agro-shadow rounded-xl p-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></span>
+<h2 class="text-xl font-semibold text-on-surface">Regiões Habilitadas</h2>
+</div>
+<p class="text-on-surface-variant text-sm font-light">Status geográfico da operação iFarm Brasil.</p>
+</div>
+<div class="px-4 py-2 bg-surface-container-lowest rounded-lg border border-outline-variant/10">
+<span class="text-primary font-bold">12</span>
+<span class="text-on-surface-variant text-[11px] font-extrabold uppercase tracking-tight ml-1">de 27 Estados habilitados</span>
+</div>
+</div>
+<div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-9 gap-3">
+<!-- Enabled State -->
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">SP</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">MG</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">PR</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">RS</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">GO</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">MT</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">MS</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">SC</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">RJ</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">ES</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">BA</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-on-primary-fixed-variant border border-primary/20 cursor-pointer hover:bg-on-primary-fixed-variant/80 transition-all">
+<span class="text-[11px] font-extrabold text-primary-fixed">TO</span>
+</div>
+<!-- Disabled States -->
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">AM</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">AC</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">PA</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">RO</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">RR</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">AP</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">MA</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">PI</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">CE</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">RN</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">PB</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">PE</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">AL</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">SE</span>
+</div>
+<div class="flex items-center justify-center p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/10 cursor-pointer hover:bg-surface-container-high transition-all opacity-40">
+<span class="text-[11px] font-extrabold text-on-surface-variant">DF</span>
+</div>
+</div>
+</section>
+<!-- 3. Configuração do Sistema -->
+<section class="glass-card agro-shadow rounded-xl p-8">
+<div class="mb-10">
+<h2 class="text-xl font-semibold text-on-surface mb-2">Parâmetros Operacionais</h2>
+<p class="text-on-surface-variant text-sm font-light">Definições financeiras e SLAs do núcleo do sistema.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+<!-- Column 1 -->
+<div class="space-y-6">
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant">Holdback Financeiro (Dias)</label>
+<input class="bg-surface-container-lowest border-0 rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary/20 transition-all outline-none" type="number" value="15"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant">Valor Mínimo por Pedido</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">R$</span>
+<input class="w-full bg-surface-container-lowest border-0 rounded-lg p-4 pl-12 text-on-surface focus:ring-2 focus:ring-primary/20 transition-all outline-none" type="text" value="500,00"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant">SLA KYC (Horas)</label>
+<input class="bg-surface-container-lowest border-0 rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary/20 transition-all outline-none" type="number" value="24"/>
+</div>
+</div>
+<!-- Column 2 -->
+<div class="space-y-6">
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant">Frequência de Payout</label>
+<select class="bg-surface-container-lowest border-0 rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary/20 transition-all outline-none appearance-none">
+<option>Semanal (T+2)</option>
+<option>Quinzenal</option>
+<option selected="">Mensal</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant">Valor Máximo por Pedido</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">R$</span>
+<input class="w-full bg-surface-container-lowest border-0 rounded-lg p-4 pl-12 text-on-surface focus:ring-2 focus:ring-primary/20 transition-all outline-none" type="text" value="500.000,00"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant">SLA Disputas (Dias)</label>
+<input class="bg-surface-container-lowest border-0 rounded-lg p-4 text-on-surface focus:ring-2 focus:ring-primary/20 transition-all outline-none" type="number" value="7"/>
+</div>
+</div>
+</div>
+<!-- Maintenance Mode Toggle -->
+<div class="mt-12 pt-8 border-t border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="p-3 rounded-full bg-error/10">
+<span class="material-symbols-outlined text-error">engineering</span>
+</div>
+<div>
+<h3 class="font-semibold text-on-surface">Modo de Manutenção</h3>
+<p class="text-[11px] text-on-surface-variant font-light">Desativa o acesso de produtores e compradores globalmente.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-7 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-6 after:transition-all peer-checked:bg-error"></div>
+</label>
+</div>
+</section>
+<!-- 4. Feature Flags -->
+<section class="glass-card agro-shadow rounded-xl p-8 mb-16 overflow-hidden relative group">
+<!-- Decorative background elements -->
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-secondary/5 rounded-full blur-3xl group-hover:bg-secondary/10 transition-colors"></div>
+<div class="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-secondary">flag</span>
+<h2 class="text-xl font-semibold text-on-surface">Gerenciador de Funcionalidades (Feature Flags)</h2>
+</div>
+<p class="text-on-surface-variant leading-relaxed font-light">
+                            Controle a visibilidade de novas ferramentas como <span class="text-secondary-fixed">iFarm Wallet</span>, 
+                            <span class="text-secondary-fixed">Seguro Agrícola Integrado</span> e <span class="text-secondary-fixed">Relatórios Dinâmicos</span> 
+                            em tempo real para grupos específicos de usuários.
+                        </p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-8 py-4 rounded-lg font-bold text-sm hover:opacity-90 transition-all active:scale-95 flex items-center gap-3 whitespace-nowrap">
+                        Abrir Painel Avançado
+                        <span class="material-symbols-outlined text-[20px]">open_in_new</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Bottom Action Bar (Fixed Mobile/Contextual) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-high border-t border-outline-variant/10 px-6 py-4 flex justify-between items-center z-50">
+<button class="material-symbols-outlined text-on-surface-variant">home</button>
+<button class="material-symbols-outlined text-on-surface-variant">shopping_bag</button>
+<button class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">settings</button>
+<button class="material-symbols-outlined text-on-surface-variant">person</button>
+</div>
+</body></html>

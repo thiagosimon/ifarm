@@ -112,9 +112,9 @@ export default function Header() {
         {/* Right: language + CTA + mobile toggle */}
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
-          <button className="hidden sm:block bg-primary-container text-on-primary-container px-5 py-2 rounded-lg font-bold hover:scale-105 transition-all duration-300 text-sm whitespace-nowrap">
+          <a href="https://ifarm-saas.netlify.app" className="hidden sm:block bg-primary-container text-on-primary-container px-5 py-2 rounded-lg font-bold hover:scale-105 transition-all duration-300 text-sm whitespace-nowrap">
             {tr.header.getStarted}
-          </button>
+          </a>
           <button
             className="md:hidden text-white"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -140,9 +140,9 @@ export default function Header() {
               {item.label}
             </a>
           ))}
-          <button className="mt-2 bg-primary-container text-on-primary-container px-5 py-3 rounded-lg font-bold text-sm w-full">
+          <a href="https://ifarm-saas.netlify.app" className="mt-2 bg-primary-container text-on-primary-container px-5 py-3 rounded-lg font-bold text-sm w-full text-center">
             {tr.header.getStarted}
-          </button>
+          </a>
         </div>
       )}
     </header>

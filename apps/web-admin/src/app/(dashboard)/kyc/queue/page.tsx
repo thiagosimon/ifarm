@@ -1,565 +1,420 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  CheckCircle,
+  XCircle,
+  Eye,
+  RefreshCw,
+  FileText,
+  Shield,
+  Clock,
+  AlertCircle,
+  X,
+  FileCheck,
+  Home,
+  CreditCard,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  ShieldCheck,
-  ShieldX,
-  Clock,
-  FileText,
-  Image as ImageIcon,
-  ExternalLink,
-  ChevronLeft,
-  ChevronRight,
-  RefreshCw,
-  Eye,
-} from 'lucide-react';
-import { formatDate, formatDateTime } from '@/lib/utils';
-import { fetchKycQueue, getKycDocumentUrl, approveFarmerKyc, rejectFarmerKyc } from '@/lib/api';
-import toast from 'react-hot-toast';
+import { cn, formatDateTime, getInitials } from '@/lib/utils';
 
-interface KycQueueItem {
+interface KycEntry {
   id: string;
-  userId: string;
-  userName: string;
-  userType: 'FARMER' | 'RETAILER';
+  number: string;
+  name: string;
   email: string;
-  federalTaxId: string;
+  type: 'Farmer' | 'Retailer';
+  cnpj: string;
   submittedAt: string;
-  waitingTime: string;
-  documents: {
-    key: string;
-    type: string;
-    fileName: string;
-    mimeType: string;
-    uploadedAt: string;
-  }[];
+  waitDays: number;
+  waitLabel: string;
+  waitUrgency: 'critical' | 'warning' | 'ok';
+  docs: string[];
 }
 
-const mockQueue: KycQueueItem[] = [
+const kycQueue: KycEntry[] = [
   {
-    id: 'kyc-1',
-    userId: 'user-101',
-    userName: 'Sitio Boa Esperanca',
-    userType: 'FARMER',
-    email: 'sitio@boaesperanca.com',
-    federalTaxId: '98.765.432/0001-10',
-    submittedAt: '2025-03-10T09:30:00Z',
-    waitingTime: '8 dias',
-    documents: [
-      { key: 'doc-1', type: 'CNPJ', fileName: 'cnpj_card.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-10T09:30:00Z' },
-      { key: 'doc-2', type: 'Inscricao Estadual', fileName: 'ie_cert.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-10T09:32:00Z' },
-      { key: 'doc-3', type: 'Documento Pessoal', fileName: 'rg_frente.jpg', mimeType: 'image/jpeg', uploadedAt: '2025-03-10T09:33:00Z' },
-    ],
+    id: '1',
+    number: '4201',
+    name: 'João Fazendeiro Silva',
+    email: 'joao.silva@agropoint.com',
+    type: 'Farmer',
+    cnpj: '12.345.678/0001-90',
+    submittedAt: '12/10/2023 14:20',
+    waitDays: 12,
+    waitLabel: '12 dias',
+    waitUrgency: 'critical',
+    docs: ['cnpj', 'badge'],
   },
   {
-    id: 'kyc-2',
-    userId: 'user-102',
-    userName: 'Hortifruti Fresco',
-    userType: 'RETAILER',
-    email: 'contato@hortifrutifresco.com',
-    federalTaxId: '34.567.890/0001-12',
-    submittedAt: '2025-03-12T14:00:00Z',
-    waitingTime: '6 dias',
-    documents: [
-      { key: 'doc-4', type: 'CNPJ', fileName: 'cnpj.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-12T14:00:00Z' },
-      { key: 'doc-5', type: 'Contrato Social', fileName: 'contrato_social.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-12T14:02:00Z' },
-    ],
+    id: '2',
+    number: '4205',
+    name: 'AgroVarejo Matogrosso',
+    email: 'contato@agrovarejo.com.br',
+    type: 'Retailer',
+    cnpj: '98.765.432/0001-11',
+    submittedAt: '22/10/2023 09:15',
+    waitDays: 2,
+    waitLabel: '2 dias',
+    waitUrgency: 'warning',
+    docs: ['cnpj', 'contract', 'location'],
   },
   {
-    id: 'kyc-3',
-    userId: 'user-103',
-    userName: 'Fazenda Tres Irmaos',
-    userType: 'FARMER',
-    email: 'admin@tresirmaos.agro',
-    federalTaxId: '77.888.999/0001-55',
-    submittedAt: '2025-03-14T08:15:00Z',
-    waitingTime: '4 dias',
-    documents: [
-      { key: 'doc-6', type: 'CNPJ', fileName: 'cnpj_card.jpg', mimeType: 'image/jpeg', uploadedAt: '2025-03-14T08:15:00Z' },
-      { key: 'doc-7', type: 'CAR', fileName: 'car_certificado.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-14T08:17:00Z' },
-    ],
+    id: '3',
+    number: '4209',
+    name: 'Carlos Sementes',
+    email: 'carlos@sementes.com',
+    type: 'Farmer',
+    cnpj: '34.567.890/0001-22',
+    submittedAt: '24/10/2023 16:45',
+    waitDays: 0,
+    waitLabel: '4 horas',
+    waitUrgency: 'ok',
+    docs: ['cnpj', 'badge'],
   },
   {
-    id: 'kyc-4',
-    userId: 'user-104',
-    userName: 'Mercado Municipal Central LTDA',
-    userType: 'RETAILER',
-    email: 'compras@mercadocentral.com',
-    federalTaxId: '88.999.000/0001-66',
-    submittedAt: '2025-03-16T11:45:00Z',
-    waitingTime: '2 dias',
-    documents: [
-      { key: 'doc-8', type: 'CNPJ', fileName: 'cnpj.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-16T11:45:00Z' },
-    ],
+    id: '4',
+    number: '4212',
+    name: 'Fazenda Esperança',
+    email: 'admin@fazendaesperanca.com',
+    type: 'Farmer',
+    cnpj: '56.789.012/0001-33',
+    submittedAt: '24/10/2023 10:30',
+    waitDays: 1,
+    waitLabel: '1 dia',
+    waitUrgency: 'warning',
+    docs: ['cnpj', 'badge', 'home'],
   },
   {
-    id: 'kyc-5',
-    userId: 'user-105',
-    userName: 'Cooperativa Agropecuaria do Vale',
-    userType: 'FARMER',
-    email: 'secretaria@coopvale.coop',
-    federalTaxId: '99.000.111/0001-77',
-    submittedAt: '2025-03-17T16:20:00Z',
-    waitingTime: '1 dia',
-    documents: [
-      { key: 'doc-9', type: 'CNPJ', fileName: 'cnpj_cooperativa.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-17T16:20:00Z' },
-      { key: 'doc-10', type: 'Ata de Assembleia', fileName: 'ata_assembleia.pdf', mimeType: 'application/pdf', uploadedAt: '2025-03-17T16:22:00Z' },
-      { key: 'doc-11', type: 'Documento Pessoal', fileName: 'identidade_presidente.jpg', mimeType: 'image/jpeg', uploadedAt: '2025-03-17T16:25:00Z' },
-    ],
+    id: '5',
+    number: '4218',
+    name: 'SuperAgro Distribuidora',
+    email: 'contato@superagro.com.br',
+    type: 'Retailer',
+    cnpj: '78.901.234/0001-44',
+    submittedAt: '23/10/2023 08:00',
+    waitDays: 3,
+    waitLabel: '3 dias',
+    waitUrgency: 'warning',
+    docs: ['cnpj', 'contract'],
   },
 ];
 
+const docIcons: Record<string, { icon: React.ElementType; label: string }> = {
+  cnpj: { icon: FileText, label: 'CNPJ' },
+  badge: { icon: CreditCard, label: 'RG/CNH' },
+  contract: { icon: FileCheck, label: 'Contrato' },
+  location: { icon: Home, label: 'Endereço' },
+  home: { icon: Home, label: 'Comprovante' },
+};
+
+const kycDocuments = [
+  { id: 'cnpj', name: 'Cartão CNPJ', size: 'PDF • 2.4 MB', icon: FileText },
+  { id: 'badge', name: 'Documento Social', size: 'JPG • 1.1 MB', icon: CreditCard },
+  { id: 'home', name: 'Comprovante Residência', size: 'PDF • 0.8 MB', icon: Home },
+];
+
 export default function KycQueuePage() {
-  const [queue, setQueue] = React.useState<KycQueueItem[]>(mockQueue);
-  const [page, setPage] = React.useState(1);
-  const [loading, setLoading] = React.useState(false);
+  const [selectedEntry, setSelectedEntry] = React.useState<KycEntry | null>(null);
+  const [selectedDoc, setSelectedDoc] = React.useState(0);
+  const [rejectReason, setRejectReason] = React.useState('');
+  const [showRejectModal, setShowRejectModal] = React.useState(false);
 
-  // Action modal
-  const [actionType, setActionType] = React.useState<'approve' | 'reject' | null>(null);
-  const [actionItem, setActionItem] = React.useState<KycQueueItem | null>(null);
-  const [rejectionReason, setRejectionReason] = React.useState('');
-  const [actionLoading, setActionLoading] = React.useState(false);
-
-  // Document viewer
-  const [viewerOpen, setViewerOpen] = React.useState(false);
-  const [viewerItem, setViewerItem] = React.useState<KycQueueItem | null>(null);
-  const [documentUrl, setDocumentUrl] = React.useState<string | null>(null);
-  const [activeDocIndex, setActiveDocIndex] = React.useState(0);
-
-  const loadQueue = React.useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await fetchKycQueue({ page, limit: 20 });
-      if (data?.items) setQueue(data.items);
-    } catch {
-      // Use mock data on error
-    } finally {
-      setLoading(false);
-    }
-  }, [page]);
-
-  React.useEffect(() => {
-    loadQueue();
-  }, [loadQueue]);
-
-  const handleAction = async () => {
-    if (!actionItem) return;
-    setActionLoading(true);
-    try {
-      if (actionType === 'approve') {
-        await approveFarmerKyc(actionItem.userId);
-        toast.success(`KYC de ${actionItem.userName} aprovado com sucesso`);
-      } else {
-        await rejectFarmerKyc(actionItem.userId, rejectionReason);
-        toast.success(`KYC de ${actionItem.userName} rejeitado`);
-      }
-      // Remove from queue locally
-      setQueue((prev) => prev.filter((item) => item.id !== actionItem.id));
-    } catch {
-      toast.error('Erro ao processar acao de KYC');
-    } finally {
-      setActionLoading(false);
-      setActionType(null);
-      setActionItem(null);
-      setRejectionReason('');
-    }
-  };
-
-  const openDocumentViewer = async (item: KycQueueItem, docIndex: number = 0) => {
-    setViewerItem(item);
-    setActiveDocIndex(docIndex);
-    setViewerOpen(true);
-
-    try {
-      const data = await getKycDocumentUrl(item.userId, item.documents[docIndex].key);
-      if (data?.url) {
-        setDocumentUrl(data.url);
-      }
-    } catch {
-      // Use a placeholder URL for demo
-      setDocumentUrl(null);
-    }
-  };
-
-  const switchDocument = async (index: number) => {
-    if (!viewerItem) return;
-    setActiveDocIndex(index);
-    setDocumentUrl(null);
-
-    try {
-      const data = await getKycDocumentUrl(viewerItem.userId, viewerItem.documents[index].key);
-      if (data?.url) {
-        setDocumentUrl(data.url);
-      }
-    } catch {
-      setDocumentUrl(null);
-    }
+  const urgencyConfig = {
+    critical: {
+      color: 'text-[#ffb4ab]',
+      dot: 'bg-[#ffb4ab] animate-pulse',
+    },
+    warning: {
+      color: 'text-[#f6be39]',
+      dot: 'bg-[#f6be39]',
+    },
+    ok: {
+      color: 'text-[#a4f5b8]',
+      dot: 'bg-[#a4f5b8]',
+    },
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Fila KYC</h1>
-          <p className="text-muted-foreground">
-            Documentos aguardando revisao (FIFO - primeiro a enviar, primeiro a ser analisado)
+          <h1 className="text-4xl font-bold tracking-tight text-foreground flex items-center gap-4">
+            Fila KYC
+            <span className="bg-[#89D89E]/20 text-[#a4f5b8] text-sm font-extrabold px-3 py-1 rounded-full uppercase tracking-widest">
+              {kycQueue.length} pendentes
+            </span>
+          </h1>
+          <p className="text-muted-foreground mt-2 font-light">
+            Gerenciamento de validação e verificação de identidade dos parceiros iFarm.
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <Badge variant="warning" className="text-sm">
-            {queue.length} pendentes
-          </Badge>
-          <Button variant="outline" size="icon" onClick={loadQueue} disabled={loading}>
-            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-          </Button>
+        <Button
+          variant="ghost"
+          className="flex items-center gap-2 bg-[#272B2C] hover:bg-[#313536] text-[#a4f5b8] font-semibold rounded-lg"
+        >
+          <RefreshCw className="h-4 w-4" />
+          Atualizar Fila
+        </Button>
+      </div>
+
+      {/* Stats Bento Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="glass-card agro-shadow p-8 rounded-xl relative overflow-hidden group">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#a4f5b8]" />
+          <p className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground mb-4">
+            Na Fila
+          </p>
+          <div className="flex items-baseline gap-2">
+            <span className="text-5xl font-light text-foreground tracking-tighter">14</span>
+            <span className="text-[#89D89E] text-sm font-semibold tracking-tight">
+              Verificações pendentes
+            </span>
+          </div>
+        </div>
+        <div className="glass-card agro-shadow p-8 rounded-xl relative overflow-hidden group">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#f6be39]" />
+          <p className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground mb-4">
+            Documentos Totais
+          </p>
+          <div className="flex items-baseline gap-2">
+            <span className="text-5xl font-light text-foreground tracking-tighter">38</span>
+            <span className="text-[#f6be39] text-sm font-semibold tracking-tight">
+              Arquivos analisados hoje
+            </span>
+          </div>
+        </div>
+        <div className="glass-card agro-shadow p-8 rounded-xl relative overflow-hidden group">
+          <div className="absolute top-0 left-0 w-1 h-full bg-[#ffb4ab]" />
+          <p className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground mb-4">
+            Mais Antigo
+          </p>
+          <div className="flex items-baseline gap-2">
+            <span className="text-5xl font-light text-foreground tracking-tighter">12</span>
+            <span className="text-[#ffb4ab] text-sm font-semibold tracking-tight">
+              Dias em espera crítica
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Queue Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card>
-          <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-100">
-              <Clock className="h-5 w-5 text-yellow-600" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Na Fila</p>
-              <p className="text-2xl font-bold">{queue.length}</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
-              <FileText className="h-5 w-5 text-blue-600" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Documentos Totais</p>
-              <p className="text-2xl font-bold">
-                {queue.reduce((acc, item) => acc + item.documents.length, 0)}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="flex items-center gap-4 p-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100">
-              <Clock className="h-5 w-5 text-red-600" />
-            </div>
-            <div>
-              <p className="text-sm text-muted-foreground">Mais Antigo</p>
-              <p className="text-2xl font-bold">{queue[0]?.waitingTime || '-'}</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Queue Table */}
-      <Card>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[40px]">#</TableHead>
-                <TableHead>Usuario</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead>CNPJ</TableHead>
-                <TableHead>Enviado em</TableHead>
-                <TableHead>Tempo de Espera</TableHead>
-                <TableHead>Docs</TableHead>
-                <TableHead className="text-right">Acoes</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {queue.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={8} className="py-12 text-center">
-                    <ShieldCheck className="mx-auto mb-3 h-12 w-12 text-green-500" />
-                    <p className="text-lg font-medium">Fila vazia</p>
-                    <p className="text-sm text-muted-foreground">
-                      Todos os KYCs foram processados
-                    </p>
-                  </TableCell>
-                </TableRow>
-              ) : (
-                queue.map((item, index) => (
-                  <TableRow key={item.id}>
-                    <TableCell className="font-mono text-muted-foreground">
-                      {index + 1}
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{item.userName}</p>
-                        <p className="text-xs text-muted-foreground">{item.email}</p>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={item.userType === 'FARMER' ? 'success' : 'info'}>
-                        {item.userType === 'FARMER' ? 'Farmer' : 'Retailer'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-sm">{item.federalTaxId}</TableCell>
-                    <TableCell className="text-sm">{formatDateTime(item.submittedAt)}</TableCell>
-                    <TableCell>
-                      <Badge variant={parseInt(item.waitingTime) > 5 ? 'error' : 'warning'}>
-                        {item.waitingTime}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        {item.documents.map((doc, docIdx) => (
-                          <button
-                            key={doc.key}
-                            onClick={() => openDocumentViewer(item, docIdx)}
-                            className="flex h-8 w-8 items-center justify-center rounded border bg-muted/50 transition-colors hover:bg-muted"
-                            title={doc.type}
-                          >
-                            {doc.mimeType.startsWith('image/') ? (
-                              <ImageIcon className="h-4 w-4 text-muted-foreground" />
-                            ) : (
-                              <FileText className="h-4 w-4 text-muted-foreground" />
-                            )}
-                          </button>
-                        ))}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="xs"
-                          onClick={() => openDocumentViewer(item)}
-                          title="Ver documentos"
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          size="xs"
-                          className="bg-green-600 text-white hover:bg-green-700"
-                          onClick={() => {
-                            setActionItem(item);
-                            setActionType('approve');
-                          }}
-                        >
-                          Aprovar
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          size="xs"
-                          onClick={() => {
-                            setActionItem(item);
-                            setActionType('reject');
-                          }}
-                        >
-                          Rejeitar
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
+      {/* Verification Table */}
+      <div className="glass-card rounded-xl overflow-hidden agro-shadow">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-[#181c1d]/50">
+              {['#', 'Usuário', 'Tipo', 'CNPJ', 'Enviado em', 'Tempo de Espera', 'Docs', 'Ações'].map(
+                (h, i) => (
+                  <th
+                    key={h}
+                    className={cn(
+                      'px-6 py-5 text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground border-b border-border/10',
+                      i === 6 && 'text-center',
+                      i === 7 && 'text-right'
+                    )}
+                  >
+                    {h}
+                  </th>
+                )
               )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border/5">
+            {kycQueue.map((entry) => {
+              const urgency = urgencyConfig[entry.waitUrgency];
+              return (
+                <tr
+                  key={entry.id}
+                  className="hover:bg-[#313536]/30 transition-colors"
+                >
+                  <td className="px-6 py-4 font-mono text-xs text-muted-foreground">
+                    {entry.number}
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-[#272B2C] flex items-center justify-center text-[#a4f5b8] font-bold text-xs">
+                        {getInitials(entry.name)}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm">{entry.name}</p>
+                        <p className="text-xs text-muted-foreground">{entry.email}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span
+                      className={cn(
+                        'px-2 py-0.5 rounded text-[10px] font-bold border uppercase',
+                        entry.type === 'Farmer'
+                          ? 'border-[#89D89E]/20 text-[#89D89E] bg-[#89D89E]/5'
+                          : 'border-[#f6be39]/20 text-[#f6be39] bg-[#f6be39]/5'
+                      )}
+                    >
+                      {entry.type}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 font-mono text-xs text-foreground">{entry.cnpj}</td>
+                  <td className="px-6 py-4 text-sm text-muted-foreground">{entry.submittedAt}</td>
+                  <td className="px-6 py-4">
+                    <span className={cn('flex items-center gap-1.5 text-xs font-bold', urgency.color)}>
+                      <span className={cn('w-2 h-2 rounded-full', urgency.dot)} />
+                      {entry.waitLabel}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex justify-center gap-2">
+                      {entry.docs.map((doc) => {
+                        const DocIcon = docIcons[doc]?.icon || FileText;
+                        return (
+                          <DocIcon
+                            key={doc}
+                            className="h-4 w-4 text-muted-foreground"
+                            title={docIcons[doc]?.label}
+                          />
+                        );
+                      })}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => setSelectedEntry(entry)}
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#272B2C] text-foreground hover:bg-[#313536] transition-colors"
+                        title="Visualizar"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </button>
+                      <button
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#a4f5b8]/10 text-[#a4f5b8] hover:bg-[#a4f5b8] hover:text-[#00391b] transition-colors"
+                        title="Aprovar"
+                      >
+                        <CheckCircle className="h-4 w-4" />
+                      </button>
+                      <button
+                        className="w-8 h-8 flex items-center justify-center rounded-lg bg-[#ffb4ab]/10 text-[#ffb4ab] hover:bg-[#ffb4ab] hover:text-[#690005] transition-colors"
+                        title="Rejeitar"
+                      >
+                        <XCircle className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
 
-      {/* Pagination */}
-      {queue.length > 0 && (
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
-            Mostrando {queue.length} itens na fila
-          </p>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" disabled={page === 1} onClick={() => setPage(page - 1)}>
-              <ChevronLeft className="h-4 w-4" />
-              Anterior
-            </Button>
-            <span className="text-sm">Pagina {page}</span>
-            <Button variant="outline" size="sm" onClick={() => setPage(page + 1)}>
-              Proximo
-              <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
+      {/* Document Viewer Modal */}
+      {selectedEntry && (
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-md z-[100] flex items-center justify-center p-12">
+          <div className="w-full h-full max-w-7xl glass-card rounded-2xl agro-shadow flex flex-col overflow-hidden border border-border/10">
+            {/* Modal Header */}
+            <div className="px-8 py-6 flex justify-between items-center border-b border-border/10">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#89D89E]/10 flex items-center justify-center">
+                  <Shield className="h-7 w-7 text-[#89D89E]" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold tracking-tight">{selectedEntry.name}</h2>
+                  <p className="text-xs text-muted-foreground font-light uppercase tracking-widest">
+                    Protocolo #{selectedEntry.number}-KYC-2023
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4">
+                <Button variant="outline" size="sm">
+                  Reportar Erro
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-[#ffb4ab]/10 text-[#ffb4ab] hover:bg-[#ffb4ab] hover:text-[#690005] border-0"
+                >
+                  Rejeitar Documentos
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-[#a4f5b8] text-[#00391b] hover:bg-[#a4f5b8]/90"
+                >
+                  Aprovar KYC
+                </Button>
+                <div className="h-8 w-px bg-border/20 mx-2" />
+                <button
+                  onClick={() => setSelectedEntry(null)}
+                  className="p-2 hover:bg-[#272B2C] rounded-full text-muted-foreground transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="flex-1 flex overflow-hidden">
+              {/* Left Panel */}
+              <div className="w-80 bg-[#181c1d]/50 border-r border-border/10 flex flex-col">
+                <div className="p-6">
+                  <p className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground mb-4">
+                    Arquivos Enviados
+                  </p>
+                  <ul className="space-y-2">
+                    {kycDocuments.map((doc, idx) => {
+                      const DocIcon = doc.icon;
+                      return (
+                        <li key={doc.id}>
+                          <button
+                            onClick={() => setSelectedDoc(idx)}
+                            className={cn(
+                              'w-full flex items-center gap-3 p-4 rounded-xl text-left transition-all',
+                              selectedDoc === idx
+                                ? 'bg-[#272B2C] border-l-4 border-[#a4f5b8]'
+                                : 'hover:bg-[#272B2C]'
+                            )}
+                          >
+                            <DocIcon
+                              className={cn(
+                                'h-5 w-5',
+                                selectedDoc === idx ? 'text-[#a4f5b8]' : 'text-muted-foreground'
+                              )}
+                            />
+                            <div>
+                              <p
+                                className={cn(
+                                  'text-sm font-semibold',
+                                  selectedDoc === idx ? 'text-foreground' : 'text-muted-foreground'
+                                )}
+                              >
+                                {doc.name}
+                              </p>
+                              <p className="text-[10px] text-muted-foreground">{doc.size}</p>
+                            </div>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Right Panel - Document Preview */}
+              <div className="flex-1 p-8 flex flex-col items-center justify-center bg-[#0b0f10]/40">
+                <div className="w-full max-w-2xl h-full bg-[#1c2021] rounded-xl border border-border/10 flex items-center justify-center">
+                  <div className="text-center">
+                    <FileText className="h-16 w-16 text-muted-foreground/20 mx-auto mb-4" />
+                    <p className="text-muted-foreground font-light">
+                      {kycDocuments[selectedDoc]?.name}
+                    </p>
+                    <p className="text-xs text-muted-foreground/60 mt-1">
+                      Pré-visualização do documento
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Action Modal (Approve/Reject) */}
-      <Dialog
-        open={!!actionType}
-        onOpenChange={() => {
-          setActionType(null);
-          setActionItem(null);
-          setRejectionReason('');
-        }}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>
-              {actionType === 'approve' ? 'Aprovar KYC' : 'Rejeitar KYC'}
-            </DialogTitle>
-            <DialogDescription>
-              {actionType === 'approve'
-                ? `Confirmar aprovacao do KYC de "${actionItem?.userName}"? O usuario sera notificado e podera operar na plataforma.`
-                : `Informe o motivo da rejeicao do KYC de "${actionItem?.userName}". O usuario sera notificado e podera reenviar os documentos.`}
-            </DialogDescription>
-          </DialogHeader>
-
-          {actionItem && (
-            <div className="rounded-lg border bg-muted/50 p-3">
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div>
-                  <span className="text-muted-foreground">Usuario: </span>
-                  <span className="font-medium">{actionItem.userName}</span>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">Tipo: </span>
-                  <Badge variant={actionItem.userType === 'FARMER' ? 'success' : 'info'} className="ml-1">
-                    {actionItem.userType}
-                  </Badge>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">CNPJ: </span>
-                  <span className="font-medium">{actionItem.federalTaxId}</span>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">Docs: </span>
-                  <span className="font-medium">{actionItem.documents.length}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {actionType === 'reject' && (
-            <Textarea
-              placeholder="Motivo da rejeicao (obrigatorio)... Ex: Documento ilegivel, CNPJ divergente, etc."
-              value={rejectionReason}
-              onChange={(e) => setRejectionReason(e.target.value)}
-              rows={4}
-            />
-          )}
-
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setActionType(null);
-                setActionItem(null);
-                setRejectionReason('');
-              }}
-            >
-              Cancelar
-            </Button>
-            <Button
-              variant={actionType === 'approve' ? 'default' : 'destructive'}
-              onClick={handleAction}
-              disabled={actionLoading || (actionType === 'reject' && !rejectionReason.trim())}
-              loading={actionLoading}
-            >
-              {actionType === 'approve' ? 'Confirmar Aprovacao' : 'Confirmar Rejeicao'}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      {/* Document Viewer Modal */}
-      <Dialog open={viewerOpen} onOpenChange={setViewerOpen}>
-        <DialogContent className="max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>Documentos KYC - {viewerItem?.userName}</DialogTitle>
-            <DialogDescription>
-              Visualize os documentos enviados pelo usuario
-            </DialogDescription>
-          </DialogHeader>
-
-          {viewerItem && (
-            <div className="space-y-4">
-              {/* Document tabs */}
-              <div className="flex gap-2 overflow-x-auto">
-                {viewerItem.documents.map((doc, idx) => (
-                  <button
-                    key={doc.key}
-                    onClick={() => switchDocument(idx)}
-                    className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
-                      activeDocIndex === idx
-                        ? 'border-primary bg-primary/10 text-primary'
-                        : 'hover:bg-muted'
-                    }`}
-                  >
-                    {doc.mimeType.startsWith('image/') ? (
-                      <ImageIcon className="h-4 w-4" />
-                    ) : (
-                      <FileText className="h-4 w-4" />
-                    )}
-                    {doc.type}
-                  </button>
-                ))}
-              </div>
-
-              {/* Document preview area */}
-              <div className="flex min-h-[400px] items-center justify-center rounded-lg border bg-muted/30">
-                {documentUrl ? (
-                  viewerItem.documents[activeDocIndex]?.mimeType.startsWith('image/') ? (
-                    <img
-                      src={documentUrl}
-                      alt={viewerItem.documents[activeDocIndex]?.type}
-                      className="max-h-[500px] max-w-full rounded object-contain"
-                    />
-                  ) : (
-                    <iframe
-                      src={documentUrl}
-                      className="h-[500px] w-full rounded"
-                      title={viewerItem.documents[activeDocIndex]?.type}
-                    />
-                  )
-                ) : (
-                  <div className="text-center">
-                    <FileText className="mx-auto mb-3 h-16 w-16 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">
-                      Carregando documento...
-                    </p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {viewerItem.documents[activeDocIndex]?.fileName}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Document info */}
-              <div className="flex items-center justify-between rounded-lg border bg-muted/50 p-3 text-sm">
-                <div className="flex items-center gap-4">
-                  <span>
-                    <span className="text-muted-foreground">Arquivo: </span>
-                    {viewerItem.documents[activeDocIndex]?.fileName}
-                  </span>
-                  <span>
-                    <span className="text-muted-foreground">Enviado: </span>
-                    {formatDateTime(viewerItem.documents[activeDocIndex]?.uploadedAt)}
-                  </span>
-                </div>
-                {documentUrl && (
-                  <Button variant="ghost" size="xs" onClick={() => window.open(documentUrl, '_blank')}>
-                    <ExternalLink className="mr-1 h-3 w-3" />
-                    Abrir original
-                  </Button>
-                )}
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

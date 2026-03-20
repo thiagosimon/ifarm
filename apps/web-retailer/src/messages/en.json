@@ -103,7 +103,9 @@
       "state": "State",
       "valueRange": "Value Range",
       "allCategories": "All Categories",
-      "allStates": "All States"
+      "allStates": "All States",
+      "searchPlaceholder": "Search by # or producer...",
+      "clear": "Clear Filters"
     },
     "categories": {
       "fertilizers": "Fertilizers",
@@ -118,7 +120,9 @@
       "quantity": "Qty",
       "expiration": "Expiration",
       "estimatedValue": "Est. Value",
-      "action": "Action"
+      "action": "Action",
+      "category": "Category",
+      "urgency": "Urgency"
     },
     "status": {
       "open": "Open",
@@ -126,11 +130,32 @@
       "accepted": "Accepted",
       "rejected": "Rejected",
       "expired": "Expired",
-      "inAnalysis": "In Analysis"
+      "inAnalysis": "In Analysis",
+      "responded": "Responded"
     },
+    "newInternalQuotation": "New Internal Quotation",
     "sendProposal": "Send Proposal",
     "viewDetail": "View Details",
-    "timeRemaining": "remaining"
+    "timeRemaining": "remaining",
+    "noResults": "No quotations found",
+    "noResultsHint": "Try adjusting your search filters",
+    "resultsFound": "results found",
+    "showing": "Showing",
+    "of": "of",
+    "resultsLabel": "results",
+    "urgency": {
+      "urgent": "Urgent",
+      "normal": "Normal",
+      "low": "Low"
+    },
+    "kpi": {
+      "conversionRate": "Conversion Rate",
+      "pendingProposals": "Pending Proposals",
+      "monthlySales": "Monthly Sales",
+      "awaitingResponse": "Awaiting response",
+      "insights": "AgroBiz Insights",
+      "insightsDescription": "NPK Fertilizers are 12% above regional average margin"
+    }
   },
   "proposal": {
     "title": "New Proposal",
@@ -138,6 +163,7 @@
     "item": {
       "unitPrice": "Unit Price",
       "brand": "Brand/Manufacturer",
+      "brandPlaceholder": "E.g.: Mosaic, Yara...",
       "deliveryDays": "Delivery Days",
       "subtotal": "Subtotal"
     },
@@ -154,7 +180,11 @@
     "notes": "Notes",
     "submit": "Submit Proposal",
     "summary": "Proposal Summary",
-    "totalValue": "Total Value"
+    "totalValue": "Total Value",
+    "itemPricing": "Per-Item Pricing",
+    "freightCost": "Freight Cost",
+    "notesPlaceholder": "Special conditions, notes...",
+    "subtotalLabel": "Items Subtotal"
   },
   "orders": {
     "title": "Orders",
@@ -186,20 +216,17 @@
       "dispatch": "Dispatch Order",
       "printDanfe": "Print Danfe",
       "markShipped": "Mark as Shipped"
-    }
+    },
+    "search": "Search by number, farmer or city...",
+    "noOrders": "No orders",
+    "trackingHint": "Enter the carrier tracking code so the farmer can follow the delivery.",
+    "confirmShipment": "Confirm Shipment"
   },
   "catalog": {
     "title": "My Catalog",
     "subtitle": "Manage {count} active products in your B2B showcase",
     "addProduct": "Add Product",
     "addFromGeneral": "Add from General Catalog",
-    "filters": {
-      "all": "All",
-      "fertilizers": "Fertilizers",
-      "pesticides": "Pesticides",
-      "seeds": "Seeds",
-      "machinery": "Machinery"
-    },
     "product": {
       "name": "Product Name",
       "description": "Description",
@@ -216,13 +243,62 @@
       "inactive": "Inactive",
       "outOfStock": "Out of Stock"
     },
-    "regions": {
-      "title": "Service Regions",
-      "subtitle": "Select the states where you operate"
-    },
     "image": {
       "upload": "Upload Image",
       "recommended": "Recommended: 800×600px"
+    },
+    "search": "Search by name, SKU or brand...",
+    "noProducts": "No products found",
+    "noNcm": "No HS Code",
+    "ncmAlert": "{count} product(s) without HS Code",
+    "editProduct": "Edit Product",
+    "newProduct": "New Product",
+    "editProductDesc": "Update the product information",
+    "newProductDesc": "Fill in the details to register a new product",
+    "saveChanges": "Save Changes",
+    "registerProduct": "Register Product",
+    "tariffDescription": "8-digit HS Code according to TIPI table",
+    "validation": {
+      "nameMin": "Name must be at least 3 characters",
+      "descriptionMin": "Description must be at least 10 characters",
+      "categoryRequired": "Category is required",
+      "brandRequired": "Brand is required",
+      "unitRequired": "Unit is required",
+      "priceRequired": "Price is required",
+      "pricePositive": "Price must be greater than zero",
+      "tariffFormat": "HS Code must be exactly 8 numeric digits",
+      "skuRequired": "SKU is required",
+      "stockNonNegative": "Stock cannot be negative"
+    },
+    "placeholders": {
+      "name": "e.g. NPK Fertilizer 10-10-10",
+      "sku": "e.g. FERT-NPK-1010",
+      "description": "Describe the product in detail...",
+      "brand": "e.g. AgroNutri",
+      "selectCategory": "Select category",
+      "selectUnit": "Select unit"
+    },
+    "units": {
+      "ton": "Ton",
+      "sack": "Sack (60kg)",
+      "unit": "Unit"
+    },
+    "regions": {
+      "title": "Service Regions",
+      "subtitle": "Select the states where you operate",
+      "configure": "Configure Regions",
+      "selectFor": "Select the states where {name} is available",
+      "selected": "{count} state(s) selected",
+      "save": "Save Regions"
+    },
+    "filters": {
+      "all": "All",
+      "fertilizers": "Fertilizers",
+      "pesticides": "Pesticides",
+      "seeds": "Seeds",
+      "machinery": "Machinery",
+      "limestone": "Limestone",
+      "organic": "Organic"
     },
     "sortBy": "Sort by",
     "highestMargin": "Highest Margin"
@@ -247,7 +323,47 @@
       "held": "Held"
     },
     "exportCsv": "Export CSV",
-    "holdbackNote": "Holdback: 7 business days per policy"
+    "holdbackNote": "Holdback: 7 business days per policy",
+    "payoutHistory": "Payout History",
+    "payoutDetail": "Payout Details",
+    "holdbackInfo": {
+      "inHoldback": "in holdback",
+      "releaseNote": "Released 7 business days after delivery confirmation, excluding national holidays."
+    },
+    "paidOn": "Paid on {date}",
+    "expectedFor": "Expected for {date}",
+    "table": {
+      "reference": "Reference",
+      "order": "Order",
+      "farmer": "Producer",
+      "grossAmount": "Gross",
+      "fee": "Fee",
+      "netAmount": "Net",
+      "scheduledDate": "Scheduled Date"
+    },
+    "weekdays": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "months": {
+      "jan": "January",
+      "feb": "February",
+      "mar": "March",
+      "apr": "April",
+      "may": "May",
+      "jun": "June",
+      "jul": "July",
+      "aug": "August",
+      "sep": "September",
+      "oct": "October",
+      "nov": "November",
+      "dec": "December"
+    }
   },
   "login": {
     "brandSuffix": "Retailer",
@@ -291,6 +407,7 @@
       "street": "Street",
       "number": "Number",
       "complement": "Complement",
+      "complementPlaceholder": "E.g.: Suite 202",
       "neighborhood": "Neighborhood",
       "city": "City",
       "state": "State",
@@ -306,7 +423,26 @@
       "title": "Commercial Settings",
       "deliveryTime": "Default Delivery Time",
       "minOrder": "Minimum Order",
-      "paymentTerms": "Payment Terms"
+      "paymentTerms": "Payment Terms",
+      "serviceArea": "Service Area (km)",
+      "businessHours": "Business Hours",
+      "paymentMethods": "Payment Methods",
+      "methods": {
+        "card": "Credit Card",
+        "pix": "Pix",
+        "boleto": "Bank Slip"
+      }
+    },
+    "bank": {
+      "title": "Bank Details",
+      "bankName": "Bank",
+      "branch": "Branch",
+      "account": "Account",
+      "holder": "Account Holder"
+    },
+    "actions": {
+      "discard": "Discard Changes",
+      "save": "Save Changes"
     }
   },
   "signup": {
@@ -356,15 +492,50 @@
   },
   "reviews": {
     "title": "Reviews & Reputation",
+    "subtitle": "Track your customers' perception",
+    "exportReport": "Export Report",
     "overallRating": "Overall Rating",
+    "overallScore": "Overall Score",
     "totalReviews": "{count} reviews",
+    "basedOn": "based on {count} reviews",
+    "star": "star",
+    "stars": "stars",
     "distribution": "Rating Distribution",
     "kpi": {
       "nps": "NPS",
+      "npsDescription": "Net Promoter Score",
       "repurchaseRate": "Repurchase Rate",
-      "responseTime": "Response Time"
+      "repurchaseDescription": "Customers who bought again",
+      "responseTime": "Response Time",
+      "responseDescription": "Average response time"
     },
-    "evolution": "Review Evolution"
+    "evolution": "Review Evolution",
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
+    "recentReviews": "Recent Reviews",
+    "filters": {
+      "all": "All",
+      "pending": "Pending",
+      "replied": "Replied"
+    },
+    "daysAgo": "{count} days ago",
+    "order": "Order #{id}",
+    "respondedIn": "Responded in {time}",
+    "reply": "Reply",
+    "dismiss": "Dismiss",
+    "noReviews": "No reviews found"
   },
   "kyc": {
     "title": "KYC Verification",
@@ -392,24 +563,127 @@
       "viewer": "Viewer"
     }
   },
+  "messages": {
+    "title": "Messages",
+    "subtitle": "Communication with producers and cooperatives",
+    "search": "Search conversation...",
+    "noConversations": "No conversations found",
+    "typeMessage": "Type your message...",
+    "send": "Send",
+    "online": "Online",
+    "offline": "Offline",
+    "lastSeen": "Last seen {time}",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "unread": "{count} unread",
+    "attachFile": "Attach file"
+  },
   "customers": {
     "title": "Customers",
-    "subtitle": "Producer and cooperative CRM"
+    "subtitle": "Producer and cooperative CRM",
+    "search": "Search customer...",
+    "addCustomer": "Add Customer",
+    "totalCustomers": "Total Customers",
+    "activeCustomers": "Active Customers",
+    "newThisMonth": "New This Month",
+    "avgTicket": "Average Ticket",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "city": "City",
+      "lastOrder": "Last Order",
+      "totalSpent": "Total Spent",
+      "orders": "Orders"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "noCustomers": "No customers found"
   },
   "reports": {
     "title": "Reports",
-    "subtitle": "Analytical data and exports"
+    "subtitle": "Analytical data and exports",
+    "types": {
+      "sales": "Sales",
+      "products": "Products",
+      "customers": "Customers",
+      "financial": "Financial"
+    },
+    "period": {
+      "week": "Week",
+      "month": "Month",
+      "quarter": "Quarter",
+      "year": "Year"
+    },
+    "generate": "Generate Report",
+    "download": "Download",
+    "generatedAt": "Generated on {date}",
+    "noReports": "No reports generated"
   },
   "shipping": {
     "title": "Shipping",
-    "subtitle": "Freight and delivery management"
+    "subtitle": "Freight and delivery management",
+    "tabs": {
+      "pending": "Pending",
+      "inTransit": "In Transit",
+      "delivered": "Delivered"
+    },
+    "carrier": "Carrier",
+    "trackingCode": "Tracking Code",
+    "estimatedDelivery": "Estimated Delivery",
+    "weight": "Weight",
+    "origin": "Origin",
+    "destination": "Destination",
+    "noShipments": "No shipments found"
   },
   "invoices": {
     "title": "Invoices",
-    "subtitle": "NF-e issuance and management"
+    "subtitle": "NF-e issuance and management",
+    "emit": "Issue NF-e",
+    "invoiceNumber": "Invoice Number",
+    "issueDate": "Issue Date",
+    "totalValue": "Total Value",
+    "status": {
+      "pending": "Pending",
+      "issued": "Issued",
+      "cancelled": "Cancelled"
+    },
+    "xmlDownload": "Download XML",
+    "pdfDownload": "Download PDF",
+    "noInvoices": "No invoices found"
   },
   "settings": {
     "title": "Settings",
-    "subtitle": "System preferences"
+    "subtitle": "System preferences",
+    "sections": {
+      "general": "General",
+      "notifications": "Notifications",
+      "security": "Security",
+      "integrations": "Integrations"
+    },
+    "general": {
+      "language": "Language",
+      "timezone": "Timezone",
+      "dateFormat": "Date Format",
+      "currency": "Currency"
+    },
+    "notificationSettings": {
+      "email": "Email Notifications",
+      "push": "Push Notifications",
+      "sms": "SMS Notifications",
+      "quotations": "New Quotations",
+      "orders": "Order Updates",
+      "financial": "Financial Alerts"
+    },
+    "security": {
+      "changePassword": "Change Password",
+      "twoFactor": "Two-Factor Authentication",
+      "sessions": "Active Sessions",
+      "enabled": "Enabled",
+      "disabled": "Disabled"
+    },
+    "saved": "Settings saved successfully"
   }
 }

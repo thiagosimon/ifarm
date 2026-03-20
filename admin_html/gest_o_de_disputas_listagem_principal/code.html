@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface-variant": "#bfc9be",
+              "on-secondary-fixed-variant": "#5c4300",
+              "on-error": "#690005",
+              "error": "#ffb4ab",
+              "on-secondary-fixed": "#261a00",
+              "surface-container-highest": "#313536",
+              "on-background": "#e0e3e4",
+              "surface-container-low": "#181c1d",
+              "background": "#101415",
+              "surface-tint": "#89d89e",
+              "primary": "#a4f5b8",
+              "surface-container-lowest": "#0b0f10",
+              "secondary-fixed-dim": "#f6be39",
+              "on-surface": "#e0e3e4",
+              "surface-container": "#1c2021",
+              "secondary": "#f6be39",
+              "on-tertiary-container": "#066032",
+              "on-primary": "#00391b",
+              "outline-variant": "#404940",
+              "surface-container-high": "#272b2c",
+              "on-secondary-container": "#433000",
+              "primary-fixed": "#a4f4b8",
+              "on-primary-container": "#056032",
+              "error-container": "#93000a",
+              "surface-bright": "#363a3b",
+              "secondary-fixed": "#ffdea0",
+              "tertiary-fixed": "#a5f4b8",
+              "inverse-surface": "#e0e3e4",
+              "tertiary-container": "#8ad89e",
+              "on-error-container": "#ffdad6",
+              "secondary-container": "#c59300",
+              "outline": "#899389",
+              "tertiary": "#a5f5b9",
+              "on-secondary": "#402d00",
+              "on-tertiary": "#00391b",
+              "primary-fixed-dim": "#89d89e",
+              "on-primary-fixed": "#00210d",
+              "surface-variant": "#313536",
+              "inverse-primary": "#1a6c3d",
+              "inverse-on-surface": "#2d3132",
+              "on-tertiary-fixed": "#00210d",
+              "primary-container": "#89d89e",
+              "on-tertiary-fixed-variant": "#005229",
+              "surface-dim": "#101415",
+              "surface": "#101415",
+              "on-primary-fixed-variant": "#005229",
+              "tertiary-fixed-dim": "#89d89e"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(39, 42, 44, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .agro-shadow {
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #101415; }
+        ::-webkit-scrollbar-thumb { background: #313536; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<div class="flex min-h-screen">
+<!-- SideNavBar - JSON Execution -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r-0 bg-[#181C1D] dark:bg-[#181C1D] font-['Inter'] font-light tracking-tight py-8 px-4 sticky top-0">
+<div class="mb-10 px-2">
+<h1 class="text-xl font-bold text-[#89D89E] tracking-tighter">iFarm Admin</h1>
+<p class="text-[10px] text-[#899389] uppercase tracking-[0.2em] mt-1">Gestão de Disputas</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200 scale-95 active:duration-100" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#A4F5B8] font-bold bg-[#272B2C] border-l-4 border-[#F6BE39] scale-95 active:duration-100" href="#">
+<span class="material-symbols-outlined">gavel</span>
+<span class="text-sm">Disputas</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200 scale-95 active:duration-100" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm">Contratos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200 scale-95 active:duration-100" href="#">
+<span class="material-symbols-outlined">person_pin</span>
+<span class="text-sm">Produtores</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200 scale-95 active:duration-100" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm">Relatórios</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200 scale-95 active:duration-100" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm">Configurações</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2 pt-8 border-t border-outline-variant/10">
+<button class="w-full mb-4 bg-gradient-to-br from-[#A4F5B8] to-[#89D89E] text-[#00391B] py-3 rounded-lg font-bold text-sm shadow-lg shadow-primary/10">
+                    Nova Disputa
+                </button>
+<a class="flex items-center gap-3 px-4 py-2 text-[#899389] hover:text-[#E0E3E4] transition-colors text-sm" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span>Suporte</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-[#899389] hover:text-[#E0E3E4] transition-colors text-sm" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Sair</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar - JSON Execution -->
+<header class="sticky top-0 z-50 flex justify-between items-center w-full px-10 py-4 bg-[#1D2022]/70 backdrop-blur-xl dark:bg-[#1D2022]/70 shadow-[0_24px_48px_rgba(0,0,0,0.4)]">
+<div class="flex items-center gap-8">
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-outline material-symbols-outlined text-lg">search</span>
+<input class="bg-surface-container-lowest border-none rounded-full py-2 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-primary transition-all" placeholder="Buscar disputas..." type="text"/>
+</div>
+<nav class="flex gap-6 font-['Inter'] text-sm font-medium">
+<a class="text-[#F6BE39] border-b-2 border-[#F6BE39] pb-1" href="#">Visão Geral</a>
+<a class="text-[#899389] hover:text-[#A4F5B8] transition-all" href="#">Pendentes</a>
+<a class="text-[#899389] hover:text-[#A4F5B8] transition-all" href="#">Arquivadas</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 text-[#89D89E] font-medium text-sm hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-lg">download</span>
+                        Exportar Dados
+                    </button>
+<div class="flex items-center gap-4 border-l border-outline-variant/20 pl-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="Admin Avatar" class="w-full h-full object-cover" data-alt="Close up of professional man in office attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuAwbe31HAQITqRUT8Loq-JYooFwqKrDcMEGVj4GlPN8SmJTpe30likDsUiMMhaP7TYTMt8IGpvA52W3IH_52MNRwKmY8GPTohi4Zecrqrf6aM_u5qUhx6MsVY3b3HtzAtWcO9WqG5Vo4LxpvQI3YkFVx60oXpAHAxh2lxqE5Hfvn7YKiNv9HMWYdct1sm6vEU1yUsWtgYsGHGaAWblRwPnDkMeihZxboaTK8taU82rxePrDpw6L59OsuWMexXXxoZPoW_bx59m7rY"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Editorial Content Shell -->
+<div class="p-10 space-y-10">
+<!-- Page Header -->
+<section>
+<div class="flex items-baseline gap-4">
+<h2 class="text-4xl font-headline font-bold tracking-tight text-on-surface">Disputas</h2>
+<span class="text-secondary font-headline font-light text-xl tracking-wide">— SLA 7 dias úteis</span>
+</div>
+</section>
+<!-- Stat Grid - Editorial Bento Style -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-surface-container-high p-6 rounded-xl agro-shadow relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-fixed"></div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-outline mb-1">Abertas</p>
+<h3 class="text-4xl font-headline font-light text-primary">8</h3>
+<span class="material-symbols-outlined absolute right-4 bottom-4 text-primary/10 text-5xl group-hover:scale-110 transition-transform">pending_actions</span>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl agro-shadow relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-outline mb-1">Em Análise</p>
+<h3 class="text-4xl font-headline font-light text-secondary">3</h3>
+<span class="material-symbols-outlined absolute right-4 bottom-4 text-secondary/10 text-5xl group-hover:scale-110 transition-transform">biotech</span>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl agro-shadow relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-on-tertiary-container"></div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-outline mb-1">Resolvidas</p>
+<h3 class="text-4xl font-headline font-light text-on-surface-variant">47</h3>
+<span class="material-symbols-outlined absolute right-4 bottom-4 text-outline/10 text-5xl group-hover:scale-110 transition-transform">check_circle</span>
+</div>
+<div class="bg-surface-container-high p-6 rounded-xl agro-shadow relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary-fixed"></div>
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-outline mb-1">Valor em Disputa</p>
+<h3 class="text-3xl font-headline font-light text-secondary-fixed">R$ 234.890</h3>
+<span class="material-symbols-outlined absolute right-4 bottom-4 text-secondary-fixed/10 text-5xl group-hover:scale-110 transition-transform">payments</span>
+</div>
+</section>
+<!-- Data Section -->
+<section class="space-y-6">
+<!-- Filters -->
+<div class="flex flex-col md:flex-row gap-4 items-center justify-between bg-surface-container-low p-2 rounded-xl">
+<div class="flex items-center gap-2 p-1">
+<button class="px-6 py-2 rounded-lg bg-surface-container-highest text-primary font-bold text-xs uppercase tracking-wider">Todos</button>
+<button class="px-6 py-2 rounded-lg text-outline font-bold text-xs uppercase tracking-wider hover:text-on-surface transition-colors">Abertas</button>
+<button class="px-6 py-2 rounded-lg text-outline font-bold text-xs uppercase tracking-wider hover:text-on-surface transition-colors">Em Análise</button>
+<button class="px-6 py-2 rounded-lg text-outline font-bold text-xs uppercase tracking-wider hover:text-on-surface transition-colors">Resolvidas</button>
+</div>
+<div class="flex items-center gap-4 pr-4">
+<div class="h-8 w-[1px] bg-outline-variant/20 hidden md:block"></div>
+<div class="flex items-center gap-2 text-outline text-sm">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+<span>Filtros Avançados</span>
+</div>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-hidden glass-panel rounded-xl agro-shadow">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/10">
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline">Pedido (#ID)</th>
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline">Farmer</th>
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline">Retailer</th>
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline">Motivo</th>
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline">Status</th>
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline">Valor (R$)</th>
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline text-center">SLA</th>
+<th class="p-6 text-[10px] font-extrabold uppercase tracking-widest text-outline text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 - High Urgency -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group">
+<td class="p-6 font-mono text-xs text-primary">#IF-9921</td>
+<td class="p-6 font-medium text-sm">João P. Silveira</td>
+<td class="p-6 font-medium text-sm">AgroFertil S.A.</td>
+<td class="p-6 text-sm text-outline max-w-[180px] truncate">Divergência na classificação de grãos (soja)</td>
+<td class="p-6">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-on-secondary-fixed-variant/20 text-secondary-fixed border border-secondary-fixed/20">Em Análise</span>
+</td>
+<td class="p-6 font-semibold text-sm">R$ 45.200,00</td>
+<td class="p-6 text-center">
+<span class="px-3 py-1 rounded text-[10px] font-bold bg-error-container text-error inline-block min-w-[60px]">0 dias</span>
+</td>
+<td class="p-6 text-right">
+<button class="bg-surface-container-highest p-2 rounded-lg text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 - Medium Urgency -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group">
+<td class="p-6 font-mono text-xs text-primary">#IF-9844</td>
+<td class="p-6 font-medium text-sm">Fazenda Sol Nascente</td>
+<td class="p-6 font-medium text-sm">Cooagro Ltda.</td>
+<td class="p-6 text-sm text-outline max-w-[180px] truncate">Atraso na entrega de insumos químicos</td>
+<td class="p-6">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-on-primary-fixed-variant/20 text-primary-fixed border border-primary-fixed/20">Aberta</span>
+</td>
+<td class="p-6 font-semibold text-sm">R$ 12.850,00</td>
+<td class="p-6 text-center">
+<span class="px-3 py-1 rounded text-[10px] font-bold bg-secondary-container/30 text-secondary-fixed inline-block min-w-[60px]">2 dias</span>
+</td>
+<td class="p-6 text-right">
+<button class="bg-surface-container-highest p-2 rounded-lg text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 - Low Urgency -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group">
+<td class="p-6 font-mono text-xs text-primary">#IF-9712</td>
+<td class="p-6 font-medium text-sm">Marcos Vinícius</td>
+<td class="p-6 font-medium text-sm">AgroTech Center</td>
+<td class="p-6 text-sm text-outline max-w-[180px] truncate">Defeito em componente de colheitadeira</td>
+<td class="p-6">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-on-primary-fixed-variant/20 text-primary-fixed border border-primary-fixed/20">Aberta</span>
+</td>
+<td class="p-6 font-semibold text-sm">R$ 128.000,00</td>
+<td class="p-6 text-center">
+<span class="px-3 py-1 rounded text-[10px] font-bold bg-on-tertiary-container/20 text-primary inline-block min-w-[60px]">5 dias</span>
+</td>
+<td class="p-6 text-right">
+<button class="bg-surface-container-highest p-2 rounded-lg text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 - Resolved -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group opacity-70">
+<td class="p-6 font-mono text-xs text-primary">#IF-9601</td>
+<td class="p-6 font-medium text-sm">Helena Matos</td>
+<td class="p-6 font-medium text-sm">Geração Rural</td>
+<td class="p-6 text-sm text-outline max-w-[180px] truncate">Erro de faturamento em nota fiscal</td>
+<td class="p-6">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase bg-surface-container-highest text-outline border border-outline/10">Resolvida</span>
+</td>
+<td class="p-6 font-semibold text-sm">R$ 5.420,00</td>
+<td class="p-6 text-center">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</td>
+<td class="p-6 text-right">
+<button class="bg-surface-container-highest p-2 rounded-lg text-primary hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-2 text-sm text-outline">
+<p>Mostrando 1-10 de 58 disputas</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold">1</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center hover:bg-surface-container-high transition-colors">2</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center hover:bg-surface-container-high transition-colors">3</button>
+<button class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Floating Action Button (FAB) - Suppressed as per context rules (Details/List view) -->
+</body></html>

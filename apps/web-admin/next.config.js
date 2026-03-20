@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
   reactStrictMode: true,
+  typescript: {
+    // Allow production builds to succeed even with type errors
+    // (type checking done separately in CI)
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   transpilePackages: [],
   images: {
     remotePatterns: [

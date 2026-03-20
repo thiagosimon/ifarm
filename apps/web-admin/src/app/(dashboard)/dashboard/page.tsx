@@ -1,387 +1,453 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import {
-  DollarSign,
-  Users,
-  FileText,
-  ShoppingCart,
-  TrendingUp,
-  TrendingDown,
-  ArrowUpRight,
-  ArrowDownRight,
-  Activity,
-  RefreshCw,
-} from 'lucide-react';
-import { formatCurrency, formatCompactNumber } from '@/lib/utils';
-import { fetchAdminDashboard } from '@/lib/api';
 import {
   AreaChart,
   Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
   BarChart,
   Bar,
   PieChart,
   Pie,
   Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
 } from 'recharts';
+import {
+  TrendingUp,
+  TrendingDown,
+  Users,
+  ShoppingCart,
+  DollarSign,
+  FileText,
+  Truck,
+  CheckCircle,
+  AlertTriangle,
+  Wallet,
+  RefreshCw,
+} from 'lucide-react';
+import { cn, formatCurrency } from '@/lib/utils';
 
-interface DashboardMetrics {
-  totalGmv: number;
-  gmvChange: number;
-  activeUsers: number;
-  activeUsersChange: number;
-  openQuotations: number;
-  quotationsChange: number;
-  ordersInProgress: number;
-  ordersChange: number;
-  periodRevenue: number;
-  revenueChange: number;
-}
+type Period = '7d' | '30d' | '90d' | '365d';
 
-const defaultMetrics: DashboardMetrics = {
-  totalGmv: 2847500,
-  gmvChange: 12.5,
-  activeUsers: 1243,
-  activeUsersChange: 8.3,
-  openQuotations: 87,
-  quotationsChange: -3.2,
-  ordersInProgress: 156,
-  ordersChange: 15.7,
-  periodRevenue: 142375,
-  revenueChange: 10.2,
-};
-
-const gmvChartData = [
-  { month: 'Set', gmv: 1800000, revenue: 90000 },
-  { month: 'Out', gmv: 2100000, revenue: 105000 },
-  { month: 'Nov', gmv: 1950000, revenue: 97500 },
-  { month: 'Dez', gmv: 2400000, revenue: 120000 },
-  { month: 'Jan', gmv: 2650000, revenue: 132500 },
-  { month: 'Fev', gmv: 2847500, revenue: 142375 },
+const gmvData = [
+  { month: 'Set', gmv: 8400000, receita: 420000 },
+  { month: 'Out', gmv: 9200000, receita: 460000 },
+  { month: 'Nov', gmv: 10100000, receita: 505000 },
+  { month: 'Dez', gmv: 11500000, receita: 575000 },
+  { month: 'Jan', gmv: 10800000, receita: 540000 },
+  { month: 'Fev', gmv: 11900000, receita: 595000 },
+  { month: 'Mar', gmv: 12847320, receita: 641366 },
 ];
 
-const ordersChartData = [
-  { day: 'Seg', pedidos: 42, cancelados: 3 },
-  { day: 'Ter', pedidos: 38, cancelados: 2 },
-  { day: 'Qua', pedidos: 55, cancelados: 5 },
-  { day: 'Qui', pedidos: 47, cancelados: 1 },
-  { day: 'Sex', pedidos: 62, cancelados: 4 },
-  { day: 'Sab', pedidos: 28, cancelados: 2 },
-  { day: 'Dom', pedidos: 15, cancelados: 0 },
+const ordersData = [
+  { day: 'Seg', pedidos: 28, cancelados: 6 },
+  { day: 'Ter', pedidos: 34, cancelados: 4 },
+  { day: 'Qua', pedidos: 24, cancelados: 10 },
+  { day: 'Qui', pedidos: 38, cancelados: 2 },
+  { day: 'Sex', pedidos: 32, cancelados: 6 },
+  { day: 'Sab', pedidos: 16, cancelados: 2 },
+  { day: 'Dom', pedidos: 12, cancelados: 1 },
 ];
 
-const userDistributionData = [
-  { name: 'Farmers Ativos', value: 645, color: '#22c55e' },
-  { name: 'Retailers Ativos', value: 398, color: '#3b82f6' },
-  { name: 'KYC Pendente', value: 120, color: '#f59e0b' },
-  { name: 'Suspensos', value: 80, color: '#ef4444' },
+const userDistribution = [
+  { name: 'Farmers', value: 1248, color: '#a4f5b8' },
+  { name: 'Retailers', value: 942, color: '#f6be39' },
+  { name: 'KYC Pend.', value: 415, color: '#5c4300' },
+  { name: 'Suspensos', value: 242, color: 'rgba(255,180,171,0.3)' },
 ];
 
 const recentActivity = [
-  { id: 1, type: 'kyc', message: 'Novo KYC submetido - Fazenda Bela Vista', time: '5 min' },
-  { id: 2, type: 'order', message: 'Pedido #2847 confirmado - R$ 12.500,00', time: '12 min' },
-  { id: 3, type: 'dispute', message: 'Disputa aberta - Pedido #2831', time: '25 min' },
-  { id: 4, type: 'user', message: 'Novo retailer cadastrado - Supermercado Alvorada', time: '38 min' },
-  { id: 5, type: 'payment', message: 'Payout processado - R$ 45.200,00', time: '1h' },
-  { id: 6, type: 'kyc', message: 'KYC aprovado - Sitio Boa Esperanca', time: '1h 15min' },
+  {
+    id: 1,
+    title: 'KYC aprovado',
+    description: 'Fazenda Santa Helena • ID #8231',
+    time: '2m atrás',
+    color: 'text-[#a4f5b8]',
+    bg: 'bg-[#a4f5b8]/10',
+    icon: CheckCircle,
+  },
+  {
+    id: 2,
+    title: 'Novo pedido',
+    description: 'Lote de Soja Transgênica • R$ 45.200',
+    time: '15m atrás',
+    color: 'text-[#f6be39]',
+    bg: 'bg-[#f6be39]/10',
+    icon: ShoppingCart,
+  },
+  {
+    id: 3,
+    title: 'Disputa aberta',
+    description: 'Qualidade divergente • Pedido #0942',
+    time: '1h atrás',
+    color: 'text-[#ffb4ab]',
+    bg: 'bg-[#ffb4ab]/10',
+    icon: AlertTriangle,
+  },
+  {
+    id: 4,
+    title: 'Pagamento liberado',
+    description: 'Holdback vencido • R$ 12.400',
+    time: '2h atrás',
+    color: 'text-[#a4f5b8]',
+    bg: 'bg-[#a4f5b8]/10',
+    icon: Wallet,
+  },
+  {
+    id: 5,
+    title: 'Novo usuário',
+    description: 'Agro Grãos SA cadastrada',
+    time: '3h atrás',
+    color: 'text-[#f6be39]',
+    bg: 'bg-[#f6be39]/10',
+    icon: Users,
+  },
 ];
+
+interface MetricCardProps {
+  title: string;
+  value: string;
+  trend: number;
+  icon: React.ElementType;
+  iconColor: string;
+  iconBg: string;
+  valueColor?: string;
+  borderColor?: string;
+}
 
 function MetricCard({
   title,
   value,
-  change,
+  trend,
   icon: Icon,
-  format = 'number',
-}: {
-  title: string;
-  value: number;
-  change: number;
-  icon: React.ElementType;
-  format?: 'currency' | 'number';
-}) {
-  const isPositive = change >= 0;
-
+  iconColor,
+  iconBg,
+  valueColor,
+  borderColor,
+}: MetricCardProps) {
+  const isPositive = trend > 0;
   return (
-    <Card>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-2xl font-bold">
-              {format === 'currency' ? formatCurrency(value) : formatCompactNumber(value)}
-            </p>
-            <div className="flex items-center gap-1">
-              {isPositive ? (
-                <ArrowUpRight className="h-4 w-4 text-green-600" />
-              ) : (
-                <ArrowDownRight className="h-4 w-4 text-red-600" />
-              )}
-              <span className={`text-sm font-medium ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                {isPositive ? '+' : ''}
-                {change}%
-              </span>
-              <span className="text-xs text-muted-foreground">vs periodo anterior</span>
-            </div>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-            <Icon className="h-6 w-6 text-primary" />
-          </div>
+    <div
+      className={cn(
+        'glass-card agro-shadow rounded-xl p-6 flex flex-col justify-between',
+        borderColor && `border-l-2 ${borderColor}`
+      )}
+    >
+      <div className="flex justify-between items-start mb-4">
+        <div className={cn('p-2 rounded-lg', iconBg)}>
+          <Icon className={cn('h-5 w-5', iconColor)} />
         </div>
-      </CardContent>
-    </Card>
+        <span
+          className={cn(
+            'flex items-center text-xs font-bold px-2 py-0.5 rounded-full',
+            isPositive
+              ? 'text-[#a4f5b8] bg-[#a4f5b8]/10'
+              : 'text-[#ffb4ab] bg-[#ffb4ab]/10'
+          )}
+        >
+          {isPositive ? (
+            <TrendingUp className="h-3 w-3 mr-1" />
+          ) : (
+            <TrendingDown className="h-3 w-3 mr-1" />
+          )}
+          {Math.abs(trend)}%
+        </span>
+      </div>
+      <div>
+        <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-muted-foreground mb-1">
+          {title}
+        </p>
+        <h3 className={cn('text-2xl font-light tracking-tighter', valueColor || 'text-foreground')}>
+          {value}
+        </h3>
+      </div>
+    </div>
   );
 }
 
-export default function AdminDashboardPage() {
-  const [period, setPeriod] = React.useState('30d');
-  const [metrics, setMetrics] = React.useState<DashboardMetrics>(defaultMetrics);
-  const [loading, setLoading] = React.useState(false);
-
-  const loadDashboard = React.useCallback(async () => {
-    setLoading(true);
-    try {
-      const data = await fetchAdminDashboard({ from: period });
-      if (data) setMetrics(data);
-    } catch {
-      // Use default metrics on error
-    } finally {
-      setLoading(false);
-    }
-  }, [period]);
-
-  React.useEffect(() => {
-    loadDashboard();
-  }, [loadDashboard]);
+export default function DashboardPage() {
+  const [period, setPeriod] = React.useState<Period>('30d');
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-muted-foreground">Visao geral da plataforma iFarm</p>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground text-sm mt-1">Visão geral do ecossistema iFarm</p>
         </div>
-        <div className="flex items-center gap-3">
-          <Select value={period} onValueChange={setPeriod}>
-            <SelectTrigger className="w-[160px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="7d">Ultimos 7 dias</SelectItem>
-              <SelectItem value="30d">Ultimos 30 dias</SelectItem>
-              <SelectItem value="90d">Ultimos 90 dias</SelectItem>
-              <SelectItem value="365d">Ultimo ano</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button variant="outline" size="icon" onClick={loadDashboard} disabled={loading}>
-            <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-          </Button>
+        <div className="flex items-center gap-4 bg-[#181c1d] p-1.5 rounded-xl agro-shadow">
+          <div className="flex gap-1">
+            {(['7d', '30d', '90d', '365d'] as Period[]).map((p) => (
+              <button
+                key={p}
+                onClick={() => setPeriod(p)}
+                className={cn(
+                  'px-4 py-1.5 text-xs font-bold uppercase tracking-widest rounded-lg transition-colors',
+                  period === p
+                    ? 'bg-[#a4f5b8] text-[#00391b] shadow-lg'
+                    : 'text-muted-foreground hover:text-[#a4f5b8]'
+                )}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+          <div className="h-6 w-px bg-border/30" />
+          <button className="flex items-center gap-2 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#89d89e] hover:bg-[#a4f5b8]/5 rounded-lg transition-all">
+            <RefreshCw className="h-3 w-3" />
+            Atualizar
+          </button>
         </div>
       </div>
 
       {/* Metric Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         <MetricCard
           title="GMV Total"
-          value={metrics.totalGmv}
-          change={metrics.gmvChange}
+          value="R$ 12.847.320"
+          trend={12}
           icon={DollarSign}
-          format="currency"
+          iconColor="text-[#a4f5b8]"
+          iconBg="bg-[#a4f5b8]/10"
+          borderColor="border-[#a4f5b8]"
         />
         <MetricCard
-          title="Usuarios Ativos"
-          value={metrics.activeUsers}
-          change={metrics.activeUsersChange}
+          title="Usuários Ativos"
+          value="2.847"
+          trend={8}
           icon={Users}
+          iconColor="text-[#a4f5b8]"
+          iconBg="bg-[#a4f5b8]/10"
         />
         <MetricCard
-          title="Cotacoes Abertas"
-          value={metrics.openQuotations}
-          change={metrics.quotationsChange}
+          title="Cotações Abertas"
+          value="156"
+          trend={-4}
           icon={FileText}
+          iconColor="text-[#f6be39]"
+          iconBg="bg-[#f6be39]/10"
         />
         <MetricCard
-          title="Pedidos em Andamento"
-          value={metrics.ordersInProgress}
-          change={metrics.ordersChange}
-          icon={ShoppingCart}
+          title="Em Andamento"
+          value="89"
+          trend={21}
+          icon={Truck}
+          iconColor="text-[#a4f5b8]"
+          iconBg="bg-[#a4f5b8]/10"
         />
         <MetricCard
-          title="Receita do Periodo"
-          value={metrics.periodRevenue}
-          change={metrics.revenueChange}
-          icon={TrendingUp}
-          format="currency"
+          title="Receita Período"
+          value="R$ 641.366"
+          trend={15}
+          icon={Wallet}
+          iconColor="text-[#f6be39]"
+          iconBg="bg-[#f6be39]/10"
+          valueColor="text-[#f6be39]"
+          borderColor="border-[#f6be39]"
         />
-      </div>
+      </section>
 
       {/* Charts Row */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* GMV Trend Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Evolucao do GMV e Receita</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={gmvChartData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                  <XAxis dataKey="month" className="text-xs" />
-                  <YAxis className="text-xs" tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`} />
-                  <Tooltip
-                    formatter={(value: number, name: string) => [
-                      formatCurrency(value),
-                      name === 'gmv' ? 'GMV' : 'Receita',
-                    ]}
-                    contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px',
-                    }}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="gmv"
-                    stackId="1"
-                    stroke="#22c55e"
-                    fill="#22c55e"
-                    fillOpacity={0.1}
-                    strokeWidth={2}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="revenue"
-                    stackId="2"
-                    stroke="#3b82f6"
-                    fill="#3b82f6"
-                    fillOpacity={0.1}
-                    strokeWidth={2}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+      <section className="grid grid-cols-1 lg:grid-cols-10 gap-8">
+        {/* GMV & Revenue Area Chart */}
+        <div className="lg:col-span-6 glass-card agro-shadow rounded-xl p-8 flex flex-col h-[400px]">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-1 h-6 bg-[#f6be39] rounded-full" />
+            <div>
+              <h4 className="text-lg font-semibold text-foreground">GMV &amp; Receita</h4>
+              <p className="text-xs text-muted-foreground">Comparativo mensal (Set - Mar)</p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+          <div className="flex-1">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={gmvData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
+                <defs>
+                  <linearGradient id="gmvGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#a4f5b8" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#a4f5b8" stopOpacity={0} />
+                  </linearGradient>
+                  <linearGradient id="receitaGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#f6be39" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#f6be39" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(137,216,158,0.05)" />
+                <XAxis
+                  dataKey="month"
+                  tick={{ fill: '#899389', fontSize: 10, fontWeight: 700 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis hide />
+                <Tooltip
+                  contentStyle={{
+                    background: '#1c2021',
+                    border: '1px solid rgba(137,216,158,0.1)',
+                    borderRadius: '8px',
+                    color: '#e0e3e4',
+                  }}
+                  formatter={(value: number, name: string) => [
+                    formatCurrency(value),
+                    name === 'gmv' ? 'GMV' : 'Receita',
+                  ]}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="gmv"
+                  stroke="#a4f5b8"
+                  fill="url(#gmvGradient)"
+                  strokeWidth={2}
+                />
+                <Area
+                  type="monotone"
+                  dataKey="receita"
+                  stroke="#f6be39"
+                  fill="url(#receitaGradient)"
+                  strokeWidth={2}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
 
-        {/* Orders Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Pedidos da Semana</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={ordersChartData}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-                  <XAxis dataKey="day" className="text-xs" />
-                  <YAxis className="text-xs" />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px',
-                    }}
-                  />
-                  <Bar dataKey="pedidos" fill="#22c55e" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="cancelados" fill="#ef4444" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+        {/* Weekly Orders Bar Chart */}
+        <div className="lg:col-span-4 glass-card agro-shadow rounded-xl p-8 flex flex-col h-[400px]">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-1 h-6 bg-[#a4f5b8] rounded-full" />
+            <div>
+              <h4 className="text-lg font-semibold text-foreground">Pedidos por Semana</h4>
+              <p className="text-xs text-muted-foreground">Concluídos vs Cancelados</p>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+          <div className="flex-1">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={ordersData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(137,216,158,0.05)" />
+                <XAxis
+                  dataKey="day"
+                  tick={{ fill: '#899389', fontSize: 9, fontWeight: 700 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis hide />
+                <Tooltip
+                  contentStyle={{
+                    background: '#1c2021',
+                    border: '1px solid rgba(137,216,158,0.1)',
+                    borderRadius: '8px',
+                    color: '#e0e3e4',
+                  }}
+                />
+                <Bar dataKey="pedidos" fill="rgba(164,245,184,0.6)" radius={[3, 3, 0, 0]} name="Pedidos" />
+                <Bar dataKey="cancelados" fill="rgba(255,180,171,0.4)" radius={[3, 3, 0, 0]} name="Cancelados" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="mt-4 flex gap-6 text-[10px] font-bold uppercase tracking-widest justify-center">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#a4f5b8]" />
+              Pedidos
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#ffb4ab] opacity-50" />
+              Cancelados
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Bottom Row */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* User Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Distribuicao de Usuarios</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[250px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={userDistributionData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={90}
-                    paddingAngle={4}
-                    dataKey="value"
-                  >
-                    {userDistributionData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px',
-                    }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
+      <section className="grid grid-cols-1 lg:grid-cols-10 gap-8">
+        {/* User Distribution Donut */}
+        <div className="lg:col-span-4 glass-card agro-shadow rounded-xl p-8">
+          <div className="flex items-center justify-between mb-10">
+            <h4 className="text-lg font-semibold text-foreground">Distribuição de Usuários</h4>
+          </div>
+          <div className="relative h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={userDistribution}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={70}
+                  outerRadius={100}
+                  dataKey="value"
+                  strokeWidth={0}
+                >
+                  {userDistribution.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    background: '#1c2021',
+                    border: '1px solid rgba(137,216,158,0.1)',
+                    borderRadius: '8px',
+                    color: '#e0e3e4',
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span className="text-3xl font-light tracking-tighter">2.8k</span>
+              <span className="text-[10px] uppercase font-bold text-muted-foreground tracking-widest">
+                Total
+              </span>
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {userDistributionData.map((item) => (
-                <div key={item.name} className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
-                  <span className="text-xs text-muted-foreground">
-                    {item.name}: {item.value}
-                  </span>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-4">
+            {userDistribution.map((item) => (
+              <div key={item.name} className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: item.color }} />
+                <div>
+                  <p className="text-[10px] font-extrabold uppercase text-muted-foreground">
+                    {item.name}
+                  </p>
+                  <p className="text-sm font-semibold">
+                    {item.value.toLocaleString('pt-BR')}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Recent Activity */}
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="text-base">Atividade Recente</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-start gap-3">
-                  <div
-                    className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                      activity.type === 'kyc'
-                        ? 'bg-blue-100 text-blue-600'
-                        : activity.type === 'order'
-                          ? 'bg-green-100 text-green-600'
-                          : activity.type === 'dispute'
-                            ? 'bg-red-100 text-red-600'
-                            : activity.type === 'user'
-                              ? 'bg-purple-100 text-purple-600'
-                              : 'bg-yellow-100 text-yellow-600'
-                    }`}
-                  >
-                    <Activity className="h-4 w-4" />
+        <div className="lg:col-span-6 glass-card agro-shadow rounded-xl p-8">
+          <div className="flex items-center justify-between mb-8">
+            <h4 className="text-lg font-semibold text-foreground">Atividade Recente</h4>
+            <button className="text-xs font-bold uppercase tracking-widest text-[#a4f5b8] hover:underline">
+              Ver tudo
+            </button>
+          </div>
+          <div className="space-y-6">
+            {recentActivity.map((activity) => {
+              const Icon = activity.icon;
+              return (
+                <div key={activity.id} className="flex items-center justify-between group transition-all">
+                  <div className="flex items-center gap-4">
+                    <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', activity.bg)}>
+                      <Icon className={cn('h-5 w-5', activity.color)} />
+                    </div>
+                    <div>
+                      <h5 className="text-sm font-semibold">{activity.title}</h5>
+                      <p className="text-xs text-muted-foreground">{activity.description}</p>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm">{activity.message}</p>
-                    <p className="text-xs text-muted-foreground">{activity.time} atras</p>
-                  </div>
+                  <span className="text-[10px] font-bold text-muted-foreground/40 whitespace-nowrap ml-4">
+                    {activity.time}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

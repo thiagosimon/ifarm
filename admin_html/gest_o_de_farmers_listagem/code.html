@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iFarm Admin - Gestão de Farmers</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#bfc9be",
+                        "on-secondary-fixed-variant": "#5c4300",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#261a00",
+                        "surface-container-highest": "#313536",
+                        "on-background": "#e0e3e4",
+                        "surface-container-low": "#181c1d",
+                        "background": "#101415",
+                        "surface-tint": "#89d89e",
+                        "primary": "#a4f5b8",
+                        "surface-container-lowest": "#0b0f10",
+                        "secondary-fixed-dim": "#f6be39",
+                        "on-surface": "#e0e3e4",
+                        "surface-container": "#1c2021",
+                        "secondary": "#f6be39",
+                        "on-tertiary-container": "#066032",
+                        "on-primary": "#00391b",
+                        "outline-variant": "#404940",
+                        "surface-container-high": "#272b2c",
+                        "on-secondary-container": "#433000",
+                        "primary-fixed": "#a4f4b8",
+                        "on-primary-container": "#056032",
+                        "error-container": "#93000a",
+                        "surface-bright": "#363a3b",
+                        "secondary-fixed": "#ffdea0",
+                        "tertiary-fixed": "#a5f4b8",
+                        "inverse-surface": "#e0e3e4",
+                        "tertiary-container": "#8ad89e",
+                        "on-error-container": "#ffdad6",
+                        "secondary-container": "#c59300",
+                        "outline": "#899389",
+                        "tertiary": "#a5f5b9",
+                        "on-secondary": "#402d00",
+                        "on-tertiary": "#00391b",
+                        "primary-fixed-dim": "#89d89e",
+                        "on-primary-fixed": "#00210d",
+                        "surface-variant": "#313536",
+                        "inverse-primary": "#1a6c3d",
+                        "inverse-on-surface": "#2d3132",
+                        "on-tertiary-fixed": "#00210d",
+                        "primary-container": "#89d89e",
+                        "on-tertiary-fixed-variant": "#005229",
+                        "surface-dim": "#101415",
+                        "surface": "#101415",
+                        "on-primary-fixed-variant": "#005229",
+                        "tertiary-fixed-dim": "#89d89e"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-glass {
+            background: rgba(39, 42, 44, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .agro-shadow {
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- SideNavBar -->
+<aside class="bg-[#181C1D] dark:bg-[#181C1D] h-screen w-64 fixed left-0 top-0 flex flex-col py-8 z-[60]">
+<div class="px-6 mb-10">
+<h1 class="text-2xl font-black tracking-tighter text-[#A4F5B8]">iFarm</h1>
+<p class="font-['Inter'] font-light tracking-tight text-[#899389] text-xs uppercase">Digital Agronomist</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-['Inter'] font-light tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center px-6 py-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">shopping_cart</span>
+<span class="font-['Inter'] font-light tracking-tight">Pedidos</span>
+</a>
+<!-- Active Tab: Usuários/Farmers -->
+<a class="flex items-center px-6 py-3 text-[#A4F5B8] font-bold border-l-4 border-[#A4F5B8] bg-[#272B2C]" href="#">
+<span class="material-symbols-outlined mr-3">person_search</span>
+<span class="font-['Inter'] font-light tracking-tight">Usuários/Farmers</span>
+</a>
+<a class="flex items-center px-6 py-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">storefront</span>
+<span class="font-['Inter'] font-light tracking-tight">Retailers</span>
+</a>
+<a class="flex items-center px-6 py-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">verified_user</span>
+<span class="font-['Inter'] font-light tracking-tight">KYC</span>
+</a>
+<a class="flex items-center px-6 py-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">payments</span>
+<span class="font-['Inter'] font-light tracking-tight">Financeiro</span>
+</a>
+<a class="flex items-center px-6 py-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">gavel</span>
+<span class="font-['Inter'] font-light tracking-tight">Disputas</span>
+</a>
+<a class="flex items-center px-6 py-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-['Inter'] font-light tracking-tight">Configurações</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-3 px-4 bg-primary text-on-primary font-bold rounded-lg text-xs tracking-wider uppercase flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">download</span>
+                Export Harvest Data
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-50 bg-[#1D2022]/70 backdrop-blur-xl flex justify-between items-center px-10 h-20">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary text-on-surface" placeholder="Global search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface hover:text-[#A4F5B8] transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface hover:text-[#A4F5B8] transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/20"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface leading-none">Admin User</p>
+<p class="text-[10px] text-outline leading-none mt-1">Administrator</p>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-primary transition-colors">
+<img class="w-full h-full object-cover" data-alt="Administrator Profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5DoLCaM0fXSVePNtwVY8rZ3UNB19Q2_3mlO8LCyy_mZNjkhaMOaB8jrHhHGUfTB4xvmEVq-SbiWHCodb3kz5Idu6MCkOdcP4aPSUVJMiXHLOypZ5Xv2lxC5RZO9jCJesQgetcR2_OG2rGt9-c91XlexV0YaMaD0IfNeEP_nLZFGK4JBgU7KEfXMwgnBeQ1tEV_jL-dIGSI7xq2v2QfwcafvTyzoYE4-8u-RVQ_43OmrOzWJ43wtLE9_Q3k4sOaY0k8MuwEh8-rebX"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="pt-28 px-10 pb-12">
+<!-- Page Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="text-4xl font-bold text-on-surface tracking-tight leading-none mb-2">Gestão de Farmers</h2>
+<p class="text-outline font-medium">Controle e verificação da base de produtores rurais.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary px-6 py-3 rounded-lg font-bold text-sm flex items-center gap-2 agro-shadow hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined">person_add</span>
+                    Novo Farmer
+                </button>
+</div>
+<!-- Editorial Filter Bar -->
+<div class="grid grid-cols-12 gap-6 mb-8 items-end">
+<div class="col-span-5">
+<label class="block text-[10px] font-extrabold text-outline uppercase tracking-widest mb-2">Pesquisa</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-none rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-primary text-on-surface" placeholder="Nome, email ou CNPJ..." type="text"/>
+</div>
+</div>
+<div class="col-span-3">
+<label class="block text-[10px] font-extrabold text-outline uppercase tracking-widest mb-2">Status da Conta</label>
+<select class="w-full bg-surface-container-high border-none rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-primary text-on-surface appearance-none">
+<option>Todos</option>
+<option>Ativo</option>
+<option>Suspenso</option>
+<option>Pendente</option>
+</select>
+</div>
+<div class="col-span-3">
+<label class="block text-[10px] font-extrabold text-outline uppercase tracking-widest mb-2">Status KYC</label>
+<select class="w-full bg-surface-container-high border-none rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-primary text-on-surface appearance-none">
+<option>Todos</option>
+<option>Não Iniciado</option>
+<option>Docs Enviados</option>
+<option>Aprovado</option>
+<option>Rejeitado</option>
+</select>
+</div>
+<div class="col-span-1">
+<button class="w-full h-[44px] bg-surface-container-highest rounded-lg flex items-center justify-center text-on-surface hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-high rounded-xl overflow-hidden agro-shadow border border-outline-variant/10">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-5 text-[10px] font-extrabold text-outline uppercase tracking-widest">Nome + Email</th>
+<th class="px-6 py-5 text-[10px] font-extrabold text-outline uppercase tracking-widest">CNPJ</th>
+<th class="px-6 py-5 text-[10px] font-extrabold text-outline uppercase tracking-widest">Região</th>
+<th class="px-6 py-5 text-[10px] font-extrabold text-outline uppercase tracking-widest">Status</th>
+<th class="px-6 py-5 text-[10px] font-extrabold text-outline uppercase tracking-widest text-center">KYC</th>
+<th class="px-6 py-5 text-[10px] font-extrabold text-outline uppercase tracking-widest">Cadastro</th>
+<th class="px-6 py-5 text-[10px] font-extrabold text-outline uppercase tracking-widest text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">JO</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">João Oliveira</p>
+<p class="text-xs text-outline">joao.oliveira@agro.com.br</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">45.123.789/0001-90</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Sorriso, MT</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-primary/20 text-primary border border-primary/20">Ativo</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">12 Out 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary/10 flex items-center justify-center text-secondary font-bold text-xs">MS</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Maria Silva</p>
+<p class="text-xs text-outline">maria.silva@fazenda.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">12.987.654/0001-22</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Cristalina, GO</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-secondary/20 text-secondary border border-secondary/20">Pendente</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">pending</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">05 Nov 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-error/10 flex items-center justify-center text-error font-bold text-xs">RB</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Ricardo Batista</p>
+<p class="text-xs text-outline">ricardo@batistagrãos.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">08.456.123/0001-11</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Londrina, PR</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-error-container text-error border border-error-container">Suspenso</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">18 Set 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">FP</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Fazenda Progresso</p>
+<p class="text-xs text-outline">admin@progresso.com.br</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">33.111.222/0001-33</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Uberlândia, MG</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-primary/20 text-primary border border-primary/20">Ativo</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">22 Nov 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary/10 flex items-center justify-center text-secondary font-bold text-xs">AG</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Agro Grãos SA</p>
+<p class="text-xs text-outline">contato@agrogrãos.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">21.000.444/0001-05</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Luís Eduardo Magalhães, BA</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-secondary/20 text-secondary border border-secondary/20">Pendente</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">description</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">01 Dez 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">CV</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Carlos Vieira</p>
+<p class="text-xs text-outline">cvieira@agro.bio</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">19.222.333/0001-88</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Sinop, MT</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-primary/20 text-primary border border-primary/20">Ativo</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">10 Ago 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-error/10 flex items-center justify-center text-error font-bold text-xs">PN</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Paulo Nogueira</p>
+<p class="text-xs text-outline">paulo.nog@fazendas.com</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">04.555.666/0001-44</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Ribeirão Preto, SP</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-error-container text-error border border-error-container">Suspenso</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">02 Jul 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-outline-variant/20 flex items-center justify-center text-on-surface-variant font-bold text-xs">AM</div>
+<div>
+<p class="text-sm font-semibold text-on-surface">Ana Mendes</p>
+<p class="text-xs text-outline">ana.mendes@rural.net</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface-variant">55.888.999/0001-77</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Campo Grande, MS</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold uppercase bg-surface-container-highest text-outline border border-outline-variant/20">Pendente</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0;">history</span>
+</td>
+<td class="px-6 py-4 text-sm text-outline">15 Dez 2023</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-bright rounded-lg transition-colors text-outline">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination Footer -->
+<div class="bg-surface-container-low/50 px-6 py-4 flex justify-between items-center border-t border-outline-variant/10">
+<p class="text-xs text-outline">Exibindo <span class="text-on-surface font-bold">8</span> de <span class="text-on-surface font-bold">1.240</span> farmers</p>
+<div class="flex gap-2">
+<button class="p-1 rounded bg-surface-container-highest text-outline cursor-not-allowed">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-highest text-on-surface text-xs font-bold transition-colors">2</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-highest text-on-surface text-xs font-bold transition-colors">3</button>
+<span class="px-2 text-outline">...</span>
+<button class="w-8 h-8 rounded hover:bg-surface-container-highest text-on-surface text-xs font-bold transition-colors">42</button>
+<button class="p-1 rounded bg-surface-container-highest text-on-surface hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bento Summary Row -->
+<div class="grid grid-cols-12 gap-6 mt-10">
+<div class="col-span-4 bg-surface-container-high p-6 rounded-xl agro-shadow border-l-4 border-primary">
+<h4 class="text-[10px] font-extrabold text-outline uppercase tracking-widest mb-4">Aprovações de Hoje</h4>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-light tracking-tight text-on-surface">12</span>
+<div class="text-right">
+<p class="text-primary text-xs font-bold">+18%</p>
+<p class="text-outline text-[10px]">vs. ontem</p>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-high p-6 rounded-xl agro-shadow border-l-4 border-secondary">
+<h4 class="text-[10px] font-extrabold text-outline uppercase tracking-widest mb-4">KYC Pendente</h4>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-light tracking-tight text-on-surface">43</span>
+<div class="text-right">
+<p class="text-secondary text-xs font-bold">Urgente</p>
+<p class="text-outline text-[10px]">Ação requerida</p>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-surface-container-high p-6 rounded-xl agro-shadow border-l-4 border-on-surface-variant">
+<h4 class="text-[10px] font-extrabold text-outline uppercase tracking-widest mb-4">Total de Terras</h4>
+<div class="flex items-end justify-between">
+<span class="text-4xl font-light tracking-tight text-on-surface">1.2M</span>
+<div class="text-right">
+<p class="text-on-surface-variant text-xs font-bold">Hectares</p>
+<p class="text-outline text-[10px]">Monitorados</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

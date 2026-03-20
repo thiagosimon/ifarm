@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface-variant": "#bfc9be",
+              "on-secondary-fixed-variant": "#5c4300",
+              "on-error": "#690005",
+              "error": "#ffb4ab",
+              "on-secondary-fixed": "#261a00",
+              "surface-container-highest": "#313536",
+              "on-background": "#e0e3e4",
+              "surface-container-low": "#181c1d",
+              "background": "#101415",
+              "surface-tint": "#89d89e",
+              "primary": "#a4f5b8",
+              "surface-container-lowest": "#0b0f10",
+              "secondary-fixed-dim": "#f6be39",
+              "on-surface": "#e0e3e4",
+              "surface-container": "#1c2021",
+              "secondary": "#f6be39",
+              "on-tertiary-container": "#066032",
+              "on-primary": "#00391b",
+              "outline-variant": "#404940",
+              "surface-container-high": "#272b2c",
+              "on-secondary-container": "#433000",
+              "primary-fixed": "#a4f4b8",
+              "on-primary-container": "#056032",
+              "error-container": "#93000a",
+              "surface-bright": "#363a3b",
+              "secondary-fixed": "#ffdea0",
+              "tertiary-fixed": "#a5f4b8",
+              "inverse-surface": "#e0e3e4",
+              "tertiary-container": "#8ad89e",
+              "on-error-container": "#ffdad6",
+              "secondary-container": "#c59300",
+              "outline": "#899389",
+              "tertiary": "#a5f5b9",
+              "on-secondary": "#402d00",
+              "on-tertiary": "#00391b",
+              "primary-fixed-dim": "#89d89e",
+              "on-primary-fixed": "#00210d",
+              "surface-variant": "#313536",
+              "inverse-primary": "#1a6c3d",
+              "inverse-on-surface": "#2d3132",
+              "on-tertiary-fixed": "#00210d",
+              "primary-container": "#89d89e",
+              "on-tertiary-fixed-variant": "#005229",
+              "surface-dim": "#101415",
+              "surface": "#101415",
+              "on-primary-fixed-variant": "#005229",
+              "tertiary-fixed-dim": "#89d89e"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel { background: rgba(39, 42, 44, 0.7); backdrop-filter: blur(12px); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #101415; }
+        ::-webkit-scrollbar-thumb { background: #313536; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary/30">
+<!-- SideNavBar -->
+<aside class="bg-[#181C1D] dark:bg-[#181C1D] h-screen w-64 fixed left-0 top-0 flex flex-col h-full py-8 z-[60] font-['Inter'] font-light tracking-tight shadow-none">
+<div class="px-6 mb-10">
+<h1 class="text-2xl font-black tracking-tighter text-[#A4F5B8]">iFarm</h1>
+<p class="text-[10px] uppercase tracking-widest text-outline">Digital Agronomist</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 space-x-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-sm">Dashboard</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+<span class="text-sm">Pedidos</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">person_search</span>
+<span class="text-sm">Usuários/Farmers</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">storefront</span>
+<span class="text-sm">Retailers</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">verified_user</span>
+<span class="text-sm">KYC</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">payments</span>
+<span class="text-sm">Financeiro</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-[#A4F5B8] font-bold border-l-4 border-[#A4F5B8] bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">gavel</span>
+<span class="text-sm">Disputas</span>
+</a>
+<a class="flex items-center px-6 py-3 space-x-3 text-[#899389] hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-colors duration-200" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-sm">Configurações</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full py-3 px-4 bg-surface-container-highest text-primary text-xs font-bold rounded-lg border border-primary/10 hover:bg-primary hover:text-on-primary transition-all duration-300">
+                Export Harvest Data
+            </button>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-50 bg-[#1D2022]/70 backdrop-blur-xl flex justify-between items-center px-10 h-20 shadow-none">
+<div class="flex items-center bg-surface-container-lowest px-4 py-2 rounded-full w-96 border border-outline-variant/10">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-outline/50" placeholder="Buscar disputas ou pedidos..." type="text"/>
+</div>
+<div class="flex items-center space-x-6">
+<button class="text-on-surface hover:text-[#A4F5B8] transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<button class="text-on-surface hover:text-[#A4F5B8] transition-all">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/20"></div>
+<div class="flex items-center space-x-3 group cursor-pointer">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface leading-tight">Admin Panel</p>
+<p class="text-[10px] text-outline leading-tight">Administrator</p>
+</div>
+<img class="w-10 h-10 rounded-full object-cover border border-primary/20 group-hover:border-primary transition-all" data-alt="Administrator profile portrait in professional setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAFpMZOVipCh_IWpFULIJ-kfrCsriXhFUzZhePxU7gJOk3l2p8tifje-VJquHfTw1Ca4cM2x3VmWACB6EcGHsLUr5XHZNN1I286ydC_Mrq-KZL9REcX4l1CI0txA755j1Eb6CrPxhaaRtUyet5zjD05ESL3Rfzu4lpdXH9ZLrffofGyHGZOgUTWHyuCPRrtoVgZ7gUJjLCZ4UMTidAf6mroRh5XFNhbNAw04Kmzqz6qHn-cKZYF6DltO6oeV9l23z2DvcZwwFuxjNv"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-28 px-10 pb-12 min-h-screen bg-background">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-secondary mb-2 block">Central de Resolução</span>
+<h2 class="text-4xl font-bold tracking-tight text-on-surface">Gestão de Disputas</h2>
+</div>
+<button class="flex items-center space-x-2 px-6 py-3 bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-lg font-bold text-sm shadow-lg shadow-primary/10 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span>Relatório Geral</span>
+</button>
+</div>
+<!-- Stat Cards: Editorial Grid -->
+<div class="grid grid-cols-4 gap-6 mb-10">
+<!-- Stat 1 -->
+<div class="glass-panel p-6 rounded-xl border-l-4 border-primary relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-xs font-extrabold text-outline uppercase tracking-wider mb-1">Abertas</p>
+<p class="text-4xl font-light text-on-surface">08</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-7xl text-white/5 group-hover:text-primary/10 transition-colors">outbound</span>
+</div>
+<!-- Stat 2 -->
+<div class="glass-panel p-6 rounded-xl border-l-4 border-secondary relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-xs font-extrabold text-outline uppercase tracking-wider mb-1">Em Análise</p>
+<p class="text-4xl font-light text-on-surface">03</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-7xl text-white/5 group-hover:text-secondary/10 transition-colors">hourglass_top</span>
+</div>
+<!-- Stat 3 -->
+<div class="glass-panel p-6 rounded-xl border-l-4 border-on-tertiary-container relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-xs font-extrabold text-outline uppercase tracking-wider mb-1">Resolvidas</p>
+<p class="text-4xl font-light text-on-surface">47</p>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-7xl text-white/5 group-hover:text-on-tertiary-container/10 transition-colors">check_circle</span>
+</div>
+<!-- Stat 4 -->
+<div class="glass-panel p-6 rounded-xl border-l-4 border-secondary-fixed-dim relative overflow-hidden group bg-gradient-to-br from-surface-container-high to-surface-container-low">
+<div class="relative z-10">
+<p class="text-xs font-extrabold text-outline uppercase tracking-wider mb-1">Valor em Disputa</p>
+<div class="flex items-baseline space-x-1">
+<span class="text-lg font-bold text-secondary">R$</span>
+<span class="text-4xl font-light text-on-surface">234.890</span>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-7xl text-white/5 group-hover:text-secondary/10 transition-colors">payments</span>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-container-low p-4 rounded-xl mb-6 flex flex-wrap gap-4 items-center">
+<div class="flex items-center space-x-3 flex-1">
+<div class="relative">
+<select class="appearance-none bg-surface-container-highest border-none text-on-surface text-sm rounded-lg pl-4 pr-10 py-2.5 focus:ring-1 focus:ring-primary/50 min-w-[180px]">
+<option>Todos os Status</option>
+<option>Abertas</option>
+<option>Em Análise</option>
+<option>Resolvidas</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-outline pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-highest border-none text-on-surface text-sm rounded-lg pl-10 pr-4 py-2.5 focus:ring-1 focus:ring-primary/50">
+<option>Últimos 30 dias</option>
+<option>Últimos 90 dias</option>
+<option>Safra 2023/24</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-sm">calendar_month</span>
+</div>
+</div>
+<div class="flex space-x-2">
+<button class="px-4 py-2.5 bg-surface-container-highest text-on-surface text-xs font-bold rounded-lg hover:bg-surface-bright transition-colors">Limpar Filtros</button>
+</div>
+</div>
+<!-- Table: Editorial Style -->
+<div class="bg-surface-container-low rounded-2xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest">Pedido</th>
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest">Farmer</th>
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest">Retailer</th>
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest">Motivo</th>
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest">Status</th>
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest">Valor</th>
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest text-center">SLA</th>
+<th class="px-6 py-4 text-[10px] font-extrabold text-outline uppercase tracking-widest text-right">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-bold text-on-surface">#IF-90281</span>
+<p class="text-[10px] text-outline">14 Out, 2023</p>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">JS</div>
+<span class="text-sm text-on-surface">João Silva</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface">AgroFertil SA</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Atraso na Logística</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary border border-primary/20">
+                                Aberta
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-secondary">R$ 45.200</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-on-tertiary-container/20 text-on-tertiary-container">
+                                5 dias
+                            </span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end space-x-2">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="px-3 py-1.5 bg-primary/10 text-primary text-[10px] font-bold rounded hover:bg-primary hover:text-on-primary transition-all">RESOLVER</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-bold text-on-surface">#IF-89922</span>
+<p class="text-[10px] text-outline">12 Out, 2023</p>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary font-bold text-xs">MR</div>
+<span class="text-sm text-on-surface">Maria Rocha</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface">BioSeeds Corp</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Divergência de Grãos</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-secondary/10 text-secondary border border-secondary/20">
+                                Em Análise
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-secondary">R$ 128.400</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-secondary/20 text-secondary">
+                                2 dias
+                            </span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end space-x-2">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="px-3 py-1.5 bg-primary/10 text-primary text-[10px] font-bold rounded hover:bg-primary hover:text-on-primary transition-all">RESOLVER</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-bold text-on-surface">#IF-88710</span>
+<p class="text-[10px] text-outline">08 Out, 2023</p>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center text-error font-bold text-xs">PA</div>
+<span class="text-sm text-on-surface">Pedro Alves</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface">TerraForte Ltda</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Pagamento não Identificado</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary border border-primary/20">
+                                Aberta
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-secondary">R$ 12.050</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="inline-flex items-center px-2 py-1 rounded text-[10px] font-bold bg-error/20 text-error">
+                                &lt; 24h
+                            </span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end space-x-2">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="px-3 py-1.5 bg-primary/10 text-primary text-[10px] font-bold rounded hover:bg-primary hover:text-on-primary transition-all">RESOLVER</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-highest/50 transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-bold text-on-surface">#IF-87654</span>
+<p class="text-[10px] text-outline">05 Out, 2023</p>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center space-x-3">
+<div class="w-8 h-8 rounded-full bg-on-tertiary-container/10 flex items-center justify-center text-on-tertiary-container font-bold text-xs">CP</div>
+<span class="text-sm text-on-surface">Carlos Pereira</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface">FertMax</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-on-surface-variant">Produto Danificado</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-on-tertiary-container/20 text-on-tertiary-container border border-on-tertiary-container/20">
+                                Resolvida
+                            </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-secondary">R$ 49.240</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-xs text-outline italic">Concluído</span>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex items-center justify-end space-x-2">
+<button class="p-2 hover:bg-surface-container-highest rounded-lg transition-colors text-outline hover:text-primary">
+<span class="material-symbols-outlined text-lg">visibility</span>
+</button>
+<button class="px-3 py-1.5 bg-surface-container-highest text-outline text-[10px] font-bold rounded cursor-not-allowed" disabled="">ARQUIVADO</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination Overlay/Footer -->
+<div class="bg-surface-container-high px-6 py-4 flex justify-between items-center border-t border-outline-variant/10">
+<span class="text-xs text-outline">Mostrando 1 a 10 de 58 disputas</span>
+<div class="flex space-x-2">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-highest text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-highest text-on-surface text-xs hover:bg-surface-bright transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-highest text-on-surface text-xs hover:bg-surface-bright transition-colors">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container-highest text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Hidden as per hierarchy for list views but kept as structure) -->
+<div class="fixed bottom-8 right-8 hidden">
+<button class="w-14 h-14 bg-secondary text-on-secondary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</div>
+</body></html>

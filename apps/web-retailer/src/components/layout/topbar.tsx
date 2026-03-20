@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Bell, User, LogOut, Settings, ChevronDown, Search } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 interface Notification {
   id: string;
@@ -131,6 +132,9 @@ export function Topbar() {
             </div>
           )}
         </div>
+
+        {/* Theme Toggle */}
+        <ThemeToggle />
 
         {/* User Menu */}
         <div className="relative" ref={userMenuRef}>

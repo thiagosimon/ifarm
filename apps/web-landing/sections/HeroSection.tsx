@@ -30,9 +30,9 @@ export default function HeroSection() {
           </h1>
           <p className="text-xl text-on-surface-variant max-w-xl leading-relaxed">{h.subtitle}</p>
           <div className="flex flex-wrap gap-4 pt-4">
-            <button className="px-8 py-4 bg-primary text-on-primary font-bold rounded-xl hover:shadow-[0_0_20px_rgba(137,216,158,0.4)] transition-all">
+            <a href="https://ifarm-saas.netlify.app" className="px-8 py-4 bg-primary text-on-primary font-bold rounded-xl hover:shadow-[0_0_20px_rgba(137,216,158,0.4)] transition-all">
               {h.cta1}
-            </button>
+            </a>
             <button className="px-8 py-4 bg-surface-container border border-outline/30 text-white font-bold rounded-xl hover:bg-surface-container-highest transition-all flex items-center gap-2">
               <PlayCircle size={18} /> {h.cta2}
             </button>

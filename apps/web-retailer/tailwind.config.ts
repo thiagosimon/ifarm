@@ -1,5 +1,9 @@
 import type { Config } from 'tailwindcss';
 
+function rgb(varName: string) {
+  return `rgb(var(--color-${varName}) / <alpha-value>)`;
+}
+
 const config: Config = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -10,50 +14,48 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Material Design 3 — Dark Theme Tokens
-        primary: '#89d89e',
-        'primary-container': '#1a6b3c',
-        'on-primary': '#00391b',
-        'on-primary-container': '#a5f4b8',
-        'inverse-primary': '#1b6c3d',
+        primary: rgb('primary'),
+        'primary-container': rgb('primary-container'),
+        'on-primary': rgb('on-primary'),
+        'on-primary-container': rgb('on-primary-container'),
+        'inverse-primary': rgb('inverse-primary'),
 
-        secondary: '#f6be39',
-        'secondary-container': '#c59300',
-        'on-secondary': '#3e2e00',
-        'on-secondary-container': '#ffdea6',
+        secondary: rgb('secondary'),
+        'secondary-container': rgb('secondary-container'),
+        'on-secondary': rgb('on-secondary'),
+        'on-secondary-container': rgb('on-secondary-container'),
 
-        tertiary: '#ffb2b9',
-        'tertiary-container': '#73333e',
-        'on-tertiary': '#5c1225',
+        tertiary: rgb('tertiary'),
+        'tertiary-container': rgb('tertiary-container'),
+        'on-tertiary': rgb('on-tertiary'),
 
-        error: '#ffb4ab',
-        'error-container': '#93000a',
-        'on-error': '#690005',
-        'on-error-container': '#ffdad6',
+        error: rgb('error'),
+        'error-container': rgb('error-container'),
+        'on-error': rgb('on-error'),
+        'on-error-container': rgb('on-error-container'),
 
-        background: '#101415',
-        'on-background': '#e0e3e5',
+        background: rgb('background'),
+        'on-background': rgb('on-background'),
 
-        surface: '#101415',
-        'on-surface': '#e0e3e5',
-        'on-surface-variant': '#bfc9be',
+        surface: rgb('surface'),
+        'on-surface': rgb('on-surface'),
+        'on-surface-variant': rgb('on-surface-variant'),
 
-        'surface-container-lowest': '#0b0f10',
-        'surface-container-low': '#191c1e',
-        'surface-container': '#1d2022',
-        'surface-container-high': '#272a2c',
-        'surface-container-highest': '#323537',
+        'surface-container-lowest': rgb('surface-container-lowest'),
+        'surface-container-low': rgb('surface-container-low'),
+        'surface-container': rgb('surface-container'),
+        'surface-container-high': rgb('surface-container-high'),
+        'surface-container-highest': rgb('surface-container-highest'),
 
-        outline: '#899389',
-        'outline-variant': '#404940',
+        outline: rgb('outline'),
+        'outline-variant': rgb('outline-variant'),
 
-        // Semantic aliases
-        border: '#404940',
-        foreground: '#e0e3e5',
-        'muted-foreground': '#899389',
-        card: '#1d2022',
-        'card-foreground': '#e0e3e5',
-        destructive: '#ffb4ab',
+        border: rgb('border'),
+        foreground: rgb('foreground'),
+        'muted-foreground': rgb('muted-foreground'),
+        card: rgb('card'),
+        'card-foreground': rgb('card-foreground'),
+        destructive: rgb('destructive'),
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

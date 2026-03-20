@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iFarm Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#272b2c",
+              "outline-variant": "#404940",
+              "on-surface": "#e0e3e4",
+              "tertiary-container": "#8ad89e",
+              "on-error-container": "#ffdad6",
+              "on-tertiary": "#00391b",
+              "on-surface-variant": "#bfc9be",
+              "surface-container-lowest": "#0b0f10",
+              "tertiary": "#a5f5b9",
+              "inverse-surface": "#e0e3e4",
+              "outline": "#899389",
+              "on-primary": "#00391b",
+              "background": "#101415",
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "surface-container-highest": "#313536",
+              "surface-tint": "#89d89e",
+              "surface-container-low": "#181c1d",
+              "on-tertiary-fixed": "#00210d",
+              "primary-fixed": "#a4f4b8",
+              "error": "#ffb4ab",
+              "secondary": "#f6be39",
+              "on-secondary": "#402d00",
+              "secondary-container": "#c59300",
+              "surface-container": "#1c2021",
+              "primary-container": "#89d89e",
+              "on-secondary-fixed": "#261a00",
+              "inverse-primary": "#1a6c3d",
+              "surface-bright": "#363a3b",
+              "inverse-on-surface": "#2d3132",
+              "on-tertiary-fixed-variant": "#005229",
+              "on-secondary-fixed-variant": "#5c4300",
+              "surface-variant": "#313536",
+              "surface": "#101415",
+              "on-secondary-container": "#433000",
+              "secondary-fixed": "#ffdea0",
+              "on-primary-container": "#056032",
+              "on-primary-fixed-variant": "#005229",
+              "surface-dim": "#101415",
+              "primary-fixed-dim": "#89d89e",
+              "primary": "#a4f5b8",
+              "on-primary-fixed": "#00210d",
+              "tertiary-fixed-dim": "#89d89e",
+              "on-background": "#e0e3e4",
+              "on-tertiary-container": "#066032",
+              "secondary-fixed-dim": "#f6be39",
+              "tertiary-fixed": "#a5f4b8"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(39, 42, 44, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(137, 216, 158, 0.05);
+        }
+        .agro-shadow {
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary/30 selection:text-primary min-h-screen">
+<!-- SideNavBar Anchor -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#181C1D] flex flex-col justify-between py-8 shadow-2xl shadow-black/40 z-50">
+<div>
+<div class="px-6 mb-10">
+<div class="text-2xl font-extrabold tracking-tighter flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+                    iFarm
+                </div>
+<div class="text-xs font-light tracking-tight text-[#E0E3E4]/60 mt-1 uppercase">Admin Panel</div>
+</div>
+<nav class="space-y-1">
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-6 py-3 text-[#89D89E] bg-[#89D89E]/10 border-l-4 border-[#89D89E] font-semibold transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+                    Pedidos
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                    Usuários
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+                    KYC
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+                    Financeiro
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+                    Disputas
+                </a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Configurações
+                </a>
+</nav>
+</div>
+<div class="px-6">
+<button class="flex items-center gap-3 px-4 py-3 text-error w-full hover:bg-error/10 rounded-lg transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Sair
+            </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-8 min-h-screen">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+<div>
+<h1 class="text-4xl font-bold tracking-tight text-on-surface">Dashboard</h1>
+<p class="text-on-surface-variant text-sm mt-1">Visão geral do ecossistema iFarm</p>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-low p-1.5 rounded-xl agro-shadow">
+<div class="flex gap-1">
+<button class="px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors">7d</button>
+<button class="px-4 py-1.5 text-xs font-bold uppercase tracking-widest bg-primary text-on-primary rounded-lg shadow-lg">30d</button>
+<button class="px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors">90d</button>
+<button class="px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors">365d</button>
+</div>
+<div class="h-6 w-px bg-outline-variant/30"></div>
+<button class="flex items-center gap-2 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary-fixed-dim hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined text-sm">refresh</span>
+                    Atualizar
+                </button>
+</div>
+</header>
+<!-- Metric Cards Grid (Row 1) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
+<!-- GMV Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between agro-shadow border-l-2 border-primary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<span class="flex items-center text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span> 12%
+                    </span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant mb-1">GMV Total</p>
+<h3 class="text-2xl font-light tracking-tighter text-on-surface">R$ 12.847.320</h3>
+</div>
+</div>
+<!-- Active Users Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between agro-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+</div>
+<span class="flex items-center text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span> 8%
+                    </span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant mb-1">Usuários Ativos</p>
+<h3 class="text-2xl font-light tracking-tighter text-on-surface">2.847</h3>
+</div>
+</div>
+<!-- Quotes Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between agro-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">request_quote</span>
+</div>
+<span class="flex items-center text-xs font-bold text-error bg-error/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_down</span> 4%
+                    </span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant mb-1">Cotações Abertas</p>
+<h3 class="text-2xl font-light tracking-tighter text-on-surface">156</h3>
+</div>
+</div>
+<!-- Orders Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between agro-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<span class="flex items-center text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span> 21%
+                    </span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant mb-1">Em Andamento</p>
+<h3 class="text-2xl font-light tracking-tighter text-on-surface">89</h3>
+</div>
+</div>
+<!-- Revenue Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col justify-between agro-shadow border-l-2 border-secondary">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+<span class="flex items-center text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span> 15%
+                    </span>
+</div>
+<div>
+<p class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-on-surface-variant mb-1">Receita Período</p>
+<h3 class="text-2xl font-light tracking-tighter text-secondary">R$ 641.366</h3>
+</div>
+</div>
+</section>
+<!-- Charts (Row 2) -->
+<section class="grid grid-cols-1 lg:grid-cols-10 gap-8 mb-10">
+<!-- GMV & Receita Area Chart -->
+<div class="lg:col-span-6 glass-card p-8 rounded-xl agro-shadow flex flex-col h-[400px]">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-1 h-6 bg-secondary rounded-full"></div>
+<div>
+<h4 class="text-lg font-semibold text-on-surface">GMV &amp; Receita</h4>
+<p class="text-xs text-on-surface-variant">Comparativo mensal (Set - Mar)</p>
+</div>
+</div>
+<div class="flex-1 relative flex items-end gap-1">
+<!-- Abstract Visual Representation of Area Chart -->
+<div class="absolute inset-0 flex items-end">
+<svg class="w-full h-full opacity-30" viewbox="0 0 600 200">
+<path d="M0,150 Q75,120 150,140 T300,80 T450,110 T600,40 V200 H0 Z" fill="url(#grad1)"></path>
+<path d="M0,170 Q75,150 150,160 T300,120 T450,140 T600,100 V200 H0 Z" fill="url(#grad2)"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#89D89E;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#89D89E;stop-opacity:0"></stop>
+</lineargradient>
+<lineargradient id="grad2" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#F6BE39;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#F6BE39;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<!-- Axis Labels -->
+<div class="w-full flex justify-between mt-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant/40">
+<span>Set</span><span>Out</span><span>Nov</span><span>Dez</span><span>Jan</span><span>Fev</span><span>Mar</span>
+</div>
+</div>
+</div>
+<!-- Weekly Orders Bar Chart -->
+<div class="lg:col-span-4 glass-card p-8 rounded-xl agro-shadow flex flex-col h-[400px]">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-1 h-6 bg-primary rounded-full"></div>
+<div>
+<h4 class="text-lg font-semibold text-on-surface">Pedidos por Semana</h4>
+<p class="text-xs text-on-surface-variant">Concluídos vs Cancelados</p>
+</div>
+</div>
+<div class="flex-1 flex items-end justify-between px-2 pb-4 border-b border-outline-variant/10">
+<!-- Bar Group Monday -->
+<div class="flex flex-col items-center gap-1 group w-full">
+<div class="flex gap-1 items-end h-40">
+<div class="w-3 bg-primary/60 rounded-t-sm h-[70%] transition-all hover:bg-primary"></div>
+<div class="w-2 bg-error/40 rounded-t-sm h-[15%] transition-all hover:bg-error"></div>
+</div>
+<span class="text-[9px] font-bold mt-2 text-on-surface-variant/50">SEG</span>
+</div>
+<!-- Bar Group Tue -->
+<div class="flex flex-col items-center gap-1 group w-full">
+<div class="flex gap-1 items-end h-40">
+<div class="w-3 bg-primary/60 rounded-t-sm h-[85%] transition-all hover:bg-primary"></div>
+<div class="w-2 bg-error/40 rounded-t-sm h-[10%] transition-all hover:bg-error"></div>
+</div>
+<span class="text-[9px] font-bold mt-2 text-on-surface-variant/50">TER</span>
+</div>
+<!-- Bar Group Wed -->
+<div class="flex flex-col items-center gap-1 group w-full">
+<div class="flex gap-1 items-end h-40">
+<div class="w-3 bg-primary/60 rounded-t-sm h-[60%] transition-all hover:bg-primary"></div>
+<div class="w-2 bg-error/40 rounded-t-sm h-[25%] transition-all hover:bg-error"></div>
+</div>
+<span class="text-[9px] font-bold mt-2 text-on-surface-variant/50">QUA</span>
+</div>
+<!-- Bar Group Thu -->
+<div class="flex flex-col items-center gap-1 group w-full">
+<div class="flex gap-1 items-end h-40">
+<div class="w-3 bg-primary/60 rounded-t-sm h-[95%] transition-all hover:bg-primary"></div>
+<div class="w-2 bg-error/40 rounded-t-sm h-[5%] transition-all hover:bg-error"></div>
+</div>
+<span class="text-[9px] font-bold mt-2 text-on-surface-variant/50">QUI</span>
+</div>
+<!-- Bar Group Fri -->
+<div class="flex flex-col items-center gap-1 group w-full">
+<div class="flex gap-1 items-end h-40">
+<div class="w-3 bg-primary/60 rounded-t-sm h-[80%] transition-all hover:bg-primary"></div>
+<div class="w-2 bg-error/40 rounded-t-sm h-[15%] transition-all hover:bg-error"></div>
+</div>
+<span class="text-[9px] font-bold mt-2 text-on-surface-variant/50">SEX</span>
+</div>
+<!-- Bar Group Sat -->
+<div class="flex flex-col items-center gap-1 group w-full">
+<div class="flex gap-1 items-end h-40">
+<div class="w-3 bg-primary/60 rounded-t-sm h-[40%] transition-all hover:bg-primary"></div>
+<div class="w-2 bg-error/40 rounded-t-sm h-[5%] transition-all hover:bg-error"></div>
+</div>
+<span class="text-[9px] font-bold mt-2 text-on-surface-variant/50">SAB</span>
+</div>
+<!-- Bar Group Sun -->
+<div class="flex flex-col items-center gap-1 group w-full">
+<div class="flex gap-1 items-end h-40">
+<div class="w-3 bg-primary/60 rounded-t-sm h-[30%] transition-all hover:bg-primary"></div>
+<div class="w-2 bg-error/40 rounded-t-sm h-[2%] transition-all hover:bg-error"></div>
+</div>
+<span class="text-[9px] font-bold mt-2 text-on-surface-variant/50">DOM</span>
+</div>
+</div>
+<div class="mt-6 flex gap-6 text-[10px] font-bold uppercase tracking-widest justify-center">
+<div class="flex items-center gap-2"><div class="w-3 h-3 bg-primary rounded-full"></div> Pedidos</div>
+<div class="flex items-center gap-2"><div class="w-3 h-3 bg-error rounded-full opacity-50"></div> Cancelados</div>
+</div>
+</div>
+</section>
+<!-- Bottom Row (Row 3) -->
+<section class="grid grid-cols-1 lg:grid-cols-10 gap-8">
+<!-- User Distribution Donut Pie -->
+<div class="lg:col-span-4 glass-card p-8 rounded-xl agro-shadow">
+<div class="flex items-center justify-between mb-10">
+<h4 class="text-lg font-semibold text-on-surface">Distribuição de Usuários</h4>
+<span class="material-symbols-outlined text-on-surface-variant/40">more_vert</span>
+</div>
+<div class="flex items-center justify-center relative h-64">
+<!-- Svg Donut -->
+<svg class="w-56 h-56 transform -rotate-90">
+<circle class="text-primary" cx="112" cy="112" fill="transparent" r="85" stroke="currentColor" stroke-dasharray="534" stroke-dashoffset="133" stroke-width="24"></circle>
+<circle class="text-secondary" cx="112" cy="112" fill="transparent" r="85" stroke="currentColor" stroke-dasharray="534" stroke-dashoffset="350" stroke-width="24"></circle>
+<circle class="text-on-secondary-fixed-variant" cx="112" cy="112" fill="transparent" r="85" stroke="currentColor" stroke-dasharray="534" stroke-dashoffset="460" stroke-width="24"></circle>
+<circle class="text-error/30" cx="112" cy="112" fill="transparent" r="85" stroke="currentColor" stroke-dasharray="534" stroke-dashoffset="500" stroke-width="24"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-3xl font-light tracking-tighter">2.8k</span>
+<span class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest">Total</span>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-2 gap-4">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<div>
+<p class="text-[10px] font-extrabold uppercase text-on-surface-variant">Farmers</p>
+<p class="text-sm font-semibold">1,248</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div>
+<p class="text-[10px] font-extrabold uppercase text-on-surface-variant">Retailers</p>
+<p class="text-sm font-semibold">942</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-on-secondary-fixed-variant"></div>
+<div>
+<p class="text-[10px] font-extrabold uppercase text-on-surface-variant">KYC Pend.</p>
+<p class="text-sm font-semibold">415</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error/30"></div>
+<div>
+<p class="text-[10px] font-extrabold uppercase text-on-surface-variant">Suspensos</p>
+<p class="text-sm font-semibold">242</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="lg:col-span-6 glass-card p-8 rounded-xl agro-shadow">
+<div class="flex items-center justify-between mb-8">
+<h4 class="text-lg font-semibold text-on-surface">Atividade Recente</h4>
+<button class="text-xs font-bold uppercase tracking-widest text-primary hover:underline">Ver tudo</button>
+</div>
+<div class="space-y-6">
+<!-- Event 1 -->
+<div class="flex items-center justify-between group transition-all">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">how_to_reg</span>
+</div>
+<div>
+<h5 class="text-sm font-semibold">KYC aprovado</h5>
+<p class="text-xs text-on-surface-variant">Fazenda Santa Helena • ID #8231</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant/40">2m atrás</span>
+</div>
+<!-- Event 2 -->
+<div class="flex items-center justify-between group transition-all">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-xl">shopping_cart</span>
+</div>
+<div>
+<h5 class="text-sm font-semibold">Novo pedido</h5>
+<p class="text-xs text-on-surface-variant">Lote de Soja Transgênica • R$ 45.200</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant/40">15m atrás</span>
+</div>
+<!-- Event 3 -->
+<div class="flex items-center justify-between group transition-all">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-xl">warning_amber</span>
+</div>
+<div>
+<h5 class="text-sm font-semibold">Disputa aberta</h5>
+<p class="text-xs text-on-surface-variant">Qualidade divergente • Pedido #0942</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant/40">1h atrás</span>
+</div>
+<!-- Event 4 -->
+<div class="flex items-center justify-between group transition-all">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">account_balance_wallet</span>
+</div>
+<div>
+<h5 class="text-sm font-semibold">Payout processado</h5>
+<p class="text-xs text-on-surface-variant">Transferência enviada • R$ 12.890</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant/40">3h atrás</span>
+</div>
+<!-- Event 5 -->
+<div class="flex items-center justify-between group transition-all">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-xl">person_cancel</span>
+</div>
+<div>
+<h5 class="text-sm font-semibold">KYC rejeitado</h5>
+<p class="text-xs text-on-surface-variant">Documentação incompleta • ID #9901</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant/40">5h atrás</span>
+</div>
+<!-- Event 6 -->
+<div class="flex items-center justify-between group transition-all">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-on-surface-variant/10 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">block</span>
+</div>
+<div>
+<h5 class="text-sm font-semibold">Pedido cancelado</h5>
+<p class="text-xs text-on-surface-variant">Cancelado pelo comprador • #1128</p>
+</div>
+</div>
+<span class="text-[10px] font-bold text-on-surface-variant/40">12h atrás</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

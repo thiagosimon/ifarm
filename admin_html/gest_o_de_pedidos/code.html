@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>iFarm Admin - Gestão de Pedidos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#272b2c",
+              "outline-variant": "#404940",
+              "on-surface": "#e0e3e4",
+              "tertiary-container": "#8ad89e",
+              "on-error-container": "#ffdad6",
+              "on-tertiary": "#00391b",
+              "on-surface-variant": "#bfc9be",
+              "surface-container-lowest": "#0b0f10",
+              "tertiary": "#a5f5b9",
+              "inverse-surface": "#e0e3e4",
+              "outline": "#899389",
+              "on-primary": "#00391b",
+              "background": "#101415",
+              "error-container": "#93000a",
+              "on-error": "#690005",
+              "surface-container-highest": "#313536",
+              "surface-tint": "#89d89e",
+              "surface-container-low": "#181c1d",
+              "on-tertiary-fixed": "#00210d",
+              "primary-fixed": "#a4f4b8",
+              "error": "#ffb4ab",
+              "secondary": "#f6be39",
+              "on-secondary": "#402d00",
+              "secondary-container": "#c59300",
+              "surface-container": "#1c2021",
+              "primary-container": "#89d89e",
+              "on-secondary-fixed": "#261a00",
+              "inverse-primary": "#1a6c3d",
+              "surface-bright": "#363a3b",
+              "inverse-on-surface": "#2d3132",
+              "on-tertiary-fixed-variant": "#005229",
+              "on-secondary-fixed-variant": "#5c4300",
+              "surface-variant": "#313536",
+              "surface": "#101415",
+              "on-secondary-container": "#433000",
+              "secondary-fixed": "#ffdea0",
+              "on-primary-container": "#056032",
+              "on-primary-fixed-variant": "#005229",
+              "surface-dim": "#101415",
+              "primary-fixed-dim": "#89d89e",
+              "primary": "#a4f5b8",
+              "on-primary-fixed": "#00210d",
+              "tertiary-fixed-dim": "#89d89e",
+              "on-background": "#e0e3e4",
+              "on-tertiary-container": "#066032",
+              "secondary-fixed-dim": "#f6be39",
+              "tertiary-fixed": "#a5f4b8"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+        }
+        .glass-panel {
+            background: rgba(39, 42, 44, 0.7);
+            backdrop-filter: blur(12px);
+        }
+        .agro-shadow {
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(137, 216, 158, 0.05);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #101415; }
+        ::-webkit-scrollbar-thumb { background: #313536; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body overflow-x-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#181C1D] dark:bg-[#181C1D] flex flex-col justify-between py-8 shadow-2xl shadow-black/40 z-50">
+<div>
+<div class="px-6 mb-10">
+<h1 class="text-2xl font-extrabold tracking-tighter flex items-center gap-1 text-[#89D89E]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">potted_plant</span>
+                    iFarm
+                </h1>
+<p class="text-xs font-light tracking-tight text-[#E0E3E4]/60 uppercase mt-1">Admin Panel</p>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-light tracking-tight">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#89D89E] bg-[#89D89E]/10 border-l-4 border-[#89D89E] font-semibold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+<span class="font-['Inter'] tracking-tight">Pedidos</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-light tracking-tight">Usuários</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-light tracking-tight">KYC</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="font-light tracking-tight">Financeiro</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-light tracking-tight">Disputas</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-[#E0E3E4]/60 hover:text-[#E0E3E4] hover:bg-[#272B2C] transition-all duration-200 group" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-light tracking-tight">Configurações</span>
+</a>
+</nav>
+</div>
+<div class="px-6">
+<button class="flex items-center gap-3 w-full px-4 py-3 text-[#E0E3E4]/60 hover:text-error transition-colors duration-200 bg-[#1D2022] rounded-lg">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-light tracking-tight">Sair</span>
+</button>
+</div>
+</aside>
+<main class="ml-64 p-10 min-h-screen">
+<!-- Header Section -->
+<header class="mb-10 flex justify-between items-end">
+<div>
+<span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-primary mb-2 block">Operações de Mercado</span>
+<h2 class="text-4xl font-bold tracking-tight text-on-surface">Gestão de Pedidos</h2>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2.5 bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold text-sm rounded-lg hover:opacity-90 transition-opacity agro-shadow">
+                    Novo Relatório
+                </button>
+</div>
+</header>
+<!-- Filter Bar Card -->
+<section class="bg-surface-container-high rounded-xl p-6 mb-8 agro-shadow border-l-2 border-secondary">
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6 items-end">
+<div class="col-span-1 md:col-span-2">
+<label class="block text-[10px] font-extrabold uppercase tracking-widest text-outline mb-2">Busca Avançada</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary placeholder:text-outline/50" placeholder="Buscar por número, farmer, retailer..." type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-extrabold uppercase tracking-widest text-outline mb-2">Status</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-2.5 px-4 text-sm focus:ring-1 focus:ring-primary">
+<option>Todos</option>
+<option>Aguardando Pagamento</option>
+<option>Pago</option>
+<option>Em Preparo</option>
+<option>Enviado</option>
+<option>Entregue</option>
+<option>Concluído</option>
+<option>Cancelado</option>
+<option>Disputado</option>
+<option>Reembolsado</option>
+</select>
+</div>
+<div class="col-span-1 md:col-span-2">
+<label class="block text-[10px] font-extrabold uppercase tracking-widest text-outline mb-2">Período (De / Até)</label>
+<div class="flex items-center gap-2">
+<input class="flex-1 bg-surface-container-lowest border-none rounded-lg py-2.5 px-4 text-sm focus:ring-1 focus:ring-primary" type="date"/>
+<span class="text-outline text-xs">até</span>
+<input class="flex-1 bg-surface-container-lowest border-none rounded-lg py-2.5 px-4 text-sm focus:ring-1 focus:ring-primary" type="date"/>
+</div>
+</div>
+<div class="flex justify-end">
+<button class="w-12 h-10 flex items-center justify-center bg-surface-container-highest hover:bg-surface-bright rounded-lg transition-colors border border-outline-variant/20">
+<span class="material-symbols-outlined text-on-surface">refresh</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Orders Table -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden agro-shadow">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-highest/50">
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline border-b border-outline-variant/10">Pedido</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline border-b border-outline-variant/10">Farmer</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline border-b border-outline-variant/10">Retailer</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline border-b border-outline-variant/10">Status</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline border-b border-outline-variant/10 text-right">Valor</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline border-b border-outline-variant/10">Data</th>
+<th class="px-6 py-4 text-[10px] font-extrabold uppercase tracking-widest text-outline border-b border-outline-variant/10 text-center">Ações</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-low">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1234</td>
+<td class="px-6 py-4 text-sm font-light">João Silveira (Fazenda Boa Vista)</td>
+<td class="px-6 py-4 text-sm font-light">AgroShop São Paulo</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-on-primary-fixed-variant text-primary-fixed text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Concluído</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 14.250,00</td>
+<td class="px-6 py-4 text-sm font-light text-outline">12/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-high/20">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1235</td>
+<td class="px-6 py-4 text-sm font-light">Marta Mendes (Granja Norte)</td>
+<td class="px-6 py-4 text-sm font-light">Insumos Direto</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-on-secondary-fixed-variant text-secondary-fixed text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Em Preparo</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 8.920,50</td>
+<td class="px-6 py-4 text-sm font-light text-outline">12/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-low">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1236</td>
+<td class="px-6 py-4 text-sm font-light">Ricardo Vale (Sítio Esperança)</td>
+<td class="px-6 py-4 text-sm font-light">Fertilizantes S.A.</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-error-container/20 text-error text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Disputado</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 2.400,00</td>
+<td class="px-6 py-4 text-sm font-light text-outline">11/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-high/20">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1237</td>
+<td class="px-6 py-4 text-sm font-light">Hélio Farias (AgroFarias)</td>
+<td class="px-6 py-4 text-sm font-light">Cooperativa Central</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-primary-container/10 text-primary text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Pago</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 45.100,00</td>
+<td class="px-6 py-4 text-sm font-light text-outline">11/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-low">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1238</td>
+<td class="px-6 py-4 text-sm font-light">Ana Paula (BioCultura)</td>
+<td class="px-6 py-4 text-sm font-light">Distribuidora Sul</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-on-tertiary-fixed-variant text-tertiary-fixed text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Entregue</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 6.330,00</td>
+<td class="px-6 py-4 text-sm font-light text-outline">10/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-high/20">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1239</td>
+<td class="px-6 py-4 text-sm font-light">Sérgio Cruz (Plantação Ouro)</td>
+<td class="px-6 py-4 text-sm font-light">AgroShop São Paulo</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-on-secondary-fixed-variant text-secondary-fixed text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Enviado</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 1.890,00</td>
+<td class="px-6 py-4 text-sm font-light text-outline">10/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-low">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1240</td>
+<td class="px-6 py-4 text-sm font-light">Fábio Lima (Lima Agro)</td>
+<td class="px-6 py-4 text-sm font-light">Insumos Direto</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-outline/20 text-outline text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Aguardando Pagamento</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 12.000,00</td>
+<td class="px-6 py-4 text-sm font-light text-outline">09/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-surface-container-high/40 transition-colors bg-surface-container-high/20">
+<td class="px-6 py-4 text-sm font-semibold tracking-tight">#PED-2024-1241</td>
+<td class="px-6 py-4 text-sm font-light">Clara Luz (Florada Viva)</td>
+<td class="px-6 py-4 text-sm font-light">Cooperativa Central</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 bg-error/10 text-error text-[10px] font-extrabold rounded-full uppercase tracking-tighter">Cancelado</span>
+</td>
+<td class="px-6 py-4 text-sm font-bold text-secondary text-right">R$ 540,00</td>
+<td class="px-6 py-4 text-sm font-light text-outline">09/05/2024</td>
+<td class="px-6 py-4 text-center">
+<div class="flex justify-center gap-2">
+<button class="p-1.5 hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:text-error transition-colors"><span class="material-symbols-outlined text-lg">cancel</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination-ish footer -->
+<div class="px-6 py-4 bg-surface-container-highest/20 flex justify-between items-center">
+<p class="text-[10px] font-extrabold uppercase tracking-widest text-outline">Exibindo 8 de 452 pedidos</p>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-highest rounded hover:bg-surface-bright transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="p-2 bg-primary text-on-primary rounded font-bold text-xs px-4">1</button>
+<button class="p-2 bg-surface-container-highest rounded hover:bg-surface-bright transition-colors text-xs px-4">2</button>
+<button class="p-2 bg-surface-container-highest rounded hover:bg-surface-bright transition-colors text-xs px-4">3</button>
+<button class="p-2 bg-surface-container-highest rounded hover:bg-surface-bright transition-colors"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+</main>
+<!-- Timeline Modal Drawer -->
+<!-- Shown by default for demonstration; in a real app, this would be toggled -->
+<div class="fixed inset-0 bg-background/60 backdrop-blur-sm z-[60] flex justify-end">
+<div class="w-full max-w-md h-full glass-panel border-l border-outline-variant/20 shadow-2xl flex flex-col">
+<div class="p-8 border-b border-outline-variant/10 flex justify-between items-center">
+<div>
+<span class="text-[10px] font-extrabold uppercase tracking-[0.2em] text-secondary mb-1 block">Logística &amp; Rastreamento</span>
+<h3 class="text-xl font-bold tracking-tight">Timeline - Pedido #PED-2024-1234</h3>
+</div>
+<button class="p-2 hover:bg-surface-container-highest rounded-full transition-colors text-outline">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-8">
+<div class="relative">
+<!-- Vertical Line -->
+<div class="absolute left-6 top-0 bottom-0 w-0.5 bg-outline-variant/30"></div>
+<!-- Steps -->
+<div class="space-y-12">
+<!-- Step 1 -->
+<div class="relative flex items-start gap-6 group">
+<div class="z-10 w-12 h-12 rounded-full bg-primary flex items-center justify-center agro-shadow">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">add_shopping_cart</span>
+</div>
+<div class="pt-1">
+<h4 class="text-sm font-extrabold uppercase tracking-widest text-primary">ORDER_CREATED</h4>
+<p class="text-xs text-outline mt-1 font-light">Pedido iniciado pelo Farmer e aguardando confirmação do sistema de pagamentos.</p>
+<span class="text-[10px] font-bold text-outline-variant mt-2 block">12/05/2024 — 08:34</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex items-start gap-6">
+<div class="z-10 w-12 h-12 rounded-full bg-primary flex items-center justify-center agro-shadow">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="pt-1">
+<h4 class="text-sm font-extrabold uppercase tracking-widest text-primary">PAYMENT_RECEIVED</h4>
+<p class="text-xs text-outline mt-1 font-light">Confirmação de recebimento via PIX transacionada com sucesso.</p>
+<span class="text-[10px] font-bold text-outline-variant mt-2 block">12/05/2024 — 08:36</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex items-start gap-6">
+<div class="z-10 w-12 h-12 rounded-full bg-primary flex items-center justify-center agro-shadow">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+</div>
+<div class="pt-1">
+<h4 class="text-sm font-extrabold uppercase tracking-widest text-primary">ORDER_ACCEPTED</h4>
+<p class="text-xs text-outline mt-1 font-light">O varejista (AgroShop São Paulo) aceitou o pedido e iniciou a separação.</p>
+<span class="text-[10px] font-bold text-outline-variant mt-2 block">12/05/2024 — 10:15</span>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex items-start gap-6">
+<div class="z-10 w-12 h-12 rounded-full bg-primary flex items-center justify-center agro-shadow">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+<div class="pt-1">
+<h4 class="text-sm font-extrabold uppercase tracking-widest text-primary">SHIPMENT_CREATED</h4>
+<p class="text-xs text-outline mt-1 font-light">Nota fiscal emitida e transportadora designada para coleta no armazém.</p>
+<span class="text-[10px] font-bold text-outline-variant mt-2 block">12/05/2024 — 14:45</span>
+</div>
+</div>
+<!-- Step 5 -->
+<div class="relative flex items-start gap-6">
+<div class="z-10 w-12 h-12 rounded-full bg-surface-container-highest border-2 border-primary/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary/50">check_circle</span>
+</div>
+<div class="pt-1">
+<h4 class="text-sm font-extrabold uppercase tracking-widest text-outline">DELIVERED</h4>
+<p class="text-xs text-outline/50 mt-1 font-light italic">Aguardando confirmação de recebimento final pelo Farmer.</p>
+<span class="text-[10px] font-bold text-outline-variant mt-2 block">Previsão: 14/05/2024</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-8 bg-surface-container-lowest/50 border-t border-outline-variant/10">
+<button class="w-full py-4 border border-outline/20 text-[10px] font-extrabold uppercase tracking-widest hover:bg-surface-container-highest transition-colors rounded-lg">
+                    Imprimir Comprovante de Entrega
+                </button>
+</div>
+</div>
+</div>
+</body></html>
