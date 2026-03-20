@@ -23,6 +23,10 @@
     "health": "bash scripts/health-check.sh",
     "db:create": "docker compose exec -T postgres psql -U ifarm -d ifarm -c 'CREATE DATABASE ifarm_orders;' 2>/dev/null; docker compose exec -T postgres psql -U ifarm -d ifarm -c 'CREATE DATABASE ifarm_payments;' 2>/dev/null; docker compose exec -T postgres psql -U ifarm -d ifarm -c 'CREATE DATABASE ifarm_commission;' 2>/dev/null; echo 'Databases created'"
   },
+  "overrides": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "devDependencies": {
     "turbo": "^2.0.0"
   },
