@@ -445,6 +445,17 @@
       "save": "Save Changes"
     }
   },
+  "forgotPassword": {
+    "title": "Reset Password",
+    "subtitle": "Enter your email or tax ID to receive reset instructions",
+    "emailLabel": "EMAIL OR TAX ID",
+    "emailPlaceholder": "Your registered email or tax ID",
+    "submit": "SEND INSTRUCTIONS",
+    "backToLogin": "Back to login",
+    "successTitle": "Email sent!",
+    "successMessage": "Check your inbox. If you don't see it, check your spam folder.",
+    "successAction": "Back to login"
+  },
   "signup": {
     "title": "Retailer Registration",
     "subtitle": "Join Brazil's largest agro B2B platform",

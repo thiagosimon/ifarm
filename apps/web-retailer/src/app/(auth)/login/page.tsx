@@ -76,7 +76,7 @@ export default function LoginPage() {
                 </label>
                 <a
                   className="text-xs font-semibold text-primary hover:brightness-125 transition-colors"
-                  href="#"
+                  href="/forgot-password"
                 >
                   {t('forgotPassword')}
                 </a>
@@ -141,7 +141,7 @@ export default function LoginPage() {
               {t('noAccount')}{' '}
               <a
                 className="font-bold text-secondary hover:brightness-125 transition-colors ml-1"
-                href="#"
+                href="/register"
               >
                 {t('createAccount')}
               </a>
@@ -157,7 +157,9 @@ export default function LoginPage() {
             {t('needHelp')}{' '}
             <a
               className="text-on-surface-variant hover:text-white underline decoration-primary underline-offset-4 ml-1"
-              href="#"
+              href="https://wa.me/5511999999999"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {t('contactSupport')}
             </a>

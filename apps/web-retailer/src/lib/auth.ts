@@ -47,9 +47,10 @@ export const authConfig: NextAuthConfig = {
     },
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = !nextUrl.pathname.startsWith('/login');
+      const publicPaths = ['/login', '/register', '/forgot-password'];
+      const isPublicPage = publicPaths.some((p) => nextUrl.pathname.startsWith(p));
 
-      if (isOnDashboard) {
+      if (!isPublicPage) {
         if (isLoggedIn) return true;
         return false;
       } else if (isLoggedIn) {

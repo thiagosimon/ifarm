@@ -445,6 +445,17 @@
       "save": "Salvar Alterações"
     }
   },
+  "forgotPassword": {
+    "title": "Recuperar Senha",
+    "subtitle": "Informe seu e-mail ou CNPJ para receber as instruções de redefinição",
+    "emailLabel": "E-MAIL OU CNPJ",
+    "emailPlaceholder": "Seu e-mail ou CNPJ cadastrado",
+    "submit": "ENVIAR INSTRUÇÕES",
+    "backToLogin": "Voltar para o login",
+    "successTitle": "E-mail enviado!",
+    "successMessage": "Verifique sua caixa de entrada. Caso não encontre, confira o spam.",
+    "successAction": "Voltar para o login"
+  },
   "signup": {
     "title": "Cadastro de Lojista",
     "subtitle": "Junte-se à maior plataforma agro B2B do Brasil",

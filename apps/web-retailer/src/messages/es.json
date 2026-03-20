@@ -445,6 +445,17 @@
       "save": "Guardar Cambios"
     }
   },
+  "forgotPassword": {
+    "title": "Recuperar Contraseña",
+    "subtitle": "Ingrese su correo o CUIT para recibir las instrucciones de restablecimiento",
+    "emailLabel": "CORREO O CUIT",
+    "emailPlaceholder": "Su correo o CUIT registrado",
+    "submit": "ENVIAR INSTRUCCIONES",
+    "backToLogin": "Volver al inicio de sesión",
+    "successTitle": "¡Correo enviado!",
+    "successMessage": "Revise su bandeja de entrada. Si no lo encuentra, revise el spam.",
+    "successAction": "Volver al inicio de sesión"
+  },
   "signup": {
     "title": "Registro de Tienda",
     "subtitle": "Únase a la mayor plataforma agro B2B de Brasil",
