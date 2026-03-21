@@ -379,7 +379,8 @@
     "footerRights": "Todos os direitos reservados.",
     "needHelp": "Precisa de ajuda?",
     "contactSupport": "Fale com o suporte",
-    "secureEnvironment": "Ambiente Seguro"
+    "secureEnvironment": "Ambiente Seguro",
+    "invalidCredentials": "E-mail ou senha inválidos. Verifique seus dados e tente novamente."
   },
   "profile": {
     "title": "Perfil da Loja",

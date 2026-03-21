@@ -31,6 +31,7 @@ async function bootstrap(): Promise<void> {
 
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
+    bodyParser: false, // Proxy forwards raw body; default body parser would consume it
   });
 
   // HTTP request logging with pino-http

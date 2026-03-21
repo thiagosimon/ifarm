@@ -6,6 +6,7 @@ import { Bell, User, LogOut, Settings, ChevronDown, Search } from 'lucide-react'
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
 
 interface Notification {
   id: string;
@@ -132,6 +133,9 @@ export function Topbar() {
             </div>
           )}
         </div>
+
+        {/* Language Switcher */}
+        <LanguageSwitcher />
 
         {/* Theme Toggle */}
         <ThemeToggle />

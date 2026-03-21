@@ -379,7 +379,8 @@
     "footerRights": "All rights reserved.",
     "needHelp": "Need help?",
     "contactSupport": "Contact support",
-    "secureEnvironment": "Secure Environment"
+    "secureEnvironment": "Secure Environment",
+    "invalidCredentials": "Invalid email or password. Please check your credentials and try again."
   },
   "profile": {
     "title": "Store Profile",

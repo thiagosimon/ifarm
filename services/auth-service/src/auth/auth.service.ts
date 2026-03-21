@@ -30,4 +30,14 @@ export class AuthService {
   async getUserInfo(accessToken: string) {
     return this.keycloakAdapter.getUserInfo(accessToken);
   }
+
+  async createUser(userData: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+    role: string;
+  }) {
+    return this.keycloakAdapter.createUser(userData);
+  }
 }

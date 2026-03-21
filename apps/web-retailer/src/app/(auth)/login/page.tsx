@@ -3,17 +3,32 @@
 import React, { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
-import { Leaf, User, Lock, Eye, EyeOff, ShieldCheck, Globe } from 'lucide-react';
+import { Leaf, User, Lock, Eye, EyeOff, ShieldCheck, Globe, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function LoginPage() {
   const t = useTranslations('login');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
 
-  async function handleKeycloakLogin() {
+  async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError('');
     setLoading(true);
-    await signIn('keycloak', { callbackUrl: '/dashboard' });
+    const form = new FormData(e.currentTarget);
+    const result = await signIn('credentials', {
+      email: form.get('identifier') as string,
+      password: form.get('password') as string,
+      callbackUrl: '/dashboard',
+      redirect: false,
+    });
+    setLoading(false);
+    if (result?.error) {
+      setError(t('invalidCredentials'));
+    } else if (result?.url) {
+      window.location.href = result.url;
+    }
   }
 
   return (
@@ -34,13 +49,7 @@ export default function LoginPage() {
 
         {/* Login Card */}
         <div className="glass-card p-8 rounded-xl shadow-2xl">
-          <form
-            className="space-y-6"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleKeycloakLogin();
-            }}
-          >
+          <form className="space-y-6" onSubmit={handleLogin}>
             {/* Identifier field */}
             <div>
               <label
@@ -123,6 +132,13 @@ export default function LoginPage() {
                 {t('rememberDevice')}
               </label>
             </div>
+
+            {error && (
+              <div className="flex items-center gap-2 rounded-xl bg-error/10 border border-error/20 px-4 py-3 text-sm text-error">
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                {error}
+              </div>
+            )}
 
             {/* Submit button */}
             <Button

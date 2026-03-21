@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { cn } from '@/lib/utils';
 
 type SettingsTab = 'general' | 'notifications' | 'security' | 'integrations';
@@ -134,11 +135,7 @@ export default function SettingsPage() {
                     <Languages className="h-4 w-4 text-on-surface-variant" />
                     {t('general.language')}
                   </label>
-                  <select className="w-full sm:w-64 rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm text-on-surface">
-                    <option value="pt-BR">Português (BR)</option>
-                    <option value="en">English</option>
-                    <option value="es">Español</option>
-                  </select>
+                  <LanguageSwitcher variant="full" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-on-surface flex items-center gap-2 mb-2">

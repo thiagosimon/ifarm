@@ -11,6 +11,22 @@ import {
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RefreshDto } from './dto/refresh.dto';
+import { IsEmail, IsString, MinLength } from 'class-validator';
+
+class RegisterDto {
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  @MinLength(8)
+  password: string;
+
+  @IsString()
+  fullName: string;
+
+  @IsString()
+  role: string;
+}
 
 @Controller('v1/auth')
 export class AuthController {
@@ -32,6 +48,22 @@ export class AuthController {
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(@Body() refreshDto: RefreshDto) {
     await this.authService.logout(refreshDto.refreshToken);
+  }
+
+  @Post('register')
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Body() dto: RegisterDto) {
+    const nameParts = dto.fullName.trim().split(/\s+/);
+    const firstName = nameParts[0];
+    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+    const keycloakUserId = await this.authService.createUser({
+      email: dto.email,
+      firstName,
+      lastName,
+      password: dto.password,
+      role: dto.role,
+    });
+    return { keycloakUserId };
   }
 
   @Get('me')

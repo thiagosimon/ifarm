@@ -21,6 +21,9 @@ export class ProxyMiddleware implements NestMiddleware {
       const proxyOptions: ProxyOptions = {
         target: route.target,
         changeOrigin: true,
+        pathRewrite: {
+          [`^${route.prefix}`]: route.pathRewriteTarget ?? '/v1',
+        },
         timeout: 8000,
         proxyTimeout: 8000,
         on: {

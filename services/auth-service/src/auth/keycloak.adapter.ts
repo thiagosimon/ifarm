@@ -128,31 +128,45 @@ export class KeycloakAdapter {
     const adminAccessToken = adminToken.data.access_token;
     const usersUrl = `${this.baseUrl}/admin/realms/${this.realm}/users`;
 
-    // Create user
-    const createResponse = await axios.post(
-      usersUrl,
-      {
-        email: userData.email,
-        username: userData.email,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        enabled: true,
-        emailVerified: true,
-        credentials: [
-          {
-            type: 'password',
-            value: userData.password,
-            temporary: false,
-          },
-        ],
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${adminAccessToken}`,
-          'Content-Type': 'application/json',
+    // Create user (409 = already exists, which is acceptable)
+    let createResponse;
+    try {
+      createResponse = await axios.post(
+        usersUrl,
+        {
+          email: userData.email,
+          username: userData.email,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          enabled: true,
+          emailVerified: true,
+          credentials: [
+            {
+              type: 'password',
+              value: userData.password,
+              temporary: false,
+            },
+          ],
         },
-      },
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${adminAccessToken}`,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+    } catch (err: any) {
+      if (err?.response?.status === 409) {
+        // User already exists — look up the existing user ID
+        const searchRes = await axios.get(
+          `${usersUrl}?email=${encodeURIComponent(userData.email)}&exact=true`,
+          { headers: { Authorization: `Bearer ${adminAccessToken}` } },
+        );
+        const existing = searchRes.data?.[0];
+        return existing?.id ?? null;
+      }
+      throw err;
+    }
 
     // Get user ID from Location header
     const locationHeader = createResponse.headers.location;
