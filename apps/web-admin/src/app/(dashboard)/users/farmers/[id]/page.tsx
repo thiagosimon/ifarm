@@ -20,7 +20,7 @@ import {
 import { cn, formatDate, formatCurrency } from '@/lib/utils';
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const farmerData = {

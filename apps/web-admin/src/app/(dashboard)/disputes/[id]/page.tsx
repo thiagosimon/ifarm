@@ -16,7 +16,7 @@ import {
 import { cn, formatCurrency, formatDate } from '@/lib/utils';
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const disputeData = {

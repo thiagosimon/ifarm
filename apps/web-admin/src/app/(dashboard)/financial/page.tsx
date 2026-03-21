@@ -185,7 +185,7 @@ export default function FinancialPage() {
                   axisLine={false}
                   tickLine={false}
                 />
-                <YAxis hide />
+                <YAxis tick={false} axisLine={false} tickLine={false} width={0} />
                 <Tooltip
                   contentStyle={{
                     background: '#1c2021',
@@ -193,7 +193,10 @@ export default function FinancialPage() {
                     borderRadius: '8px',
                     color: '#e0e3e4',
                   }}
-                  formatter={(v: number) => [formatCurrency(v), 'GMV']}
+                  formatter={(value: unknown) => [
+                    formatCurrency(typeof value === 'number' ? value : Number(value) || 0),
+                    'GMV',
+                  ]}
                 />
                 <Area
                   type="monotone"

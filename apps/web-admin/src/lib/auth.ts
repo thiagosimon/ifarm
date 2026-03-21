@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
         token.expiresAt = account.expires_at;
 
         const decoded = parseJwt(account.access_token || '');
-        const realmRoles: string[] = decoded?.realm_access?.roles || [];
+        const realmRoles = getRealmRoles(decoded);
         token.role = realmRoles.includes('ADMIN') ? 'ADMIN' : 'UNKNOWN';
       }
 
@@ -86,6 +86,16 @@ function parseJwt(token: string): Record<string, unknown> | null {
   } catch {
     return null;
   }
+}
+
+function getRealmRoles(decoded: Record<string, unknown> | null): string[] {
+  if (!decoded) return [];
+  const realmAccess = decoded.realm_access;
+  if (!realmAccess || typeof realmAccess !== 'object' || !('roles' in realmAccess)) {
+    return [];
+  }
+  const roles = (realmAccess as { roles?: unknown }).roles;
+  return Array.isArray(roles) ? roles.filter((role): role is string => typeof role === 'string') : [];
 }
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {

@@ -282,7 +282,7 @@ export default function DashboardPage() {
                   axisLine={false}
                   tickLine={false}
                 />
-                <YAxis hide />
+                <YAxis tick={false} axisLine={false} tickLine={false} width={0} />
                 <Tooltip
                   contentStyle={{
                     background: '#1c2021',
@@ -290,8 +290,8 @@ export default function DashboardPage() {
                     borderRadius: '8px',
                     color: '#e0e3e4',
                   }}
-                  formatter={(value: number, name: string) => [
-                    formatCurrency(value),
+                  formatter={(value: unknown, name: string) => [
+                    formatCurrency(typeof value === 'number' ? value : Number(value) || 0),
                     name === 'gmv' ? 'GMV' : 'Receita',
                   ]}
                 />
@@ -333,7 +333,7 @@ export default function DashboardPage() {
                   axisLine={false}
                   tickLine={false}
                 />
-                <YAxis hide />
+                <YAxis tick={false} axisLine={false} tickLine={false} width={0} />
                 <Tooltip
                   contentStyle={{
                     background: '#1c2021',
@@ -377,7 +377,6 @@ export default function DashboardPage() {
                   innerRadius={70}
                   outerRadius={100}
                   dataKey="value"
-                  strokeWidth={0}
                 >
                   {userDistribution.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />

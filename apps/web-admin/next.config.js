@@ -1,6 +1,9 @@
+const path = require("path");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: path.join(__dirname, "../../"),
   typescript: {
     // Allow production builds to succeed even with type errors
     // (type checking done separately in CI)

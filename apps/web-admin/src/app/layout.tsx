@@ -1,13 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import dynamic from 'next/dynamic';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/theme-provider';
-
-const Toaster = dynamic(
-  () => import('react-hot-toast').then((mod) => mod.Toaster),
-  { ssr: false }
-);
+import { ToasterProvider } from '@/components/providers/toaster-provider';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -30,17 +25,7 @@ export default function RootLayout({
           defaultTheme="dark"
         >
           {children}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: 'hsl(var(--card))',
-                color: 'hsl(var(--card-foreground))',
-                border: '1px solid hsl(var(--border))',
-              },
-            }}
-          />
+          <ToasterProvider />
         </ThemeProvider>
       </body>
     </html>
