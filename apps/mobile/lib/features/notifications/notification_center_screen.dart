@@ -8,6 +8,8 @@ import '../../core/utils/formatters.dart';
 import '../../core/router/app_router.dart';
 import '../../data/models/app_notification_model.dart';
 import '../../providers/notification_provider.dart';
+import '../../providers/guest_provider.dart';
+import '../../widgets/guest_feature_lock.dart';
 import 'package:ifarm_mobile/l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
@@ -101,6 +103,14 @@ class NotificationCenterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(guestModeProvider)) {
+      return const GuestFeatureLock(
+        icon: Icons.notifications_outlined,
+        title: 'Notificações em tempo real',
+        description:
+            'Receba alertas de novas propostas, atualizações de pedidos e oportunidades do mercado.',
+      );
+    }
     final l = AppLocalizations.of(context)!;
     final notificationsAsync = ref.watch(notificationListProvider);
 

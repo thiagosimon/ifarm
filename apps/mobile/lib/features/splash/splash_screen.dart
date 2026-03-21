@@ -203,7 +203,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         },
                       ),
                       Text(
-                        '2024.1',
+                        '2026.3',
                         style: TextStyle(
                           fontFamily: 'Inter',
                           fontSize: 10,

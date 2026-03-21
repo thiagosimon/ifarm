@@ -41,8 +41,17 @@ class ScaffoldWithBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
     final currentIndex = _locationToIndex(location);
+    final isHome = currentIndex == 0;
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        if (!isHome) {
+          context.go(Routes.home);
+        }
+      },
+      child: Scaffold(
       body: child,
       // Glassmorphism bottom nav — white 80% + blur effect via decoration
       extendBody: true,
@@ -97,6 +106,7 @@ class ScaffoldWithBottomNav extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }

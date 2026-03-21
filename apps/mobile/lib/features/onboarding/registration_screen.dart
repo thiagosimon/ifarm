@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import '../../core/theme/app_typography.dart';
-import '../../core/theme/app_spacing.dart';
 import '../../core/router/app_router.dart';
 import '../../core/utils/validators.dart';
 import '../../data/repositories/farmer_repository.dart';
@@ -49,71 +47,71 @@ class RegistrationScreen extends ConsumerStatefulWidget {
 }
 
 class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
-  final _formKey = GlobalKey<FormState>();
+  // ── Step tracking ────────────────────────────────────────────────────────
+  int _step = 1; // 1 or 2
 
-  // Controllers
+  // ── Form keys (one per step) ─────────────────────────────────────────────
+  final _step1Key = GlobalKey<FormState>();
+  final _step2Key = GlobalKey<FormState>();
+
+  // ── Controllers ─────────────────────────────────────────────────────────
   final _nameCtrl = TextEditingController();
-  final _cpfCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
-  final _phoneCtrl = TextEditingController();
   final _senhaCtrl = TextEditingController();
+  final _phoneCtrl = TextEditingController();
+  final _cpfCtrl = TextEditingController();
   final _farmNameCtrl = TextEditingController();
-  final _areaCtrl = TextEditingController();
-  final _cepCtrl = TextEditingController();
 
-  // State
+  // ── State ────────────────────────────────────────────────────────────────
   String? _selectedState;
   bool _termsAccepted = false;
   bool _marketingAccepted = false;
   bool _isLoading = false;
   bool _obscurePass = true;
-  double? _lat;
-  double? _lng;
 
-  // Masks
-  final _cpfMask = MaskTextInputFormatter(
-    mask: '###.###.###-##',
-    filter: {'#': RegExp(r'[0-9]')},
-  );
+  // ── Masks ────────────────────────────────────────────────────────────────
   final _phoneMask = MaskTextInputFormatter(
     mask: '(##) #####-####',
     filter: {'#': RegExp(r'[0-9]')},
   );
-  final _cepMask = MaskTextInputFormatter(
-    mask: '#####-###',
+  final _cpfMask = MaskTextInputFormatter(
+    mask: '###.###.###-##',
     filter: {'#': RegExp(r'[0-9]')},
   );
 
   @override
   void dispose() {
     _nameCtrl.dispose();
-    _cpfCtrl.dispose();
     _emailCtrl.dispose();
-    _phoneCtrl.dispose();
     _senhaCtrl.dispose();
+    _phoneCtrl.dispose();
+    _cpfCtrl.dispose();
     _farmNameCtrl.dispose();
-    _areaCtrl.dispose();
-    _cepCtrl.dispose();
     super.dispose();
   }
 
-  void _captureGPS() {
-    setState(() {
-      _lat = -15.0;
-      _lng = -47.0;
-    });
+  // ── Navigation ───────────────────────────────────────────────────────────
+  void _nextStep() {
+    if (!(_step1Key.currentState?.validate() ?? false)) return;
+    setState(() => _step = 2);
   }
 
+  void _prevStep() {
+    setState(() => _step = 1);
+  }
+
+  // ── Submit ───────────────────────────────────────────────────────────────
   Future<void> _submit() async {
     final l = AppLocalizations.of(context)!;
-    if (!(_formKey.currentState?.validate() ?? false)) return;
+    if (!(_step2Key.currentState?.validate() ?? false)) return;
     if (!_termsAccepted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(l.registrationAcceptTermsError),
           backgroundColor: const Color(0xFFBA1A1A),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
       );
       return;
@@ -130,12 +128,8 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
         'farmName': _farmNameCtrl.text.trim(),
         'farmAddress': {
           'stateProvince': _selectedState,
-          'postalCode': _cepCtrl.text.replaceAll(RegExp(r'\D'), ''),
+          'postalCode': '',
           'countryCode': 'BR',
-          if (_lat != null && _lng != null) ...{
-            'latitude': _lat,
-            'longitude': _lng,
-          },
         },
         'consentHistory': [
           {
@@ -170,79 +164,72 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
     }
   }
 
-  // ─── Input decoration factory ─────────────────────────────────────────────
-  InputDecoration _inputDeco(String label) => InputDecoration(
+  // ── Input decoration ─────────────────────────────────────────────────────
+  InputDecoration _inputDeco(String label, {Widget? suffix}) => InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(fontSize: 14, color: Color(0xFF404940)),
+        suffixIcon: suffix,
         filled: true,
-        fillColor: const Color(0xFFE6E8EA),
+        fillColor: const Color(0xFFEFF1F3),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Color(0xFF005129), width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Color(0xFFBA1A1A), width: 1),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Color(0xFFBA1A1A), width: 1.5),
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-          vertical: AppSpacing.md,
-        ),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       );
 
-  // ─── Section header ───────────────────────────────────────────────────────
-  Widget _sectionHeader(IconData icon, String title) => Padding(
-        padding: const EdgeInsets.only(top: 28, bottom: 16),
-        child: Row(
-          children: [
-            Icon(icon, size: 22, color: const Color(0xFF005129)),
-            const SizedBox(width: 8),
-            Text(
-              title,
-              style: AppTypography.titleLarge.copyWith(
-                color: const Color(0xFF191C1E),
-              ),
-            ),
-          ],
-        ),
-      );
-
-  // ─── Gradient button ──────────────────────────────────────────────────────
+  // ── Gradient button ───────────────────────────────────────────────────────
   Widget _gradientButton({
     required String label,
     required VoidCallback? onPressed,
     bool isLoading = false,
   }) =>
       Container(
-        height: 52,
+        height: 54,
         decoration: BoxDecoration(
-          gradient: isLoading
+          gradient: isLoading || onPressed == null
               ? null
               : const LinearGradient(
                   colors: [Color(0xFF005129), Color(0xFF1A6B3C)],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
-          color: isLoading ? const Color(0xFFBFC9BE) : null,
-          borderRadius: BorderRadius.circular(12),
+          color: isLoading || onPressed == null
+              ? const Color(0xFFBFC9BE)
+              : null,
+          borderRadius: BorderRadius.circular(14),
+          boxShadow: isLoading || onPressed == null
+              ? null
+              : [
+                  BoxShadow(
+                    color: const Color(0xFF005129).withValues(alpha: 0.25),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  )
+                ],
         ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: onPressed,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(14),
             child: Center(
               child: isLoading
                   ? const SizedBox(
@@ -259,6 +246,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
+                        letterSpacing: 0.2,
                       ),
                     ),
             ),
@@ -269,314 +257,494 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FB),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF191C1E)),
-          onPressed: () => context.pop(),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // ── Header with back + step indicator ───────────────────────
+            _StepHeader(
+              step: _step,
+              totalSteps: 2,
+              onBack: _step == 1 ? () => context.pop() : _prevStep,
+            ),
+
+            // ── Scrollable body (animated page swap) ─────────────────────
+            Expanded(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                transitionBuilder: (child, anim) => SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0.08, 0),
+                    end: Offset.zero,
+                  ).animate(
+                    CurvedAnimation(parent: anim, curve: Curves.easeOutCubic),
+                  ),
+                  child: FadeTransition(opacity: anim, child: child),
+                ),
+                child: _step == 1
+                    ? _Step1Body(
+                        key: const ValueKey(1),
+                        nameCtrl: _nameCtrl,
+                        emailCtrl: _emailCtrl,
+                        senhaCtrl: _senhaCtrl,
+                        obscurePass: _obscurePass,
+                        onTogglePass: () =>
+                            setState(() => _obscurePass = !_obscurePass),
+                        formKey: _step1Key,
+                        inputDeco: _inputDeco,
+                        gradientButton: _gradientButton,
+                        onNext: _nextStep,
+                        onLogin: () => context.go(Routes.login),
+                        l: l,
+                      )
+                    : _Step2Body(
+                        key: const ValueKey(2),
+                        phoneCtrl: _phoneCtrl,
+                        cpfCtrl: _cpfCtrl,
+                        farmNameCtrl: _farmNameCtrl,
+                        phoneMask: _phoneMask,
+                        cpfMask: _cpfMask,
+                        selectedState: _selectedState,
+                        onStateChanged: (v) =>
+                            setState(() => _selectedState = v),
+                        termsAccepted: _termsAccepted,
+                        onTermsChanged: (v) =>
+                            setState(() => _termsAccepted = v ?? false),
+                        marketingAccepted: _marketingAccepted,
+                        onMarketingChanged: (v) =>
+                            setState(() => _marketingAccepted = v ?? false),
+                        formKey: _step2Key,
+                        inputDeco: _inputDeco,
+                        gradientButton: _gradientButton,
+                        isLoading: _isLoading,
+                        onSubmit: _submit,
+                        l: l,
+                      ),
+              ),
+            ),
+          ],
         ),
-        title: Text(
-          l.registrationTitle,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFF191C1E),
-          ),
-        ),
-        centerTitle: false,
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // ═══════════════════════════════════════════════════════════════
-              // SECTION 1 — Dados Pessoais
-              // ═══════════════════════════════════════════════════════════════
-              _sectionHeader(Icons.person_outline, l.registrationPersonalData),
+    );
+  }
+}
 
-              // Nome completo
-              TextFormField(
-                controller: _nameCtrl,
-                textCapitalization: TextCapitalization.words,
-                textInputAction: TextInputAction.next,
-                validator: (v) =>
-                    AppValidators.required(l, v, l.registrationFullName),
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationFullName),
+// ─── Step Header ──────────────────────────────────────────────────────────────
+class _StepHeader extends StatelessWidget {
+  final int step;
+  final int totalSteps;
+  final VoidCallback onBack;
+
+  const _StepHeader({
+    required this.step,
+    required this.totalSteps,
+    required this.onBack,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 8, 24, 0),
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20,
+                color: Color(0xFF191C1E)),
+            onPressed: onBack,
+          ),
+          const Spacer(),
+          // Step bubbles
+          Row(
+            children: List.generate(totalSteps, (i) {
+              final active = i < step;
+              final current = i == step - 1;
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                margin: const EdgeInsets.symmetric(horizontal: 3),
+                width: current ? 28 : 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: active
+                      ? const Color(0xFF005129)
+                      : const Color(0xFFCDD5CD),
+                  borderRadius: BorderRadius.circular(99),
+                ),
+              );
+            }),
+          ),
+          const Spacer(),
+          // Balance spacer so bubbles are centred
+          const SizedBox(width: 48),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Step 1 — Dados de acesso ─────────────────────────────────────────────────
+class _Step1Body extends StatelessWidget {
+  final TextEditingController nameCtrl;
+  final TextEditingController emailCtrl;
+  final TextEditingController senhaCtrl;
+  final bool obscurePass;
+  final VoidCallback onTogglePass;
+  final GlobalKey<FormState> formKey;
+  final InputDecoration Function(String, {Widget? suffix}) inputDeco;
+  final Widget Function({
+    required String label,
+    required VoidCallback? onPressed,
+    bool isLoading,
+  }) gradientButton;
+  final VoidCallback onNext;
+  final VoidCallback onLogin;
+  final AppLocalizations l;
+
+  const _Step1Body({
+    super.key,
+    required this.nameCtrl,
+    required this.emailCtrl,
+    required this.senhaCtrl,
+    required this.obscurePass,
+    required this.onTogglePass,
+    required this.formKey,
+    required this.inputDeco,
+    required this.gradientButton,
+    required this.onNext,
+    required this.onLogin,
+    required this.l,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // ── Hero text ────────────────────────────────────────────────
+            const Text(
+              'Criar conta',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFF191C1E),
+                letterSpacing: -0.5,
+                height: 1.2,
               ),
-              const SizedBox(height: 12),
-
-              // CPF
-              TextFormField(
-                controller: _cpfCtrl,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                inputFormatters: [_cpfMask],
-                validator: (v) => AppValidators.federalTaxId(l, v),
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationCpf),
+            ),
+            const SizedBox(height: 6),
+            const Text(
+              'Junte-se ao mercado digital do agronegócio',
+              style: TextStyle(
+                fontSize: 15,
+                color: Color(0xFF404940),
+                height: 1.5,
               ),
-              const SizedBox(height: 12),
+            ),
+            const SizedBox(height: 32),
 
-              // E-mail
-              TextFormField(
-                controller: _emailCtrl,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                validator: (v) => AppValidators.email(l, v),
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationEmail),
+            // ── Nome ─────────────────────────────────────────────────────
+            TextFormField(
+              controller: nameCtrl,
+              textCapitalization: TextCapitalization.words,
+              textInputAction: TextInputAction.next,
+              validator: (v) => AppValidators.required(l, v, l.registrationFullName),
+              style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
+              decoration: inputDeco(l.registrationFullName),
+            ),
+            const SizedBox(height: 14),
+
+            // ── E-mail ───────────────────────────────────────────────────
+            TextFormField(
+              controller: emailCtrl,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              validator: (v) => AppValidators.email(l, v),
+              style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
+              decoration: inputDeco(l.registrationEmail),
+            ),
+            const SizedBox(height: 14),
+
+            // ── Senha ────────────────────────────────────────────────────
+            TextFormField(
+              controller: senhaCtrl,
+              obscureText: obscurePass,
+              textInputAction: TextInputAction.done,
+              validator: (v) => AppValidators.password(l, v),
+              onFieldSubmitted: (_) => onNext(),
+              style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
+              decoration: inputDeco(
+                l.registrationPassword,
+                suffix: IconButton(
+                  icon: Icon(
+                    obscurePass
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    color: const Color(0xFF707A70),
+                    size: 20,
+                  ),
+                  onPressed: onTogglePass,
+                ),
               ),
-              const SizedBox(height: 12),
+            ),
+            const SizedBox(height: 28),
 
-              // Telefone
-              TextFormField(
-                controller: _phoneCtrl,
-                keyboardType: TextInputType.phone,
-                textInputAction: TextInputAction.next,
-                inputFormatters: [_phoneMask],
-                validator: (v) => AppValidators.phone(l, v),
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationPhone),
-              ),
-              const SizedBox(height: 12),
+            // ── Continue ─────────────────────────────────────────────────
+            gradientButton(label: 'Continuar', onPressed: onNext),
+            const SizedBox(height: 20),
 
-              // Senha
-              TextFormField(
-                controller: _senhaCtrl,
-                obscureText: _obscurePass,
-                textInputAction: TextInputAction.next,
-                validator: (v) => AppValidators.password(l, v),
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationPassword).copyWith(
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscurePass
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined,
-                      color: const Color(0xFF707A70),
-                      size: 20,
-                    ),
-                    onPressed: () =>
-                        setState(() => _obscurePass = !_obscurePass),
+            // ── Login link ───────────────────────────────────────────────
+            Center(
+              child: TextButton(
+                onPressed: onLogin,
+                style: TextButton.styleFrom(
+                  foregroundColor: const Color(0xFF005129),
+                ),
+                child: RichText(
+                  text: const TextSpan(
+                    style: TextStyle(
+                        fontSize: 14, color: Color(0xFF404940)),
+                    children: [
+                      TextSpan(text: 'Já tem conta? '),
+                      TextSpan(
+                        text: 'Entrar',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF005129),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-              // ═══════════════════════════════════════════════════════════════
-              // SECTION 2 — Detalhes da Propriedade
-              // ═══════════════════════════════════════════════════════════════
-              _sectionHeader(Icons.eco_outlined, l.registrationPropertyDetails),
+// ─── Step 2 — Sua fazenda ─────────────────────────────────────────────────────
+class _Step2Body extends StatelessWidget {
+  final TextEditingController phoneCtrl;
+  final TextEditingController cpfCtrl;
+  final TextEditingController farmNameCtrl;
+  final MaskTextInputFormatter phoneMask;
+  final MaskTextInputFormatter cpfMask;
+  final String? selectedState;
+  final ValueChanged<String?> onStateChanged;
+  final bool termsAccepted;
+  final ValueChanged<bool?> onTermsChanged;
+  final bool marketingAccepted;
+  final ValueChanged<bool?> onMarketingChanged;
+  final GlobalKey<FormState> formKey;
+  final InputDecoration Function(String, {Widget? suffix}) inputDeco;
+  final Widget Function({
+    required String label,
+    required VoidCallback? onPressed,
+    bool isLoading,
+  }) gradientButton;
+  final bool isLoading;
+  final VoidCallback onSubmit;
+  final AppLocalizations l;
 
-              // Nome da propriedade
-              TextFormField(
-                controller: _farmNameCtrl,
-                textCapitalization: TextCapitalization.words,
-                textInputAction: TextInputAction.next,
-                validator: (v) =>
-                    AppValidators.required(l, v, l.registrationPropertyName),
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationPropertyName),
+  const _Step2Body({
+    super.key,
+    required this.phoneCtrl,
+    required this.cpfCtrl,
+    required this.farmNameCtrl,
+    required this.phoneMask,
+    required this.cpfMask,
+    required this.selectedState,
+    required this.onStateChanged,
+    required this.termsAccepted,
+    required this.onTermsChanged,
+    required this.marketingAccepted,
+    required this.onMarketingChanged,
+    required this.formKey,
+    required this.inputDeco,
+    required this.gradientButton,
+    required this.isLoading,
+    required this.onSubmit,
+    required this.l,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // ── Hero text ────────────────────────────────────────────────
+            const Text(
+              'Sua fazenda',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFF191C1E),
+                letterSpacing: -0.5,
+                height: 1.2,
               ),
-              const SizedBox(height: 12),
-
-              // Área total (ha)
-              TextFormField(
-                controller: _areaCtrl,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                textInputAction: TextInputAction.next,
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationTotalArea),
+            ),
+            const SizedBox(height: 6),
+            const Text(
+              'Quase lá! Informe os dados da sua propriedade',
+              style: TextStyle(
+                fontSize: 15,
+                color: Color(0xFF404940),
+                height: 1.5,
               ),
-              const SizedBox(height: 12),
+            ),
+            const SizedBox(height: 32),
 
-              // CEP
-              TextFormField(
-                controller: _cepCtrl,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.next,
-                inputFormatters: [_cepMask],
-                style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
-                decoration: _inputDeco(l.registrationZipCode),
-              ),
-              const SizedBox(height: 12),
+            // ── Telefone ─────────────────────────────────────────────────
+            TextFormField(
+              controller: phoneCtrl,
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [phoneMask],
+              validator: (v) => AppValidators.phone(l, v),
+              style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
+              decoration: inputDeco(l.registrationPhone),
+            ),
+            const SizedBox(height: 14),
 
-              // Estado dropdown
-              DropdownButtonFormField<String>(
-                value: _selectedState,
-                validator: (v) => v == null ? l.registrationSelectState : null,
-                onChanged: (v) => setState(() => _selectedState = v),
+            // ── CPF ──────────────────────────────────────────────────────
+            TextFormField(
+              controller: cpfCtrl,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [cpfMask],
+              validator: (v) => AppValidators.federalTaxId(l, v),
+              style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
+              decoration: inputDeco(l.registrationCpf),
+            ),
+            const SizedBox(height: 14),
+
+            // ── Nome da fazenda ───────────────────────────────────────────
+            TextFormField(
+              controller: farmNameCtrl,
+              textCapitalization: TextCapitalization.words,
+              textInputAction: TextInputAction.next,
+              validator: (v) =>
+                  AppValidators.required(l, v, l.registrationPropertyName),
+              style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
+              decoration: inputDeco(l.registrationPropertyName),
+            ),
+            const SizedBox(height: 14),
+
+            // ── Estado ────────────────────────────────────────────────────
+            DropdownButtonFormField<String>(
+              initialValue: selectedState,
+              validator: (v) => v == null ? l.registrationSelectState : null,
+              onChanged: onStateChanged,
+              style: const TextStyle(fontSize: 16, color: Color(0xFF191C1E)),
+              decoration: inputDeco(l.registrationState),
+              dropdownColor: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              items: _kBrazilianStates
+                  .map((s) => DropdownMenuItem(
+                        value: s.$1,
+                        child: Text('${s.$1} — ${s.$2}'),
+                      ))
+                  .toList(),
+            ),
+            const SizedBox(height: 24),
+
+            // ── Terms ─────────────────────────────────────────────────────
+            _TermsRow(
+              accepted: termsAccepted,
+              onChanged: onTermsChanged,
+              l: l,
+            ),
+            const SizedBox(height: 8),
+            CheckboxListTile(
+              value: marketingAccepted,
+              onChanged: onMarketingChanged,
+              controlAffinity: ListTileControlAffinity.leading,
+              contentPadding: EdgeInsets.zero,
+              activeColor: const Color(0xFF005129),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              title: Text(
+                l.registrationMarketingConsent,
                 style: const TextStyle(
-                  fontSize: 16,
-                  color: Color(0xFF191C1E),
-                ),
-                decoration: _inputDeco(l.registrationState),
-                dropdownColor: const Color(0xFFFFFFFF),
-                items: _kBrazilianStates
-                    .map((s) => DropdownMenuItem(
-                          value: s.$1,
-                          child: Text('${s.$1} — ${s.$2}'),
-                        ))
-                    .toList(),
+                    fontSize: 13, color: Color(0xFF404940), height: 1.4),
               ),
-              const SizedBox(height: 12),
+            ),
+            const SizedBox(height: 24),
 
-              // GPS section
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF2F4F6),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            // ── Criar conta ───────────────────────────────────────────────
+            gradientButton(
+              label: l.registrationCreateAccountButton,
+              onPressed: isLoading ? null : onSubmit,
+              isLoading: isLoading,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TermsRow extends StatelessWidget {
+  final bool accepted;
+  final ValueChanged<bool?> onChanged;
+  final AppLocalizations l;
+
+  const _TermsRow({
+    required this.accepted,
+    required this.onChanged,
+    required this.l,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Checkbox(
+          value: accepted,
+          onChanged: onChanged,
+          activeColor: const Color(0xFF005129),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          visualDensity: VisualDensity.compact,
+        ),
+        const SizedBox(width: 4),
+        Expanded(
+          child: GestureDetector(
+            onTap: () => onChanged(!accepted),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 11),
+              child: RichText(
+                text: TextSpan(
+                  style: const TextStyle(
+                      fontSize: 13, color: Color(0xFF404940), height: 1.5),
                   children: [
-                    Text(
-                      l.registrationGpsCoordinates,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF191C1E),
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      _lat != null && _lng != null
-                          ? '${_lat!.toStringAsFixed(4)}, ${_lng!.toStringAsFixed(4)}'
-                          : l.registrationTapToCapture,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF707A70),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    OutlinedButton.icon(
-                      onPressed: _captureGPS,
-                      icon: const Icon(Icons.my_location, size: 16),
-                      label: Text(l.registrationCapture),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: const Color(0xFF005129),
-                        side: const BorderSide(color: Color(0xFF005129)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                        textStyle: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.8,
-                        ),
+                    TextSpan(text: '${l.registrationAcceptTerms} '),
+                    const TextSpan(
+                      text: 'Termos de Uso e Privacidade',
+                      style: TextStyle(
+                        color: Color(0xFF005129),
+                        fontWeight: FontWeight.w600,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ],
                 ),
               ),
-
-              // ═══════════════════════════════════════════════════════════════
-              // SECTION 3 — Termos e Privacidade
-              // ═══════════════════════════════════════════════════════════════
-              _sectionHeader(Icons.gavel_outlined, l.registrationTermsTitle),
-
-              // Terms checkbox
-              CheckboxListTile(
-                value: _termsAccepted,
-                onChanged: (v) => setState(() => _termsAccepted = v ?? false),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-                activeColor: const Color(0xFF005129),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                title: Text(
-                  l.registrationAcceptTerms,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF404940),
-                    height: 1.5,
-                  ),
-                ),
-                subtitle: TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    foregroundColor: const Color(0xFF005129),
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(
-                    l.registrationReadTerms,
-                    style: const TextStyle(fontSize: 13),
-                  ),
-                ),
-              ),
-
-              // Marketing checkbox
-              CheckboxListTile(
-                value: _marketingAccepted,
-                onChanged: (v) =>
-                    setState(() => _marketingAccepted = v ?? false),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-                activeColor: const Color(0xFF005129),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                title: Text(
-                  l.registrationMarketingConsent,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF404940),
-                    height: 1.5,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 32),
-
-              // ─── Criar Conta button ───────────────────────────────────────
-              _gradientButton(
-                label: l.registrationCreateAccountButton,
-                onPressed: _isLoading ? null : _submit,
-                isLoading: _isLoading,
-              ),
-
-              const SizedBox(height: 12),
-
-              // ─── Fazer Login link ─────────────────────────────────────────
-              Center(
-                child: TextButton(
-                  onPressed: () => context.go(Routes.login),
-                  style: TextButton.styleFrom(
-                    foregroundColor: const Color(0xFF005129),
-                  ),
-                  child: Text(
-                    l.registrationLoginButton,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF005129),
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 32),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -11,6 +11,8 @@ import '../../widgets/ifarm_empty_state.dart';
 import '../../widgets/ifarm_error_state.dart';
 import '../../widgets/ifarm_skeleton.dart';
 import '../../widgets/status_badge.dart';
+import '../../providers/guest_provider.dart';
+import '../../widgets/guest_feature_lock.dart';
 
 // Stitch design tokens
 const _primary = Color(0xFF005129);
@@ -54,6 +56,14 @@ class _MyQuotesScreenState extends ConsumerState<MyQuotesScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(guestModeProvider)) {
+      return const GuestFeatureLock(
+        icon: Icons.description_outlined,
+        title: 'Cotações em um toque',
+        description:
+            'Crie cotações, receba propostas de fornecedores e compare preços para economizar na sua próxima compra.',
+      );
+    }
     final l = AppLocalizations.of(context)!;
     final tabs = [
       l.myQuotesTabActive,
