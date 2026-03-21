@@ -49,10 +49,10 @@ export class TaxRule {
   @Prop({ required: true })
   interstateRate12: number;
 
-  @Prop({ default: null })
+  @Prop({ type: Number, default: null })
   reducedBasePercentage: number | null;
 
-  @Prop({ default: null })
+  @Prop({ type: Number, default: null })
   taxSubstitutionMva: number | null;
 
   @Prop({ required: true })
@@ -61,7 +61,7 @@ export class TaxRule {
   @Prop({ required: true })
   validFrom: Date;
 
-  @Prop({ default: null })
+  @Prop({ type: Date, default: null })
   validTo: Date | null;
 
   @Prop({ type: [StateRuleSchema], default: [] })

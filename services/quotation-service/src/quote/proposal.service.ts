@@ -325,8 +325,8 @@ export class ProposalService {
       .exec();
 
     return {
-      quote: updatedQuote as QuoteDocument,
-      proposal: updatedProposal as ProposalDocument,
+      quote: updatedQuote as unknown as QuoteDocument,
+      proposal: updatedProposal as unknown as ProposalDocument,
     };
   }
 

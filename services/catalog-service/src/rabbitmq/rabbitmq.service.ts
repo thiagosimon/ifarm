@@ -14,46 +14,55 @@ export class RabbitmqService implements OnModuleInit, OnModuleDestroy {
   private isConnected = false;
 
   async onModuleInit(): Promise<void> {
-    const uri = process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672';
+    const uri = process.env.RABBITMQ_URI || 'amqp://guest:guest@localhost:5672';
 
-    this.connection = amqp.connect([uri], {
-      heartbeatIntervalInSeconds: 30,
-      reconnectTimeInSeconds: 5,
-    });
+    try {
+      this.connection = amqp.connect([uri], {
+        heartbeatIntervalInSeconds: 30,
+        reconnectTimeInSeconds: 5,
+      });
 
-    this.connection.on('connect', () => {
-      this.logger.log('RabbitMQ connected');
-      this.isConnected = true;
-    });
+      this.connection.on('connect', () => {
+        this.logger.log('RabbitMQ connected');
+        this.isConnected = true;
+      });
 
-    this.connection.on('disconnect', (err: any) => {
-      this.logger.warn(`RabbitMQ disconnected: ${err?.message}`);
-      this.isConnected = false;
-    });
+      this.connection.on('disconnect', (err: any) => {
+        this.logger.warn(`RabbitMQ disconnected: ${err?.message}`);
+        this.isConnected = false;
+      });
 
-    this.channelWrapper = this.connection.createChannel({
-      json: true,
-      setup: async (channel: ConfirmChannel) => {
-        await channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE, {
-          durable: true,
-        });
+      this.channelWrapper = this.connection.createChannel({
+        json: true,
+        setup: async (channel: ConfirmChannel) => {
+          await channel.assertExchange(EXCHANGE_NAME, EXCHANGE_TYPE, {
+            durable: true,
+          });
 
-        // Dead-letter exchange
-        await channel.assertExchange('ifarm.events.dlx', 'topic', {
-          durable: true,
-        });
-        await channel.assertQueue('ifarm.events.dlq', {
-          durable: true,
-          arguments: {
-            'x-message-ttl': 86400000, // 24h
-          },
-        });
-        await channel.bindQueue('ifarm.events.dlq', 'ifarm.events.dlx', '#');
-      },
-    });
+          // Dead-letter exchange
+          await channel.assertExchange('ifarm.events.dlx', 'topic', {
+            durable: true,
+          });
+          await channel.assertQueue('ifarm.events.dlq', {
+            durable: true,
+            arguments: {
+              'x-message-ttl': 86400000, // 24h
+            },
+          });
+          await channel.bindQueue('ifarm.events.dlq', 'ifarm.events.dlx', '#');
+        },
+      });
 
-    await this.channelWrapper.waitForConnect();
-    this.logger.log('RabbitMQ channel ready');
+      const connectTimeout = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('RabbitMQ connection timeout after 15s')), 15000),
+      );
+      await Promise.race([this.channelWrapper.waitForConnect(), connectTimeout]);
+      this.logger.log('RabbitMQ channel ready');
+    } catch (error) {
+      this.logger.error(
+        `Failed to initialize RabbitMQ: ${(error as Error).message}`,
+      );
+    }
   }
 
   async onModuleDestroy(): Promise<void> {

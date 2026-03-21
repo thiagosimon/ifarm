@@ -1,0 +1,45 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+# Entrypoints — only port 80 (Cloudflare Tunnel handles TLS externally)
+entryPoints:
+  web:
+    address: ":80"
+    transport:
+      respondingTimeouts:
+        readTimeout: 30s
+        writeTimeout: 30s
+        idleTimeout: 180s
+
+# Docker provider — auto-discovers containers via labels
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    network: ifarm-prod_ifarm-net
+    exposedByDefault: false
+    watch: true
+
+# API / Dashboard — disabled in production
+api:
+  dashboard: false
+  insecure: false
+
+# Logging
+log:
+  level: WARN
+  format: json
+
+accessLog:
+  format: json
+  fields:
+    defaultMode: keep
+    headers:
+      defaultMode: drop
+      names:
+        X-Correlation-Id: keep
+        X-Forwarded-For: keep
+
+# Ping endpoint used by healthcheck
+ping:
+  entryPoint: web

@@ -17,10 +17,14 @@ import { Commission } from './commission/entities/commission.entity';
       logging: process.env.NODE_ENV !== 'production',
     }),
     BullModule.forRoot({
-      connection: {
-        host: new URL(process.env.REDIS_URL || 'redis://localhost:6379').hostname,
-        port: parseInt(new URL(process.env.REDIS_URL || 'redis://localhost:6379').port || '6379', 10),
-      },
+      connection: (() => {
+        const url = new URL(process.env.REDIS_URL || 'redis://localhost:6379');
+        return {
+          host: url.hostname,
+          port: parseInt(url.port || '6379', 10),
+          ...(url.password ? { password: decodeURIComponent(url.password) } : {}),
+        };
+      })(),
     }),
     PrometheusModule.register({
       defaultMetrics: { enabled: true },

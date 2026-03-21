@@ -16,19 +16,19 @@ export class Customer {
   @Prop({ required: true, lowercase: true, trim: true })
   email: string;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   phone: string | null;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   city: string | null;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   state: string | null;
 
   @Prop({ enum: CustomerStatus, default: CustomerStatus.ACTIVE })
   status: CustomerStatus;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   retailerId: string | null;
 
   @Prop({ default: 0 })

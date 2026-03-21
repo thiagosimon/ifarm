@@ -9,49 +9,49 @@ export interface RouteConfig {
 export const ROUTE_MAP: RouteConfig[] = [
   {
     prefix: '/api/v1/identity',
-    target: 'http://127.0.0.1:3101',
+    target: process.env.IDENTITY_SERVICE_URL ?? 'http://127.0.0.1:3101',
     serviceName: 'identity-service',
     pathRewriteTarget: '/v1', // /api/v1/identity/retailers -> /v1/retailers
   },
   {
     prefix: '/api/v1/auth',
-    target: 'http://127.0.0.1:3102',
+    target: process.env.AUTH_SERVICE_URL ?? 'http://127.0.0.1:3102',
     serviceName: 'auth-service',
     pathRewriteTarget: '/v1/auth', // /api/v1/auth/login -> /v1/auth/login
   },
   {
     prefix: '/api/v1/catalog',
-    target: 'http://localhost:3003',
+    target: process.env.CATALOG_SERVICE_URL ?? 'http://localhost:3003',
     serviceName: 'catalog-service',
     pathRewriteTarget: '/v1',
   },
   {
     prefix: '/api/v1/quotes',
-    target: 'http://localhost:3004',
+    target: process.env.QUOTATION_SERVICE_URL ?? 'http://localhost:3004',
     serviceName: 'quotation-service',
     pathRewriteTarget: '/v1',
   },
   {
     prefix: '/api/v1/orders',
-    target: 'http://localhost:3006',
+    target: process.env.ORDER_SERVICE_URL ?? 'http://localhost:3006',
     serviceName: 'order-service',
     pathRewriteTarget: '/v1',
   },
   {
     prefix: '/api/v1/payments',
-    target: 'http://localhost:3007',
+    target: process.env.PAYMENT_SERVICE_URL ?? 'http://localhost:3007',
     serviceName: 'payment-service',
     pathRewriteTarget: '/v1',
   },
   {
     prefix: '/api/v1/notifications',
-    target: 'http://localhost:3010',
+    target: process.env.NOTIFICATION_SERVICE_URL ?? 'http://localhost:3010',
     serviceName: 'notification-service',
     pathRewriteTarget: '/v1',
   },
   {
     prefix: '/api/v1/reviews',
-    target: 'http://localhost:3011',
+    target: process.env.REVIEW_SERVICE_URL ?? 'http://localhost:3011',
     serviceName: 'review-service',
     pathRewriteTarget: '/v1',
   },

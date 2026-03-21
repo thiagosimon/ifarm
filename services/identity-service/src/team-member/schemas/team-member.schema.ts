@@ -30,10 +30,10 @@ export class TeamMember {
   @Prop({ enum: TeamMemberStatus, default: TeamMemberStatus.ACTIVE })
   status: TeamMemberStatus;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   keycloakId: string | null;
 
-  @Prop({ default: null })
+  @Prop({ type: String, default: null })
   retailerId: string | null;
 }
 

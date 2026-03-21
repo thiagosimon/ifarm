@@ -10,30 +10,39 @@ export class RabbitmqService implements OnModuleInit, OnModuleDestroy {
 
   async onModuleInit(): Promise<void> {
     const url =
-      process.env.RABBITMQ_URL || 'amqp://guest:guest@localhost:5672';
+      process.env.RABBITMQ_URI || 'amqp://guest:guest@localhost:5672';
 
-    this.connection = amqp.connect([url], {
-      heartbeatIntervalInSeconds: 30,
-      reconnectTimeInSeconds: 5,
-    });
+    try {
+      this.connection = amqp.connect([url], {
+        heartbeatIntervalInSeconds: 30,
+        reconnectTimeInSeconds: 5,
+      });
 
-    this.connection.on('connect', () => {
-      this.logger.log('RabbitMQ connected');
-    });
+      this.connection.on('connect', () => {
+        this.logger.log('RabbitMQ connected');
+      });
 
-    this.connection.on('disconnect', (err: any) => {
-      this.logger.warn(`RabbitMQ disconnected: ${err?.message || 'unknown'}`);
-    });
+      this.connection.on('disconnect', (err: any) => {
+        this.logger.warn(`RabbitMQ disconnected: ${err?.message || 'unknown'}`);
+      });
 
-    this.channelWrapper = this.connection.createChannel({
-      json: true,
-      setup: async (channel: ConfirmChannel) => {
-        await channel.prefetch(10);
-      },
-    });
+      this.channelWrapper = this.connection.createChannel({
+        json: true,
+        setup: async (channel: ConfirmChannel) => {
+          await channel.prefetch(10);
+        },
+      });
 
-    await this.channelWrapper.waitForConnect();
-    this.logger.log('RabbitMQ channel ready');
+      const connectTimeout = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('RabbitMQ connection timeout after 15s')), 15000),
+      );
+      await Promise.race([this.channelWrapper.waitForConnect(), connectTimeout]);
+      this.logger.log('RabbitMQ channel ready');
+    } catch (error) {
+      this.logger.error(
+        `Failed to initialize RabbitMQ: ${(error as Error).message}`,
+      );
+    }
   }
 
   async onModuleDestroy(): Promise<void> {
