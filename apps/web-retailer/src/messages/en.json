@@ -26,7 +26,10 @@
     "yes": "Yes",
     "no": "No",
     "required": "Required",
-    "optional": "Optional"
+    "optional": "Optional",
+    "all": "All",
+    "connected": "Connected",
+    "connect": "Connect"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -573,6 +576,24 @@
       "manager": "Manager",
       "operator": "Operator",
       "viewer": "Viewer"
+    },
+    "editMember": "Edit Member",
+    "createLogin": "Create platform access",
+    "createLoginDesc": "Sends access credentials by email",
+    "membersCount": "members",
+    "deleteTitle": "Delete member",
+    "deleteConfirm": "Are you sure you want to delete {name}? This action cannot be undone.",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Full name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status"
+    },
+    "status": {
+      "active": "Active",
+      "invited": "Invited",
+      "inactive": "Inactive"
     }
   },
   "messages": {
@@ -606,13 +627,17 @@
       "city": "City",
       "lastOrder": "Last Order",
       "totalSpent": "Total Spent",
-      "orders": "Orders"
+      "orders": "Orders",
+      "state": "State"
     },
     "status": {
       "active": "Active",
       "inactive": "Inactive"
     },
-    "noCustomers": "No customers found"
+    "noCustomers": "No customers found",
+    "editCustomer": "Edit Customer",
+    "deleteTitle": "Delete customer",
+    "deleteConfirm": "Are you sure you want to delete {name}? This action cannot be undone."
   },
   "reports": {
     "title": "Reports",

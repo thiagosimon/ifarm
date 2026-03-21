@@ -26,7 +26,10 @@
     "yes": "Sim",
     "no": "Não",
     "required": "Obrigatório",
-    "optional": "Opcional"
+    "optional": "Opcional",
+    "all": "Todos",
+    "connected": "Conectado",
+    "connect": "Conectar"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -573,6 +576,24 @@
       "manager": "Gerente",
       "operator": "Operador",
       "viewer": "Visualizador"
+    },
+    "editMember": "Editar Membro",
+    "createLogin": "Criar acesso à plataforma",
+    "createLoginDesc": "Envia credenciais de acesso por e-mail",
+    "membersCount": "membros",
+    "deleteTitle": "Excluir membro",
+    "deleteConfirm": "Tem certeza que deseja excluir {name}? Esta ação não pode ser desfeita.",
+    "fields": {
+      "name": "Nome",
+      "namePlaceholder": "Nome completo",
+      "email": "E-mail",
+      "role": "Função",
+      "status": "Status"
+    },
+    "status": {
+      "active": "Ativo",
+      "invited": "Convidado",
+      "inactive": "Inativo"
     }
   },
   "messages": {
@@ -606,13 +627,17 @@
       "city": "Cidade",
       "lastOrder": "Último Pedido",
       "totalSpent": "Total Gasto",
-      "orders": "Pedidos"
+      "orders": "Pedidos",
+      "state": "Estado"
     },
     "status": {
       "active": "Ativo",
       "inactive": "Inativo"
     },
-    "noCustomers": "Nenhum cliente encontrado"
+    "noCustomers": "Nenhum cliente encontrado",
+    "editCustomer": "Editar Cliente",
+    "deleteTitle": "Excluir cliente",
+    "deleteConfirm": "Tem certeza que deseja excluir {name}? Esta ação não pode ser desfeita."
   },
   "reports": {
     "title": "Relatórios",

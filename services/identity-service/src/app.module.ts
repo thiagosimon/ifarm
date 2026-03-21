@@ -8,6 +8,8 @@ import { SerproModule } from './serpro/serpro.module';
 import { StorageModule } from './storage/storage.module';
 import { RabbitmqModule } from './rabbitmq/rabbitmq.module';
 import { HealthModule } from './health/health.module';
+import { TeamMemberModule } from './team-member/team-member.module';
+import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { HealthModule } from './health/health.module';
     RetailerModule,
     KycModule,
     HealthModule,
+    TeamMemberModule,
+    CustomerModule,
   ],
 })
 export class AppModule {}

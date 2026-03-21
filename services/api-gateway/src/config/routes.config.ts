@@ -72,6 +72,18 @@ export const PUBLIC_ROUTES: PublicRoute[] = [
   { method: 'GET', path: '/api/v1/catalog/products/:id' },
   { method: 'GET', path: '/health' },
   { method: 'GET', path: '/ready' },
+  // Team members CRUD
+  { method: 'GET', path: '/api/v1/identity/team-members' },
+  { method: 'POST', path: '/api/v1/identity/team-members' },
+  { method: 'GET', path: '/api/v1/identity/team-members/:id' },
+  { method: 'PATCH', path: '/api/v1/identity/team-members/:id' },
+  { method: 'DELETE', path: '/api/v1/identity/team-members/:id' },
+  // Customers CRUD
+  { method: 'GET', path: '/api/v1/identity/customers' },
+  { method: 'POST', path: '/api/v1/identity/customers' },
+  { method: 'GET', path: '/api/v1/identity/customers/:id' },
+  { method: 'PATCH', path: '/api/v1/identity/customers/:id' },
+  { method: 'DELETE', path: '/api/v1/identity/customers/:id' },
 ];
 
 /**
