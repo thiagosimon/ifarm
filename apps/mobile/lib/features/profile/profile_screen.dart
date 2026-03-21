@@ -9,6 +9,8 @@ import '../../core/router/app_router.dart';
 import '../../data/models/farmer_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/farmer_provider.dart';
+import '../../providers/guest_provider.dart';
+import '../../widgets/guest_feature_lock.dart';
 import '../../widgets/status_badge.dart';
 import '../../widgets/ifarm_button.dart';
 
@@ -36,6 +38,14 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(guestModeProvider)) {
+      return const GuestFeatureLock(
+        icon: Icons.person_outline,
+        title: 'Seu perfil de agricultor',
+        description:
+            'Gerencie seus dados, acesse seu histórico e configure preferências da sua propriedade rural.',
+      );
+    }
     final l = AppLocalizations.of(context)!;
     final farmerAsync = ref.watch(currentFarmerProvider);
 

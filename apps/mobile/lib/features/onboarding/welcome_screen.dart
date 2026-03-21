@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ifarm_mobile/l10n/app_localizations.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/router/app_router.dart';
+import '../../providers/guest_provider.dart';
 
 class _SlideData {
   final String imageUrl;
@@ -36,16 +38,21 @@ const _slides = [
   ),
 ];
 
-class WelcomeScreen extends StatefulWidget {
+class WelcomeScreen extends ConsumerStatefulWidget {
   const WelcomeScreen({super.key});
 
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  ConsumerState<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
   final _pageController = PageController();
   int _currentPage = 0;
+
+  void _enterGuestMode() {
+    ref.read(guestModeProvider.notifier).state = true;
+    context.go(Routes.home);
+  }
 
   @override
   void dispose() {
@@ -55,73 +62,80 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          PageView.builder(
-            controller: _pageController,
-            onPageChanged: (i) => setState(() => _currentPage = i),
-            itemCount: _slides.length,
-            itemBuilder: (context, i) {
-              final l = AppLocalizations.of(context)!;
-              final titles = [
-                l.welcomeSlideTitle1,
-                l.welcomeSlideTitle2,
-                l.welcomeSlideTitle3
-              ];
-              final descs = [
-                l.welcomeSlideDesc1,
-                l.welcomeSlideDesc2,
-                l.welcomeSlideDesc3
-              ];
-              return _SlideView(
-                slide: _slides[i],
-                headline: titles[i],
-                subtitle: descs[i],
-              );
-            },
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                child: Row(
-                  children: [
-                    const Icon(Icons.agriculture,
-                        color: Colors.white, size: 28),
-                    const SizedBox(width: 8),
-                    const Text(
-                      'iFarm',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 22,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                        letterSpacing: -2,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(
+          children: [
+            // ── Carousel ────────────────────────────────────────────────────
+            PageView.builder(
+              controller: _pageController,
+              onPageChanged: (i) => setState(() => _currentPage = i),
+              itemCount: _slides.length,
+              itemBuilder: (context, i) {
+                final l = AppLocalizations.of(context)!;
+                final titles = [
+                  l.welcomeSlideTitle1,
+                  l.welcomeSlideTitle2,
+                  l.welcomeSlideTitle3,
+                ];
+                final descs = [
+                  l.welcomeSlideDesc1,
+                  l.welcomeSlideDesc2,
+                  l.welcomeSlideDesc3,
+                ];
+                return _SlideView(
+                  slide: _slides[i],
+                  headline: titles[i],
+                  subtitle: descs[i],
+                );
+              },
+            ),
+
+            // ── Top brand bar ────────────────────────────────────────────────
+            const Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  child: Row(
+                    children: [
+                      Icon(Icons.agriculture, color: Colors.white, size: 28),
+                      SizedBox(width: 8),
+                      Text(
+                        'iFarm',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 22,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                          letterSpacing: -2,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: _BottomControls(
-              currentPage: _currentPage,
-              totalPages: _slides.length,
-              onCreateAccount: () => context.go(Routes.register),
-              onLogin: () => context.go(Routes.login),
+
+            // ── Bottom controls ──────────────────────────────────────────────
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _BottomControls(
+                currentPage: _currentPage,
+                totalPages: _slides.length,
+                onCreateAccount: () => context.go(Routes.register),
+                onLogin: () => context.go(Routes.login),
+                onExplore: _enterGuestMode,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -145,15 +159,15 @@ class _SlideView extends StatelessWidget {
           errorBuilder: (_, __, ___) =>
               Container(color: AppColors.primaryContainer),
         ),
-        DecoratedBox(
-          decoration: const BoxDecoration(
+        const DecoratedBox(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color(0x66000000),
-                Colors.transparent,
-                Color(0xCC000000),
+                Color(0x99000000),
+                Color(0x80000000),
+                Color(0xDD000000),
               ],
               stops: [0.0, 0.45, 1.0],
             ),
@@ -162,7 +176,7 @@ class _SlideView extends StatelessWidget {
         Positioned(
           left: 24,
           right: 24,
-          bottom: 280,
+          bottom: 300,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -201,12 +215,14 @@ class _BottomControls extends StatelessWidget {
   final int totalPages;
   final VoidCallback onCreateAccount;
   final VoidCallback onLogin;
+  final VoidCallback onExplore;
 
   const _BottomControls({
     required this.currentPage,
     required this.totalPages,
     required this.onCreateAccount,
     required this.onLogin,
+    required this.onExplore,
   });
 
   @override
@@ -216,7 +232,7 @@ class _BottomControls extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
-          colors: [Color(0xE6000000), Colors.transparent],
+          colors: [Color(0xF0000000), Colors.transparent],
           stops: [0.0, 1.0],
         ),
       ),
@@ -226,6 +242,7 @@ class _BottomControls extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // ── Dot indicators ───────────────────────────────────────────
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(totalPages, (i) {
@@ -246,6 +263,8 @@ class _BottomControls extends StatelessWidget {
               }),
             ),
             const SizedBox(height: 24),
+
+            // ── Criar conta (primary) ─────────────────────────────────────
             SizedBox(
               width: double.infinity,
               height: 52,
@@ -259,54 +278,75 @@ class _BottomControls extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: Text(
-                  AppLocalizations.of(context)!.welcomeCreateAccount,
-                  style: const TextStyle(
+                child: const Text(
+                  'Criar conta grátis',
+                  style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
+
+            // ── Entrar (secondary) ────────────────────────────────────────
             SizedBox(
               width: double.infinity,
-              height: 52,
+              height: 48,
               child: OutlinedButton(
                 onPressed: onLogin,
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white,
                   side: BorderSide(
-                    color: Colors.white.withValues(alpha: 0.30),
+                    color: Colors.white.withValues(alpha: 0.35),
                     width: 1,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: Text(
-                  AppLocalizations.of(context)!.welcomeLogin,
-                  style: const TextStyle(
+                child: const Text(
+                  'Entrar',
+                  style: TextStyle(
                     fontFamily: 'Inter',
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            Text(
-              AppLocalizations.of(context)!.welcomeTagline,
-              style: TextStyle(
-                fontFamily: 'Inter',
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
-                color: Colors.white.withValues(alpha: 0.40),
-                letterSpacing: 2,
+            const SizedBox(height: 16),
+
+            // ── Explorar sem cadastro (ghost link) ────────────────────────
+            GestureDetector(
+              onTap: onExplore,
+              behavior: HitTestBehavior.opaque,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Explorar sem cadastro',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white.withValues(alpha: 0.55),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(
+                      Icons.arrow_forward,
+                      size: 13,
+                      color: Colors.white.withValues(alpha: 0.55),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/guest_provider.dart';
 import '../../features/splash/splash_screen.dart';
 import '../../features/onboarding/welcome_screen.dart';
 import '../../features/onboarding/login_screen.dart';
@@ -55,6 +56,7 @@ class Routes {
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authNotifierProvider);
+  ref.watch(guestModeProvider); // rebuild router when guest mode changes
 
   return GoRouter(
     initialLocation: Routes.splash,
@@ -64,13 +66,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       if (isLoading) return null;
 
       final isAuth = authState.value != null;
+      final isGuest = ref.read(guestModeProvider);
       final isSplash = state.matchedLocation == Routes.splash;
       final isAuthRoute = [Routes.welcome, Routes.login, Routes.register]
           .contains(state.matchedLocation);
 
       if (isSplash) return null;
-      if (!isAuth && !isAuthRoute) return Routes.welcome;
-      if (isAuth && isAuthRoute) return Routes.home;
+      if (!isAuth && !isGuest && !isAuthRoute) return Routes.welcome;
+      if ((isAuth || isGuest) && isAuthRoute) return Routes.home;
       return null;
     },
     routes: [

@@ -13,6 +13,8 @@ import '../../providers/order_provider.dart';
 import '../../widgets/ifarm_empty_state.dart';
 import '../../widgets/ifarm_error_state.dart';
 import '../../widgets/ifarm_skeleton.dart';
+import '../../providers/guest_provider.dart';
+import '../../widgets/guest_feature_lock.dart';
 
 class OrdersListScreen extends ConsumerStatefulWidget {
   const OrdersListScreen({super.key});
@@ -46,6 +48,14 @@ class _OrdersListScreenState extends ConsumerState<OrdersListScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(guestModeProvider)) {
+      return const GuestFeatureLock(
+        icon: Icons.shopping_bag_outlined,
+        title: 'Acompanhe seus pedidos',
+        description:
+            'Rastreie cada etapa dos seus pedidos, desde a confirmação até a entrega na sua propriedade.',
+      );
+    }
     final l = AppLocalizations.of(context)!;
 
     return Scaffold(

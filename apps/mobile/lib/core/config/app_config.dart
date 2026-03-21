@@ -27,9 +27,9 @@ class AppConfig {
     if (overrideUrl.isNotEmpty) return overrideUrl;
     switch (environment) {
       case AppEnvironment.prod:
-        return 'https://api.ifarm.com.br';
+        return 'https://api.ifarm.agr.br';
       case AppEnvironment.staging:
-        return 'https://api-staging.ifarm.com.br';
+        return 'https://api-staging.ifarm.agr.br';
       case AppEnvironment.dev:
         return Platform.isAndroid
             ? 'http://10.0.2.2:3000'

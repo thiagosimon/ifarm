@@ -335,9 +335,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ],
                 ),
 
-                const Spacer(),
-
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
 
                 // ─── Register link ────────────────────────────────────────
                 Center(

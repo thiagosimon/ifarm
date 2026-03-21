@@ -41,60 +41,70 @@ class ScaffoldWithBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
     final currentIndex = _locationToIndex(location);
+    final isHome = currentIndex == 0;
 
-    return Scaffold(
-      body: child,
-      // Glassmorphism bottom nav — white 80% + blur effect via decoration
-      extendBody: true,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.85),
-          border: Border(
-            top: BorderSide(
-              color: AppColors.outlineVariant.withValues(alpha: 0.15),
-              width: 1,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        if (!isHome) {
+          context.go(Routes.home);
+        }
+      },
+      child: Scaffold(
+        body: child,
+        // Glassmorphism bottom nav — white 80% + blur effect via decoration
+        extendBody: true,
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.85),
+            border: Border(
+              top: BorderSide(
+                color: AppColors.outlineVariant.withValues(alpha: 0.15),
+                width: 1,
+              ),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF005129).withValues(alpha: 0.06),
+                blurRadius: 24,
+                offset: const Offset(0, -8),
+              ),
+            ],
           ),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFF005129).withValues(alpha: 0.06),
-              blurRadius: 24,
-              offset: const Offset(0, -8),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          currentIndex: currentIndex,
-          onTap: (i) => _onTap(context, i),
-          backgroundColor: Colors.transparent,
-          selectedItemColor: AppColors.primary,
-          unselectedItemColor: AppColors.outline,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          elevation: 0,
-          items: [
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.home_outlined),
-                activeIcon: const Icon(Icons.home),
-                label: AppLocalizations.of(context)!.navHome),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.description_outlined),
-                activeIcon: const Icon(Icons.description),
-                label: AppLocalizations.of(context)!.navQuotes),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.shopping_bag_outlined),
-                activeIcon: const Icon(Icons.shopping_bag),
-                label: AppLocalizations.of(context)!.navOrders),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.notifications_outlined),
-                activeIcon: const Icon(Icons.notifications),
-                label: AppLocalizations.of(context)!.navAlerts),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.person_outline),
-                activeIcon: const Icon(Icons.person),
-                label: AppLocalizations.of(context)!.navProfile),
-          ],
+          child: BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: (i) => _onTap(context, i),
+            backgroundColor: Colors.transparent,
+            selectedItemColor: AppColors.primary,
+            unselectedItemColor: AppColors.outline,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
+            elevation: 0,
+            items: [
+              BottomNavigationBarItem(
+                  icon: const Icon(Icons.home_outlined),
+                  activeIcon: const Icon(Icons.home),
+                  label: AppLocalizations.of(context)!.navHome),
+              BottomNavigationBarItem(
+                  icon: const Icon(Icons.description_outlined),
+                  activeIcon: const Icon(Icons.description),
+                  label: AppLocalizations.of(context)!.navQuotes),
+              BottomNavigationBarItem(
+                  icon: const Icon(Icons.shopping_bag_outlined),
+                  activeIcon: const Icon(Icons.shopping_bag),
+                  label: AppLocalizations.of(context)!.navOrders),
+              BottomNavigationBarItem(
+                  icon: const Icon(Icons.notifications_outlined),
+                  activeIcon: const Icon(Icons.notifications),
+                  label: AppLocalizations.of(context)!.navAlerts),
+              BottomNavigationBarItem(
+                  icon: const Icon(Icons.person_outline),
+                  activeIcon: const Icon(Icons.person),
+                  label: AppLocalizations.of(context)!.navProfile),
+            ],
+          ),
         ),
       ),
     );
