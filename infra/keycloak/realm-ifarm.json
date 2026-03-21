@@ -40,8 +40,16 @@
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": false,
       "secret": "retailer-secret-change-in-production",
-      "redirectUris": ["http://localhost:4000/*", "https://app.ifarm.com.br/*"],
-      "webOrigins": ["http://localhost:4000", "https://app.ifarm.com.br"]
+      "redirectUris": [
+        "http://localhost:4000/*",
+        "https://saas.ifarm.agr.br/*",
+        "https://app.ifarm.com.br/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4000",
+        "https://saas.ifarm.agr.br",
+        "https://app.ifarm.com.br"
+      ]
     },
     {
       "clientId": "ifarm-web-admin",
@@ -53,16 +61,22 @@
       "secret": "admin-secret-change-in-production",
       "redirectUris": [
         "http://localhost:4001/*",
+        "https://admin.ifarm.agr.br/*",
         "https://admin.ifarm.com.br/*"
       ],
-      "webOrigins": ["http://localhost:4001", "https://admin.ifarm.com.br"]
+      "webOrigins": [
+        "http://localhost:4001",
+        "https://admin.ifarm.agr.br",
+        "https://admin.ifarm.com.br"
+      ]
     },
     {
       "clientId": "ifarm-api",
       "name": "iFarm API Gateway",
       "enabled": true,
       "publicClient": false,
-      "bearerOnly": true,
+      "bearerOnly": false,
+      "directAccessGrantsEnabled": true,
       "secret": "api-secret-change-in-production"
     }
   ],
@@ -87,7 +101,7 @@
       "firstName": "João",
       "lastName": "Silva",
       "credentials": [
-        { "type": "password", "value": "test123", "temporary": false }
+        { "type": "password", "value": "farmer123", "temporary": false }
       ],
       "realmRoles": ["FARMER"]
     },
@@ -99,7 +113,19 @@
       "firstName": "Maria",
       "lastName": "Souza",
       "credentials": [
-        { "type": "password", "value": "test123", "temporary": false }
+        { "type": "password", "value": "retailer123", "temporary": false }
+      ],
+      "realmRoles": ["RETAILER"]
+    },
+    {
+      "username": "thiagosimon_15@hotmail.com",
+      "email": "thiagosimon_15@hotmail.com",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Thiago",
+      "lastName": "Simon",
+      "credentials": [
+        { "type": "password", "value": "12345678", "temporary": false }
       ],
       "realmRoles": ["RETAILER"]
     }

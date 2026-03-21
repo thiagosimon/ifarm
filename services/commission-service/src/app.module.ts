@@ -13,7 +13,7 @@ import { Commission } from './commission/entities/commission.entity';
       type: 'postgres',
       url: process.env.POSTGRES_URI || 'postgres://ifarm:ifarm123@localhost:5432/ifarm_commission',
       entities: [Commission],
-      synchronize: process.env.NODE_ENV !== 'production',
+      synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true' || process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV !== 'production',
     }),
     BullModule.forRoot({

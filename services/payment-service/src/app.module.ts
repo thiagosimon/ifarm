@@ -10,7 +10,7 @@ import { HealthModule } from './health/health.module';
       type: 'postgres',
       url: process.env.POSTGRES_URI || 'postgres://ifarm:ifarm@localhost:5432/ifarm_payments',
       autoLoadEntities: true,
-      synchronize: process.env.NODE_ENV !== 'production',
+      synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true' || process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV !== 'production',
     }),
     RabbitmqModule,

@@ -380,6 +380,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: "3006"
+      TYPEORM_SYNCHRONIZE: "true"
       MONGODB_URI: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongodb:27017/ifarm_orders?authSource=admin
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_orders
       POSTGRES_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_orders
@@ -412,6 +413,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: "3007"
+      TYPEORM_SYNCHRONIZE: "true"
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_payments
       POSTGRES_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_payments
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
@@ -446,6 +448,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: "3008"
+      TYPEORM_SYNCHRONIZE: "true"
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_commissions
       POSTGRES_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_commissions
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
