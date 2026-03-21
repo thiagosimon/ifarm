@@ -65,80 +65,78 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
     return PopScope(
       canPop: false,
       child: Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          // ── Carousel ────────────────────────────────────────────────────
-          PageView.builder(
-            controller: _pageController,
-            onPageChanged: (i) => setState(() => _currentPage = i),
-            itemCount: _slides.length,
-            itemBuilder: (context, i) {
-              final l = AppLocalizations.of(context)!;
-              final titles = [
-                l.welcomeSlideTitle1,
-                l.welcomeSlideTitle2,
-                l.welcomeSlideTitle3,
-              ];
-              final descs = [
-                l.welcomeSlideDesc1,
-                l.welcomeSlideDesc2,
-                l.welcomeSlideDesc3,
-              ];
-              return _SlideView(
-                slide: _slides[i],
-                headline: titles[i],
-                subtitle: descs[i],
-              );
-            },
-          ),
+        backgroundColor: Colors.black,
+        body: Stack(
+          children: [
+            // ── Carousel ────────────────────────────────────────────────────
+            PageView.builder(
+              controller: _pageController,
+              onPageChanged: (i) => setState(() => _currentPage = i),
+              itemCount: _slides.length,
+              itemBuilder: (context, i) {
+                final l = AppLocalizations.of(context)!;
+                final titles = [
+                  l.welcomeSlideTitle1,
+                  l.welcomeSlideTitle2,
+                  l.welcomeSlideTitle3,
+                ];
+                final descs = [
+                  l.welcomeSlideDesc1,
+                  l.welcomeSlideDesc2,
+                  l.welcomeSlideDesc3,
+                ];
+                return _SlideView(
+                  slide: _slides[i],
+                  headline: titles[i],
+                  subtitle: descs[i],
+                );
+              },
+            ),
 
-          // ── Top brand bar ────────────────────────────────────────────────
-          const Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                child: Row(
-                  children: [
-                    Icon(Icons.agriculture,
-                        color: Colors.white, size: 28),
-                    SizedBox(width: 8),
-                    Text(
-                      'iFarm',
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 22,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                        letterSpacing: -2,
+            // ── Top brand bar ────────────────────────────────────────────────
+            const Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  child: Row(
+                    children: [
+                      Icon(Icons.agriculture, color: Colors.white, size: 28),
+                      SizedBox(width: 8),
+                      Text(
+                        'iFarm',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 22,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                          letterSpacing: -2,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-          // ── Bottom controls ──────────────────────────────────────────────
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: _BottomControls(
-              currentPage: _currentPage,
-              totalPages: _slides.length,
-              onCreateAccount: () => context.go(Routes.register),
-              onLogin: () => context.go(Routes.login),
-              onExplore: _enterGuestMode,
+            // ── Bottom controls ──────────────────────────────────────────────
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _BottomControls(
+                currentPage: _currentPage,
+                totalPages: _slides.length,
+                onCreateAccount: () => context.go(Routes.register),
+                onLogin: () => context.go(Routes.login),
+                onExplore: _enterGuestMode,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
     );
   }
 }
