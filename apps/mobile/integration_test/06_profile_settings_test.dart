@@ -26,12 +26,12 @@ void main() {
     testWidgets('profile screen shows user info', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(
             find.textContaining('João').evaluate().isNotEmpty ||
@@ -46,17 +46,17 @@ void main() {
     testWidgets('edit profile button navigates to edit screen', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final editBtn = find.textContaining('Editar').first;
           if (editBtn.evaluate().isNotEmpty) {
             await tester.tap(editBtn);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(
               find.byType(TextFormField).evaluate().isNotEmpty ||
@@ -71,17 +71,17 @@ void main() {
     testWidgets('edit profile form has name and phone fields', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final editBtn = find.textContaining('Editar');
           if (editBtn.evaluate().isNotEmpty) {
             await tester.tap(editBtn.first);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // At least 2 text fields expected (name, phone)
             expect(
@@ -97,12 +97,12 @@ void main() {
     testWidgets('KYC status is visible on profile', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(
             find.textContaining('KYC').evaluate().isNotEmpty ||
@@ -117,12 +117,12 @@ void main() {
     testWidgets('logout button is accessible from profile', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(
             find.textContaining('Sair').evaluate().isNotEmpty ||
@@ -141,17 +141,17 @@ void main() {
     testWidgets('settings screen renders notification toggles', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final settingsBtn = find.textContaining('Configurações');
           if (settingsBtn.evaluate().isNotEmpty) {
             await tester.tap(settingsBtn.first);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(
               find.byType(Switch).evaluate().isNotEmpty ||
@@ -167,17 +167,17 @@ void main() {
     testWidgets('privacy screen renders', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final privacyBtn = find.textContaining('Privacidade');
           if (privacyBtn.evaluate().isNotEmpty) {
             await tester.tap(privacyBtn.first);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(
               find.textContaining('LGPD').evaluate().isNotEmpty ||
@@ -197,17 +197,17 @@ void main() {
     testWidgets('KYC hub shows document steps', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final profileTab = find.textContaining('Perfil');
         if (profileTab.evaluate().isNotEmpty) {
           await tester.tap(profileTab.last);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final kycBtn = find.textContaining('KYC');
           if (kycBtn.evaluate().isNotEmpty) {
             await tester.tap(kycBtn.first);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(
               find.textContaining('documento').evaluate().isNotEmpty ||

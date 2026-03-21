@@ -36,14 +36,14 @@ void main() {
     testWidgets('unauthenticated user sees Welcome screen', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: false));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Should land on Welcome or Login
         final url = find.textContaining('Entrar');
         final hasLogin = url.evaluate().isNotEmpty;
         if (!hasLogin) {
           // May still be on splash — pump more
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
         }
       });
     });
@@ -51,20 +51,20 @@ void main() {
     testWidgets('login form validates empty fields', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: false));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Navigate to login if not there
         final loginBtn = find.textContaining('Entrar');
         if (loginBtn.evaluate().isNotEmpty) {
           await tester.tap(loginBtn.first);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 2));
         }
 
         // Try to submit empty form
         final submitBtn = find.textContaining('Entrar').last;
         if (submitBtn.evaluate().isNotEmpty) {
           await tester.tap(submitBtn);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 2));
           // Validation errors should appear
           expect(find.textContaining('obrigatório').evaluate().isNotEmpty ||
               find.textContaining('inválid').evaluate().isNotEmpty ||
@@ -80,7 +80,7 @@ void main() {
           authenticated: false,
           authRepo: authRepo,
         ));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Find and fill email field
         final emailField = find.byType(TextFormField).first;
@@ -100,7 +100,7 @@ void main() {
         final loginButton = find.widgetWithText(InkWell, 'Entrar').first;
         if (loginButton.evaluate().isNotEmpty) {
           await tester.tap(loginButton);
-          await tester.pumpAndSettle(const Duration(seconds: 3));
+          await tester.pump(const Duration(seconds: 3));
         }
 
         // Should navigate to home
@@ -120,7 +120,7 @@ void main() {
           authenticated: false,
           authRepo: authRepo,
         ));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final emailField = find.byType(TextFormField).first;
         if (emailField.evaluate().isNotEmpty) {
@@ -138,7 +138,7 @@ void main() {
         final loginButton = find.widgetWithText(InkWell, 'Entrar');
         if (loginButton.evaluate().isNotEmpty) {
           await tester.tap(loginButton.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
           // Error snackbar or error message should appear
           expect(
             find.byType(SnackBar).evaluate().isNotEmpty ||
@@ -154,13 +154,13 @@ void main() {
     testWidgets('registration screen has required fields', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: false));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Navigate to register
         final registerLink = find.textContaining('Cadastrar').first;
         if (registerLink.evaluate().isNotEmpty) {
           await tester.tap(registerLink);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 2));
 
           // Registration form should have multiple text fields
           expect(find.byType(TextFormField).evaluate().length, greaterThan(1));
@@ -172,7 +172,7 @@ void main() {
       await seedAuthState();
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Should be on home, not on welcome/login
         expect(
@@ -186,18 +186,18 @@ void main() {
     testWidgets('back navigation from login returns to welcome', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: false));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final enterBtn = find.textContaining('Entrar').first;
         if (enterBtn.evaluate().isNotEmpty) {
           await tester.tap(enterBtn);
-          await tester.pumpAndSettle();
+          await tester.pump(const Duration(seconds: 2));
 
           // Should now be on login — press back
           final backBtn = find.byIcon(Icons.arrow_back_ios_new);
           if (backBtn.evaluate().isNotEmpty) {
             await tester.tap(backBtn.first);
-            await tester.pumpAndSettle();
+            await tester.pump(const Duration(seconds: 2));
             // Should return to welcome
             expect(find.textContaining('Entrar').evaluate().isNotEmpty, isTrue);
           }

@@ -30,13 +30,13 @@ void main() {
     testWidgets('My Quotes screen renders quote list', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Navigate to quotes tab
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Should show the mock quote number or title
           expect(
@@ -52,12 +52,12 @@ void main() {
     testWidgets('quote status badge is visible', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Badge should show quote status
           expect(
@@ -73,18 +73,18 @@ void main() {
     testWidgets('tapping quote card opens quote detail', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Tap first quote card
           final quoteCard = find.byType(Card).first;
           if (quoteCard.evaluate().isNotEmpty) {
             await tester.tap(quoteCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // Detail should show quote info
             expect(
@@ -101,17 +101,17 @@ void main() {
     testWidgets('quote detail shows proposal count and compare button', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final quoteCard = find.byType(Card).first;
           if (quoteCard.evaluate().isNotEmpty) {
             await tester.tap(quoteCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // Should show proposal count (mock has 2) or compare button
             expect(
@@ -128,22 +128,22 @@ void main() {
     testWidgets('proposal comparison screen shows retailer and prices', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final quoteCard = find.byType(Card).first;
           if (quoteCard.evaluate().isNotEmpty) {
             await tester.tap(quoteCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             final compareBtn = find.textContaining('Comparar');
             if (compareBtn.evaluate().isNotEmpty) {
               await tester.tap(compareBtn.first);
-              await tester.pumpAndSettle(const Duration(seconds: 2));
+              await tester.pump(const Duration(seconds: 2));
 
               // Should show retailer name from mock proposal
               expect(
@@ -161,18 +161,18 @@ void main() {
     testWidgets('quote builder screen has product selector', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Look for "Nova Cotação" FAB or button
           final newQuoteBtn = find.textContaining('Nova Cotação');
           if (newQuoteBtn.evaluate().isNotEmpty) {
             await tester.tap(newQuoteBtn.first);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // Quote builder should render
             expect(
@@ -189,18 +189,18 @@ void main() {
     testWidgets('recurring quotes screen is accessible', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Look for recurring/recorrente tab or button
           final recurringBtn = find.textContaining('Recorren');
           if (recurringBtn.evaluate().isNotEmpty) {
             await tester.tap(recurringBtn.first);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(find.byType(Scaffold), findsWidgets);
           }
@@ -216,12 +216,12 @@ void main() {
           authenticated: true,
           quotationRepo: emptyQuotationRepo,
         ));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final quotesTab = find.textContaining('Cotações');
         if (quotesTab.evaluate().isNotEmpty) {
           await tester.tap(quotesTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(find.byType(Scaffold), findsWidgets);
         }

@@ -25,13 +25,13 @@ void main() {
     testWidgets('registration screen renders required fields', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: false));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Navigate to register
         final registerLink = find.textContaining('Cadastrar');
         if (registerLink.evaluate().isNotEmpty) {
           await tester.tap(registerLink.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Should have multiple text fields for registration
           final fields = find.byType(TextFormField);
@@ -43,18 +43,18 @@ void main() {
     testWidgets('empty registration form shows validation errors', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: false));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final registerLink = find.textContaining('Cadastrar');
         if (registerLink.evaluate().isNotEmpty) {
           await tester.tap(registerLink.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Submit without filling any fields
           final submitBtn = find.textContaining('Cadastrar').last;
           if (submitBtn.evaluate().isNotEmpty) {
             await tester.tap(submitBtn);
-            await tester.pumpAndSettle();
+            await tester.pump(const Duration(seconds: 2));
 
             // Validation errors should appear
             expect(
@@ -78,12 +78,12 @@ void main() {
           authRepo: authRepo,
           farmerRepo: farmerRepo,
         ));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final registerLink = find.textContaining('Cadastrar');
         if (registerLink.evaluate().isNotEmpty) {
           await tester.tap(registerLink.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Fill all visible TextFormFields with valid data
           final fields = find.byType(TextFormField);
@@ -108,7 +108,7 @@ void main() {
           final submitBtn = find.textContaining('Cadastrar').last;
           if (submitBtn.evaluate().isNotEmpty) {
             await tester.tap(submitBtn);
-            await tester.pumpAndSettle(const Duration(seconds: 3));
+            await tester.pump(const Duration(seconds: 3));
             // After registration, should be navigated away from register screen
             expect(find.byType(Scaffold), findsWidgets);
           }
@@ -123,7 +123,7 @@ void main() {
     testWidgets('geolocation screen renders permission UI', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: false));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // The geolocation screen can be navigated to directly after login
         // in a real device scenario; here we verify the scaffold renders

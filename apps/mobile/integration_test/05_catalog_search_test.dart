@@ -25,13 +25,13 @@ void main() {
     testWidgets('product search screen renders search field', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         // Navigate to search via home screen search icon
         final searchBtn = find.byIcon(Icons.search);
         if (searchBtn.evaluate().isNotEmpty) {
           await tester.tap(searchBtn.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(
             find.byType(TextField).evaluate().isNotEmpty ||
@@ -45,18 +45,18 @@ void main() {
     testWidgets('search returns product results', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final searchBtn = find.byIcon(Icons.search);
         if (searchBtn.evaluate().isNotEmpty) {
           await tester.tap(searchBtn.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final searchField = find.byType(TextField).first;
           if (searchField.evaluate().isNotEmpty) {
             await tester.enterText(searchField, 'Soja');
             await tester.pump(const Duration(milliseconds: 500));
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // Should show mock product
             expect(
@@ -72,15 +72,15 @@ void main() {
     testWidgets('product card shows key info', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final searchBtn = find.byIcon(Icons.search);
         if (searchBtn.evaluate().isNotEmpty) {
           await tester.tap(searchBtn.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Products should load initially
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(
             find.textContaining('Soja Premium').evaluate().isNotEmpty ||
@@ -95,19 +95,19 @@ void main() {
     testWidgets('tapping product card opens product detail', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final searchBtn = find.byIcon(Icons.search);
         if (searchBtn.evaluate().isNotEmpty) {
           await tester.tap(searchBtn.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final productCard = find.byType(Card).first;
           if (productCard.evaluate().isNotEmpty) {
             await tester.tap(productCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(
               find.textContaining('Soja').evaluate().isNotEmpty ||
@@ -124,19 +124,19 @@ void main() {
     testWidgets('product detail shows tariff code', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final searchBtn = find.byIcon(Icons.search);
         if (searchBtn.evaluate().isNotEmpty) {
           await tester.tap(searchBtn.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final productCard = find.byType(Card).first;
           if (productCard.evaluate().isNotEmpty) {
             await tester.tap(productCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(
               find.textContaining('1201').evaluate().isNotEmpty ||
@@ -152,19 +152,19 @@ void main() {
     testWidgets('product detail has add to quote action', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final searchBtn = find.byIcon(Icons.search);
         if (searchBtn.evaluate().isNotEmpty) {
           await tester.tap(searchBtn.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final productCard = find.byType(Card).first;
           if (productCard.evaluate().isNotEmpty) {
             await tester.tap(productCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // Should show button to add to quote or request quote
             expect(

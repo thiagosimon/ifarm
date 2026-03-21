@@ -26,12 +26,12 @@ void main() {
     testWidgets('orders list screen renders', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final ordersTab = find.textContaining('Pedidos');
         if (ordersTab.evaluate().isNotEmpty) {
           await tester.tap(ordersTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(find.byType(Scaffold), findsWidgets);
         }
@@ -41,12 +41,12 @@ void main() {
     testWidgets('order card shows order number and status', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final ordersTab = find.textContaining('Pedidos');
         if (ordersTab.evaluate().isNotEmpty) {
           await tester.tap(ordersTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           expect(
             find.textContaining('PED-2024-001').evaluate().isNotEmpty ||
@@ -61,17 +61,17 @@ void main() {
     testWidgets('tapping order card opens order detail', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final ordersTab = find.textContaining('Pedidos');
         if (ordersTab.evaluate().isNotEmpty) {
           await tester.tap(ordersTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final orderCard = find.byType(Card).first;
           if (orderCard.evaluate().isNotEmpty) {
             await tester.tap(orderCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             expect(
               find.textContaining('AgroDistrib').evaluate().isNotEmpty ||
@@ -88,17 +88,17 @@ void main() {
     testWidgets('order detail shows total amount in BRL', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final ordersTab = find.textContaining('Pedidos');
         if (ordersTab.evaluate().isNotEmpty) {
           await tester.tap(ordersTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final orderCard = find.byType(Card).first;
           if (orderCard.evaluate().isNotEmpty) {
             await tester.tap(orderCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // R$ formatting
             expect(
@@ -115,17 +115,17 @@ void main() {
     testWidgets('order status history is shown in detail', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final ordersTab = find.textContaining('Pedidos');
         if (ordersTab.evaluate().isNotEmpty) {
           await tester.tap(ordersTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final orderCard = find.byType(Card).first;
           if (orderCard.evaluate().isNotEmpty) {
             await tester.tap(orderCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // Timeline should show at least one status entry
             expect(
@@ -143,12 +143,12 @@ void main() {
     testWidgets('filter chips are rendered on orders list', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final ordersTab = find.textContaining('Pedidos');
         if (ordersTab.evaluate().isNotEmpty) {
           await tester.tap(ordersTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           // Filter chips or dropdown
           expect(
@@ -165,23 +165,23 @@ void main() {
     testWidgets('payment screen is accessible', (tester) async {
       await mockNetworkImagesFor(() async {
         await tester.pumpWidget(buildTestApp(authenticated: true));
-        await tester.pumpAndSettle(const Duration(seconds: 3));
+        await tester.pump(const Duration(seconds: 3));
 
         final ordersTab = find.textContaining('Pedidos');
         if (ordersTab.evaluate().isNotEmpty) {
           await tester.tap(ordersTab.first);
-          await tester.pumpAndSettle(const Duration(seconds: 2));
+          await tester.pump(const Duration(seconds: 2));
 
           final orderCard = find.byType(Card).first;
           if (orderCard.evaluate().isNotEmpty) {
             await tester.tap(orderCard);
-            await tester.pumpAndSettle(const Duration(seconds: 2));
+            await tester.pump(const Duration(seconds: 2));
 
             // Look for payment button
             final payBtn = find.textContaining('Pagamento');
             if (payBtn.evaluate().isNotEmpty) {
               await tester.tap(payBtn.first);
-              await tester.pumpAndSettle(const Duration(seconds: 2));
+              await tester.pump(const Duration(seconds: 2));
               expect(find.byType(Scaffold), findsWidgets);
             }
           }

@@ -1,6 +1,8 @@
 // Test app that wires up the full IFarmApp with mocked Riverpod providers.
 library test_app;
 
+export 'test_helpers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ifarm_mobile/app.dart';
