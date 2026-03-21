@@ -1,7 +1,7 @@
 /// 10 — Full Production API Validation (Flutter)
 ///
 /// Comprehensive integration test of ALL backend services through the
-/// production API gateway at https://api.ifarm.agr.br.
+/// production API gateway.
 ///
 /// Covers: health, auth (all roles + refresh), identity, catalog, orders,
 /// payments, notifications, reviews, quotations, security (JWT, TLS).
@@ -9,6 +9,9 @@
 /// Run:
 ///   flutter test integration_test/10_full_validation_test.dart
 ///   flutter test integration_test/10_full_validation_test.dart --dart-define=APP_ENV=prod
+///
+/// NOTE: Use API_BASE_URL env or update apiBase for local testing
+/// via socat proxy: http://127.0.0.1:3333
 library full_validation_test;
 
 import 'dart:convert';
@@ -17,7 +20,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-const String apiBase = 'https://api.ifarm.agr.br';
+const String apiBase = String.fromEnvironment('API_BASE_URL', defaultValue: 'https://api.ifarm.agr.br');
 
 // Test users from Keycloak realm
 const Map<String, String> retailer = {'email': 'retailer@test.com', 'password': 'retailer123'};
