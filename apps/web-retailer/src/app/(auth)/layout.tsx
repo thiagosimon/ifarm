@@ -1,7 +1,16 @@
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
+
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <div className="fixed top-4 right-4 z-50">
+        <LanguageSwitcher />
+      </div>
+      {children}
+    </>
+  );
 }

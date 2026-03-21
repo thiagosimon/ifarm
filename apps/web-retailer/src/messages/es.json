@@ -379,7 +379,8 @@
     "footerRights": "Todos los derechos reservados.",
     "needHelp": "¿Necesita ayuda?",
     "contactSupport": "Contactar soporte",
-    "secureEnvironment": "Entorno Seguro"
+    "secureEnvironment": "Entorno Seguro",
+    "invalidCredentials": "Correo o contraseña inválidos. Verifique sus datos e intente nuevamente."
   },
   "profile": {
     "title": "Perfil de Tienda",
