@@ -11,7 +11,8 @@
     "clean": "rm -rf .next node_modules",
     "test": "NEXT_IGNORE_INCORRECT_LOCKFILE=1 jest --coverage",
     "test:watch": "NEXT_IGNORE_INCORRECT_LOCKFILE=1 jest --watch",
-    "test:ci": "NEXT_IGNORE_INCORRECT_LOCKFILE=1 jest --coverage --ci"
+    "test:ci": "NEXT_IGNORE_INCORRECT_LOCKFILE=1 jest --coverage --ci",
+    "test:prod": "NEXT_IGNORE_INCORRECT_LOCKFILE=1 jest src/__tests__/production-api.test.ts --no-coverage"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
