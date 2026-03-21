@@ -13,8 +13,8 @@ import { HealthModule } from './health/health.module';
       synchronize: process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV !== 'production',
     }),
-    OrderModule,
     RabbitmqModule,
+    OrderModule,
     HealthModule,
   ],
 })

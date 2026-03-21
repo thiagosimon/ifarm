@@ -321,6 +321,7 @@ services:
       NODE_ENV: production
       PORT: "3004"
       MONGODB_URI: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongodb:27017/ifarm_quotations?authSource=admin
+      MONGO_URI: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongodb:27017/ifarm_quotations?authSource=admin
       REDIS_HOST: redis
       REDIS_PORT: "6379"
       REDIS_PASSWORD: ${REDIS_PASSWORD}
@@ -363,7 +364,7 @@ services:
       rabbitmq:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3005/v1/health"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:3005/health"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -381,6 +382,7 @@ services:
       PORT: "3006"
       MONGODB_URI: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASSWORD}@mongodb:27017/ifarm_orders?authSource=admin
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_orders
+      POSTGRES_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_orders
       RABBITMQ_URI: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/ifarm
       RABBITMQ_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/ifarm
     networks:
@@ -411,6 +413,7 @@ services:
       NODE_ENV: production
       PORT: "3007"
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_payments
+      POSTGRES_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_payments
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
       RABBITMQ_URI: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/ifarm
       RABBITMQ_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/ifarm
@@ -444,6 +447,7 @@ services:
       NODE_ENV: production
       PORT: "3008"
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_commissions
+      POSTGRES_URI: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/ifarm_commissions
       REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379
       RABBITMQ_URI: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/ifarm
       RABBITMQ_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/ifarm
